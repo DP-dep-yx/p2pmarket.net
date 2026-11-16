@@ -1,0 +1,6 @@
+node_modules/
+*.Zone.Identifier
+.DS_Store
+opencode.json
+trust_net_system_v10.docx
+
