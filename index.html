@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrustMarkets.net — Децентрализованная B2B-система Trust Net v10.0 (Base L2 & AI Agents)</title>
-  <meta name="description" content="Децентрализованная платформа международной B2B-торговли на Base L2: верификация доменов через DNS TXT, SIWE-авторизация, 6 типов смарт-контрактов, алгоритм Trust Score и интеграция автономных ИИ-агентов." />
+  <title>TrustMarkets.net — Decentralized B2B Trade Ecosystem Trust Net v10.0 (Base L2 & AI Agents)</title>
+  <meta name="description" content="Decentralized international B2B trade platform on Base L2: DNS TXT domain verification, SIWE authentication, 6 smart contract types, Trust Score algorithm, and autonomous AI agent integration." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="canonical" href="https://trustmarkets.net/" />
 
   <meta property="og:title" content="TrustMarkets.net — Trust Net v10.0 (Base L2 & AI B2B Network)" />
-  <meta property="og:description" content="Международная B2B-торговля без посредников: смарт-контракты Base L2, DNS TXT верификация, JSON-LD Schema.org, гибридный эскроу в USDC и ИИ-агенты." />
+  <meta property="og:description" content="International B2B trade without intermediaries: Base L2 smart contracts, DNS TXT verification, JSON-LD Schema.org, hybrid USDC escrow, and autonomous AI agents." />
   <meta property="og:url" content="https://trustmarkets.net/" />
   <meta property="og:type" content="website" />
 
@@ -85,7 +85,7 @@
       <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
         <div class="flex items-center gap-2 text-cyan-300 font-medium">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Спецификация Trust Net v10.0 · Сеть Base L2 (Chain ID: 8453) · DNS over HTTPS + SIWE EIP-4361</span>
+          <span>Trust Net Architecture v10.0 · Base L2 Network (Chain ID: 8453) · DNS over HTTPS + SIWE EIP-4361</span>
         </div>
         <div class="flex items-center gap-4 font-mono text-[11px] text-slate-400">
           <span>Anti-Spam Fee: <strong class="text-emerald-400">$1.00 USDC/ETH</strong></span>
@@ -107,20 +107,17 @@
       </a>
 
       <nav class="hidden lg:flex items-center gap-6 text-sm text-slate-300">
-        <a href="#ai-search" class="hover:text-cyan-400 transition">ИИ-Поиск & Реестр</a>
+        <a href="#ai-search" class="hover:text-cyan-400 transition">AI Search & Registry</a>
         <a href="#dns-siwe" class="hover:text-cyan-400 transition">DNS & SIWE</a>
-        <a href="#contracts" class="hover:text-cyan-400 transition">6 Контрактов Base</a>
-        <a href="#trust-score" class="hover:text-cyan-400 transition">Калькулятор Trust Score</a>
-        <a href="#jsonld-builder" class="hover:text-cyan-400 transition">JSON-LD & Промпт</a>
-        <a href="#security" class="hover:text-cyan-400 transition">Безопасность</a>
+        <a href="#contracts" class="hover:text-cyan-400 transition">6 Base Contracts</a>
+        <a href="#trust-score" class="hover:text-cyan-400 transition">Trust Score Engine</a>
+        <a href="#jsonld-builder" class="hover:text-cyan-400 transition">JSON-LD & AI Agent</a>
+        <a href="#security" class="hover:text-cyan-400 transition">Security</a>
       </nav>
 
       <div class="flex items-center gap-2.5">
-        <button id="langToggleBtn" onclick="toggleLang()" class="px-3 py-2 rounded-lg text-xs font-mono border border-slate-700 bg-slate-900/90 text-slate-300 hover:border-cyan-400 transition">
-          RU / EN
-        </button>
         <button id="connectWalletBtn" onclick="connectWeb3Wallet()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-sky-500 to-emerald-500 text-slate-950 hover:opacity-95 transition shadow-lg shadow-cyan-500/20">
-          Подключить кошелек Base
+          Connect Base Wallet
         </button>
       </div>
     </div>
@@ -136,44 +133,44 @@
           </div>
 
           <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.15]">
-            Децентрализованная бизнес-система
+            Decentralized B2B Trade Ecosystem
             <span class="bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">Trust Net v10.0</span>
           </h1>
 
           <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
-            Платформа <strong class="text-white">trustmarkets.net</strong> устраняет Web2-посредников, монополии и комиссии в международной B2B-торговле. Математическое доверие 6 типов смарт-контрактов Base, распределённая верификация доменов через DNS TXT и мгновенный векторный поиск контрагентов для автономных ИИ-агентов (ChatGPT, Claude, Gemini).
+            <strong class="text-white">trustmarkets.net</strong> eliminates Web2 intermediaries, excessive fees, and advertising monopolies in international B2B commerce. Combining mathematical trust on Base L2 smart contracts, distributed domain verification via DNS TXT, and millisecond semantic discovery for autonomous AI agents (ChatGPT, Claude, Gemini).
           </p>
 
           <div class="flex flex-wrap gap-3 pt-2">
             <a href="#dns-siwe" class="px-5 py-3 rounded-xl font-semibold text-sm bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition shadow-lg shadow-cyan-500/20">
-              Зарегистрировать домен ($1)
+              Register Domain ($1)
             </a>
             <a href="#ai-search" class="px-5 py-3 rounded-xl font-semibold text-sm glass-card text-white hover:border-cyan-400 transition">
-              ИИ-поиск поставщиков
+              AI Supplier Search
             </a>
             <a href="#ai-agents" class="px-5 py-3 rounded-xl font-semibold text-sm border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 transition">
-              Запустить B2B ИИ-Агента ↗
+              Launch B2B AI Agent ↗
             </a>
           </div>
 
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
             <div class="glass-card rounded-xl p-3.5">
-              <div class="text-xs text-slate-400">Запись профиля</div>
+              <div class="text-xs text-slate-400">Profile Registration</div>
               <div class="text-xl font-bold text-white mt-0.5">$1.00</div>
               <div class="text-[11px] text-emerald-400 font-mono">Anti-Spam Base L2</div>
             </div>
             <div class="glass-card rounded-xl p-3.5">
-              <div class="text-xs text-slate-400">Смарт-контракты</div>
-              <div class="text-xl font-bold text-white mt-0.5">6 типов</div>
+              <div class="text-xs text-slate-400">Smart Contracts</div>
+              <div class="text-xl font-bold text-white mt-0.5">6 Types</div>
               <div class="text-[11px] text-cyan-400 font-mono">Escrow & Net-30/60</div>
             </div>
             <div class="glass-card rounded-xl p-3.5">
-              <div class="text-xs text-slate-400">Идентичность</div>
+              <div class="text-xs text-slate-400">Core Identity</div>
               <div class="text-xl font-bold text-white mt-0.5">0x... Wallet</div>
-              <div class="text-[11px] text-indigo-300 font-mono">Перенос репутации</div>
+              <div class="text-[11px] text-indigo-300 font-mono">Portable Reputation</div>
             </div>
             <div class="glass-card rounded-xl p-3.5">
-              <div class="text-xs text-slate-400">Приватность цен</div>
+              <div class="text-xs text-slate-400">Price Privacy</div>
               <div class="text-xl font-bold text-white mt-0.5">SIWE + X25519</div>
               <div class="text-[11px] text-amber-300 font-mono">EIP-4361 Handshake</div>
             </div>
@@ -185,36 +182,36 @@
           <div class="glass-card rounded-2xl p-6 space-y-4 border border-cyan-500/30 shadow-2xl shadow-cyan-950/40">
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
-                <span class="text-xs font-mono uppercase text-cyan-400">Ядро архитектуры · Solidity</span>
+                <span class="text-xs font-mono uppercase text-cyan-400">Onchain Registry Core · Solidity</span>
                 <h2 class="text-lg font-bold text-white">TrustMarketsRegistry.sol</h2>
               </div>
               <a href="contracts/TrustMarketsRegistry.sol" target="_blank" class="text-xs font-mono px-2.5 py-1 rounded bg-slate-800 text-cyan-300 hover:bg-slate-700">
-                Исходный код ↗
+                Source Code ↗
               </a>
             </div>
 
             <pre class="bg-slate-950/90 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-200 overflow-x-auto code-scroll"><code>struct BusinessProfile {
     string domain;       // "company.com"
-    string businessInfo; // Краткое описание бизнеса
-    string aiPromptUri;  // URI на prompt.json / JSON-LD
-    uint256 updatedAt;   // Timestamp обновления
-    bool isActive;       // Статус профиля
+    string businessInfo; // Short business summary
+    string aiPromptUri;  // URI to prompt.json / JSON-LD
+    uint256 updatedAt;   // Last update timestamp
+    bool isActive;       // Profile status
 }
 mapping(address => BusinessProfile) public profiles;
 mapping(bytes32 => address) public domainToOwner;</code></pre>
 
             <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3.5 space-y-2">
               <div class="text-xs font-semibold text-emerald-400 flex items-center justify-between">
-                <span>Разделение идентичности и защита от рейдерства</span>
-                <span class="font-mono text-[11px]">Раздел 2.1</span>
+                <span>Identity Separation & Anti-Hijacking Protection</span>
+                <span class="font-mono text-[11px]">Section 2.1</span>
               </div>
               <p class="text-xs text-slate-300 leading-relaxed">
-                Носителем деловой репутации выступает криптокошелёк <code class="text-cyan-300">0x...</code>, а не имя домена. При смене домена или блокировке регистратора вызов <code class="text-emerald-300">setProfile()</code> автоматически перепривязывает новый домен с сохранением 100% истории сделок, аудитов и Trust Score.
+                Business reputation belongs to the cryptographic wallet <code class="text-cyan-300">0x...</code>, not the Web2 domain name. If a domain changes or is seized at the registrar, calling <code class="text-emerald-300">setProfile()</code> safely re-binds a new domain while preserving 100% of past escrow deals, auditor attestations, and Trust Score.
               </p>
             </div>
 
             <div class="rounded-xl bg-gradient-to-r from-cyan-950/60 to-emerald-950/60 border border-cyan-500/30 p-3.5">
-              <div class="text-[11px] font-mono text-cyan-300 uppercase">Формула ранжирования ИИ-индексатора (Раздел 6.1)</div>
+              <div class="text-[11px] font-mono text-cyan-300 uppercase">AI Indexer Ranking Formula (Section 6.1)</div>
               <div class="font-mono text-xs sm:text-sm text-white font-semibold mt-1">
                 Final_Rank = Cosine_Sim(Q, V) × (1 + α · ln(1 + Trust_Score))
               </div>
@@ -230,14 +227,14 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <span class="text-xs font-mono uppercase text-cyan-400">Разделы 6.1 и 7 · Семантический векторный поиск + Trust Score</span>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Поиск проверенных B2B-партнёров для ИИ-агентов</h2>
+          <span class="text-xs font-mono uppercase text-cyan-400">Sections 6.1 & 7 · Semantic Vector Search + Trust Score</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Verified B2B Counterparty Discovery for AI Agents</h2>
           <p class="text-sm text-slate-400 mt-1">
-            Симуляция эндпоинта <code class="text-cyan-300">GET /api/ai-search?q=query</code>: объединяет косинусную близость вектора JSON-LD визитки с ончейн-рейтингом кошелька в сети Base.
+            Interactive simulation of <code class="text-cyan-300">GET /api/ai-search?q=query</code>: blends JSON-LD embedding Cosine Similarity with onchain Base Trust Score.
           </p>
         </div>
         <div class="flex items-center gap-3 bg-slate-900/90 border border-slate-800 px-3.5 py-2 rounded-xl">
-          <label for="alphaSlider" class="text-xs font-mono text-slate-300">Вес репутации α:</label>
+          <label for="alphaSlider" class="text-xs font-mono text-slate-300">Trust Weight α:</label>
           <input id="alphaSlider" type="range" min="0.1" max="1.0" step="0.05" value="0.35" oninput="runAiSearch()" class="accent-cyan-400 w-24" />
           <span id="alphaValue" class="text-xs font-mono font-bold text-cyan-400">0.35</span>
         </div>
@@ -250,21 +247,21 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
             type="text"
             value="sunflower oil CIF Rotterdam escrow USDC"
             oninput="runAiSearch()"
-            placeholder="Введите запрос ИИ-агента: например, sunflower oil CIF Rotterdam, PET preforms, 40HC container logistics, polymers..."
+            placeholder="Enter AI agent query: e.g. sunflower oil CIF Rotterdam, PET preforms, 40HC container logistics, polymers..."
             class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
           />
           <button onclick="runAiSearch()" class="px-5 py-3 rounded-xl font-semibold text-sm bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition">
-            Рассчитать ранг
+            Rank Suppliers
           </button>
         </div>
 
         <div class="flex flex-wrap gap-2 text-xs">
-          <span class="text-slate-400 py-1">Быстрые B2B-запросы:</span>
+          <span class="text-slate-400 py-1">Sample B2B Queries:</span>
           <button onclick="setSearchQuery('sunflower oil CIF Rotterdam USDC')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-cyan-300 font-mono">sunflower oil CIF Rotterdam</button>
           <button onclick="setSearchQuery('40HC container rail freight China Europe')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-emerald-300 font-mono">40HC container freight</button>
           <button onclick="setSearchQuery('SGS warehouse quality audit inspection')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-indigo-300 font-mono">warehouse quality audit</button>
           <button onclick="setSearchQuery('granulated polymers HDPE Net-30 SEPA')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-amber-300 font-mono">HDPE polymers Net-30</button>
-          <button onclick="setSearchQuery('bot spam cheap oil')" class="px-2.5 py-1 rounded-lg bg-rose-950/60 border border-rose-500/30 hover:bg-rose-900/50 text-rose-300 font-mono">Тест антиспама (бот vs лидер)</button>
+          <button onclick="setSearchQuery('bot spam cheap oil')" class="px-2.5 py-1 rounded-lg bg-rose-950/60 border border-rose-500/30 hover:bg-rose-900/50 text-rose-300 font-mono">Sybil Anti-Spam Test (Bot vs Leader)</button>
         </div>
 
         <div id="searchResultsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2"></div>
@@ -276,8 +273,8 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
   <section id="dns-siwe" class="py-16 border-b border-slate-800/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="mb-8">
-        <span class="text-xs font-mono uppercase text-emerald-400">Раздел 3 · Односторонняя DNS-верификация и SIWE-авторизация</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Живая проверка DNS TXT (Cloudflare DoH) и EIP-4361 Рукопожатие</h2>
+        <span class="text-xs font-mono uppercase text-emerald-400">Section 3 · One-Way DNS Verification & SIWE Authentication</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Live DNS TXT Verification (Cloudflare DoH) & EIP-4361 Handshake</h2>
       </div>
 
       <div class="grid lg:grid-cols-2 gap-6">
@@ -285,14 +282,14 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
         <div class="glass-card rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <div>
-              <h3 class="text-lg font-bold text-white">1. Проверка TXT-записи домена через Cloudflare DoH</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Прямой запрос к <code class="text-cyan-300">https://cloudflare-dns.com/dns-query?type=TXT</code></p>
+              <h3 class="text-lg font-bold text-white">1. Domain TXT Record Check via Cloudflare DoH</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Live query to <code class="text-cyan-300">https://cloudflare-dns.com/dns-query?type=TXT</code></p>
             </div>
             <span class="px-2.5 py-1 rounded text-xs font-mono bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Live DoH API</span>
           </div>
 
           <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs space-y-1.5">
-            <div class="text-slate-400">Формат обязательной TXT-записи на корпоративном домене:</div>
+            <div class="text-slate-400">Required TXT record format on corporate domain:</div>
             <div class="font-mono text-emerald-400 select-all">evm-contract=0x742d35Cc6634C0532925a3b844Bc454e4438f44e</div>
           </div>
 
@@ -305,12 +302,12 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
               class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-cyan-400"
             />
             <button onclick="verifyDomainDns()" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition">
-              Проверить DNS TXT
+              Verify DNS TXT
             </button>
           </div>
 
           <div id="dnsResultBox" class="rounded-xl bg-slate-950/90 border border-slate-800 p-4 text-xs font-mono text-slate-300 space-y-2">
-            Нажмите «Проверить DNS TXT», чтобы выполнить реальный DNS-over-HTTPS запрос к Cloudflare и подготовить транзакцию <code class="text-cyan-300">setProfile()</code>.
+            Click "Verify DNS TXT" to execute a real-time DNS-over-HTTPS query against Cloudflare and validate <code class="text-cyan-300">setProfile()</code> eligibility.
           </div>
         </div>
 
@@ -318,19 +315,19 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
         <div class="glass-card rounded-2xl p-6 space-y-5">
           <div class="flex items-center justify-between">
             <div>
-              <h3 class="text-lg font-bold text-white">2. SIWE-авторизация (EIP-4361) к приватным прайс-листам</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Защита от Replay-атак + RPC-проверка взаимного NDA-рукопожатия</p>
+              <h3 class="text-lg font-bold text-white">2. SIWE Auth (EIP-4361) for Private Prompts & Price Lists</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Replay-attack protection + Free Base RPC check for active NDA Handshake</p>
             </div>
             <span class="px-2.5 py-1 rounded text-xs font-mono bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">EIP-4361 + X25519</span>
           </div>
 
           <div class="grid sm:grid-cols-2 gap-3">
             <div>
-              <label class="text-xs text-slate-400">Домен поставщика</label>
+              <label class="text-xs text-slate-400">Supplier Domain</label>
               <input id="siweDomain" type="text" value="agro-alliance.eu" oninput="updateSiweMessage()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
             </div>
             <div>
-              <label class="text-xs text-slate-400">Кошелек покупателя (Base)</label>
+              <label class="text-xs text-slate-400">Buyer Wallet (Base L2)</label>
               <input id="siweWallet" type="text" value="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" oninput="updateSiweMessage()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
             </div>
           </div>
@@ -339,10 +336,10 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
 
           <div class="flex flex-wrap gap-2.5">
             <button onclick="signSiweMessage()" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-400 text-slate-950 hover:bg-emerald-300 transition">
-              Подписать SIWE (personal_sign)
+              Sign SIWE (personal_sign)
             </button>
             <button onclick="regenerateSiweNonce()" class="px-3.5 py-2.5 rounded-xl text-xs font-mono border border-slate-700 bg-slate-900 text-slate-300 hover:border-cyan-400">
-              Новый Nonce
+              New Nonce
             </button>
           </div>
 
@@ -357,12 +354,12 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-10">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <span class="text-xs font-mono uppercase text-cyan-400">Раздел 5 · Арсенал из 6 типов смарт-контрактов Trust Net</span>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Ончейн-инфраструктура сделок на Base L2</h2>
-          <p class="text-sm text-slate-400 mt-1">Выберите любой из 6 типов контрактов для просмотра структуры вызовов или протестируйте гибридный контракт купли-продажи.</p>
+          <span class="text-xs font-mono uppercase text-cyan-400">Section 5 · Arsenal of 6 Trust Net Smart Contract Types</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Onchain Commercial & Legal Infrastructure on Base L2</h2>
+          <p class="text-sm text-slate-400 mt-1">Explore all 6 specialized Base smart contracts or configure a hybrid B2B trade settlement below.</p>
         </div>
         <a href="contracts/TrustMarketsTrade.sol" target="_blank" class="text-xs font-mono px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400">
-          Скачать TrustMarketsTrade.sol ↗
+          Download TrustMarketsTrade.sol ↗
         </a>
       </div>
 
@@ -371,96 +368,96 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
         <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">Тип 1 · Registry</span>
-              <span class="text-xs font-mono text-emerald-400">$1 антиспам</span>
+              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">Type 1 · Registry</span>
+              <span class="text-xs font-mono text-emerald-400">$1 Anti-Spam</span>
             </div>
-            <h3 class="text-lg font-bold text-white">1. Информационный профиль</h3>
+            <h3 class="text-lg font-bold text-white">1. Informational Profile</h3>
             <p class="text-xs text-slate-300 leading-relaxed">
-              Связывает <code class="text-cyan-300">Domain ↔ Wallet ↔ aiPromptUri</code> в контракте <code class="text-cyan-300">TrustMarketsRegistry.sol</code> после односторонней DNS TXT верификации.
+              Links <code class="text-cyan-300">Domain ↔ Wallet ↔ aiPromptUri</code> in <code class="text-cyan-300">TrustMarketsRegistry.sol</code> after one-way DNS TXT verification.
             </p>
           </div>
           <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Функция: <span class="text-sky-300">setProfile(domain, info, uri)</span>
+            Function: <span class="text-sky-300">setProfile(domain, info, uri)</span>
           </div>
         </div>
 
         <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">Тип 2 · Handshake / NDA</span>
+              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">Type 2 · Handshake / NDA</span>
               <span class="text-xs font-mono text-indigo-300">EIP-4361 Gate</span>
             </div>
-            <h3 class="text-lg font-bold text-white">2. Взаимное доверие / NDA</h3>
+            <h3 class="text-lg font-bold text-white">2. Mutual Trust / NDA</h3>
             <p class="text-xs text-slate-300 leading-relaxed">
-              Mutual Attestation Handshake (хэши доменов). Двусторонняя ончейн-фиксация партнерства, открывающая SIWE-доступ к закрытым промптам и оптовым прайсам.
+              Mutual Attestation Handshake (domain hashes). Bilateral onchain partnership attestation unlocking SIWE access to private prompts and wholesale price lists.
             </p>
           </div>
           <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Функция: <span class="text-indigo-300">proposeOrAcceptHandshake(partner)</span>
+            Function: <span class="text-indigo-300">proposeOrAcceptHandshake(partner)</span>
           </div>
         </div>
 
         <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4 border-cyan-500/40">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Тип 3 · Гибрид</span>
+              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Type 3 · Hybrid Trade</span>
               <span class="text-xs font-mono text-cyan-300">Escrow / Net-30</span>
             </div>
-            <h3 class="text-lg font-bold text-white">3. Купля-продажа (Гибрид)</h3>
+            <h3 class="text-lg font-bold text-white">3. Sale & Purchase (Hybrid)</h3>
             <p class="text-xs text-slate-300 leading-relaxed">
-              <code class="text-emerald-300">TrustMarketsTrade.sol</code>: режим <strong>С Эскроу</strong> (100% заморозка USDC до приемки) или <strong>Без Эскроу</strong> (реестр коммерческих инвойсов Net-30/60 и SEPA).
+              <code class="text-emerald-300">TrustMarketsTrade.sol</code>: supports <strong>With Escrow</strong> (100% USDC locked until acceptance) or <strong>Without Escrow</strong> (Net-30/60 commercial invoice registry & SEPA).
             </p>
           </div>
           <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Функция: <span class="text-emerald-300">createDeal(..., isEscrowEnabled)</span>
+            Function: <span class="text-emerald-300">createDeal(..., isEscrowEnabled)</span>
           </div>
         </div>
 
         <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">Тип 4 · Аудит</span>
+              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">Type 4 · Audit</span>
               <span class="text-xs font-mono text-amber-300">Max Multiplier</span>
             </div>
-            <h3 class="text-lg font-bold text-white">4. Валидация и аудит</h3>
+            <h3 class="text-lg font-bold text-white">4. Validation & Audit</h3>
             <p class="text-xs text-slate-300 leading-relaxed">
-              Независимая проверка качества партии товара или склада сертифицированным узлом-аудитором с Web3-подписью акта инспекции.
+              Independent cargo batch or warehouse quality inspection signed onchain by a certified auditor node, granting the highest Trust Score multiplier.
             </p>
           </div>
           <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Функция: <span class="text-amber-300">submitAuditorAttestation(id, hash)</span>
+            Function: <span class="text-amber-300">submitAuditorAttestation(id, hash)</span>
           </div>
         </div>
 
         <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">Тип 5 · Факторинг</span>
-              <span class="text-xs font-mono text-purple-300">USDC Pool</span>
+              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">Type 5 · Credit Pool</span>
+              <span class="text-xs font-mono text-purple-300">USDC Factoring</span>
             </div>
-            <h3 class="text-lg font-bold text-white">5. Кредитование сделок</h3>
+            <h3 class="text-lg font-bold text-white">5. Deal-Collateralized Credit</h3>
             <p class="text-xs text-slate-300 leading-relaxed">
-              Предоставление заёмных средств в USDC напрямую в эскроу смарт-контракта под залог прав требования по основной торговой сделке.
+              Provides borrowed USDC liquidity directly into the smart contract escrow, collateralized by the underlying B2B trade receivable.
             </p>
           </div>
           <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Функция: <span class="text-purple-300">fundDealWithCredit(dealId)</span>
+            Function: <span class="text-purple-300">fundDealWithCredit(dealId)</span>
           </div>
         </div>
 
         <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30">Тип 6 · Хеджирование</span>
+              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30">Type 6 · Hedging</span>
               <span class="text-xs font-mono text-rose-300">Parametric USDC</span>
             </div>
-            <h3 class="text-lg font-bold text-white">6. Страхование сделок</h3>
+            <h3 class="text-lg font-bold text-white">6. Trade & Cargo Insurance</h3>
             <p class="text-xs text-slate-300 leading-relaxed">
-              Страховое покрытие в USDC: автоматическое хеджирование логистических рисков и выплата при ончейн-фиксации сбоя поставки.
+              Onchain insurance coverage in USDC: automated risk hedging and instant payout upon verified logistics disruption.
             </p>
           </div>
           <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Функция: <span class="text-rose-300">attachInsurance(dealId, coverage)</span>
+            Function: <span class="text-rose-300">attachInsurance(dealId, coverage)</span>
           </div>
         </div>
       </div>
@@ -469,8 +466,8 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
       <div class="glass-card rounded-2xl p-6 border border-emerald-500/30 space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
           <div>
-            <span class="text-xs font-mono text-emerald-400 uppercase">Раздел 5.1 · Детализация TrustMarketsTrade.sol</span>
-            <h3 class="text-xl font-bold text-white">Конструктор гибридной B2B-сделки (С Эскроу / Без Эскроу)</h3>
+            <span class="text-xs font-mono text-emerald-400 uppercase">Section 5.1 · TrustMarketsTrade.sol Deep Dive</span>
+            <h3 class="text-xl font-bold text-white">Hybrid B2B Deal Configurator (With Escrow / Without Escrow)</h3>
           </div>
           <div class="inline-flex rounded-xl bg-slate-950 p-1 border border-slate-800">
             <button id="modeEscrowBtn" onclick="setTradeMode(true)" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-emerald-400 text-slate-950 transition">
@@ -485,23 +482,23 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
         <div class="grid lg:grid-cols-12 gap-6 items-center">
           <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
             <div>
-              <label class="text-xs text-slate-400">Кошелек продавца (Base)</label>
+              <label class="text-xs text-slate-400">Seller Wallet (Base L2)</label>
               <input id="dealSeller" type="text" value="0x8B3f92c1A4e05D6E7f1239a00B4c89E12c941B11" oninput="renderDealCalldata()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
             </div>
             <div>
-              <label class="text-xs text-slate-400">Независимый аудитор (Тип 4)</label>
+              <label class="text-xs text-slate-400">Independent Auditor (Type 4)</label>
               <input id="dealAuditor" type="text" value="0x55A1b8E9c40F22D190aBcE34901f2D19C77E0042" oninput="renderDealCalldata()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
             </div>
             <div>
-              <label class="text-xs text-slate-400">Сумма контракта (USDC)</label>
+              <label class="text-xs text-slate-400">Contract Amount (USDC)</label>
               <input id="dealAmount" type="number" value="46000" oninput="renderDealCalldata()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
             </div>
             <div>
-              <label class="text-xs text-slate-400">Срок закрытия / Инвойс (дней)</label>
+              <label class="text-xs text-slate-400">Settlement / Invoice Maturity (Days)</label>
               <select id="dealNetDays" onchange="renderDealCalldata()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono">
-                <option value="14">14 дней (Эскроу спот-поставка)</option>
-                <option value="30" selected>Net-30 (30 дней)</option>
-                <option value="60">Net-60 (60 дней)</option>
+                <option value="14">14 Days (Spot Escrow Delivery)</option>
+                <option value="30" selected>Net-30 (30 Days Commercial Invoice)</option>
+                <option value="60">Net-60 (60 Days Commercial Invoice)</option>
               </select>
             </div>
           </div>
@@ -520,10 +517,10 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
   <section id="trust-score" class="py-16 border-b border-slate-800/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
       <div>
-        <span class="text-xs font-mono uppercase text-cyan-400">Раздел 6 · Key Components of the Trust Score & Web of Trust</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Интерактивный калькулятор ончейн-репутации (Trust Score)</h2>
+        <span class="text-xs font-mono uppercase text-cyan-400">Section 6 · Key Components of the Trust Score & Web of Trust</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Interactive Onchain Reputation Calculator (Trust Score)</h2>
         <p class="text-sm text-slate-400 mt-1">
-          Динамический цифровой рейтинг кошелька формируется из 5 фундаментальных ончейн-компонентов и защищён от Sybil-накруток.
+          A dynamic wallet reputation index derived from 5 verifiable economic graph components and immune to Sybil manipulation.
         </p>
       </div>
 
@@ -531,44 +528,44 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
         <div class="lg:col-span-7 glass-card rounded-2xl p-6 space-y-5">
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs">
-              <span class="font-semibold text-white">1. Граф многоточечных связей (Multi-Party Connection Graph)</span>
-              <span id="tsVal1" class="font-mono text-cyan-400">14 контрагентов</span>
+              <span class="font-semibold text-white">1. Multi-Party Connection Graph</span>
+              <span id="tsVal1" class="font-mono text-cyan-400">14 counterparties</span>
             </div>
             <input id="tsInput1" type="range" min="0" max="50" value="14" oninput="recalcTrustScore()" class="w-full accent-cyan-400" />
-            <p class="text-[11px] text-slate-400">Количество независимых верифицированных партнеров (купля-продажа, логистика, NDA-рукопожатия).</p>
+            <p class="text-[11px] text-slate-400">Diversity and count of active verified smart contracts (trade, supply, logistics, NDA handshakes).</p>
           </div>
 
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs">
-              <span class="font-semibold text-white">2. Весовой коэффициент контрагентов (Graph Weight & Lineage)</span>
+              <span class="font-semibold text-white">2. Counterparty Graph Weight & Lineage</span>
               <span id="tsVal2" class="font-mono text-cyan-400">78 / 100</span>
             </div>
             <input id="tsInput2" type="range" min="1" max="100" value="78" oninput="recalcTrustScore()" class="w-full accent-cyan-400" />
-            <p class="text-[11px] text-slate-400">Средний Trust Score и длительность ончейн-истории партнеров в сети Base (сделки с пустыми ботами дают ~0).</p>
+            <p class="text-[11px] text-slate-400">Average Trust Score and Base onchain history of trading partners (zero-history bots transfer near-zero weight).</p>
           </div>
 
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs">
-              <span class="font-semibold text-white">3. Подтверждение независимыми валидаторами (Validator Multiplier)</span>
-              <span id="tsVal3" class="font-mono text-amber-300">5 аудитов</span>
+              <span class="font-semibold text-white">3. Independent Validator Verification Multiplier</span>
+              <span id="tsVal3" class="font-mono text-amber-300">5 audits</span>
             </div>
             <input id="tsInput3" type="range" min="0" max="20" value="5" oninput="recalcTrustScore()" class="w-full accent-amber-400" />
-            <p class="text-[11px] text-slate-400">Сделки с электронной Web3-подписью сертифицированного узла-аудитора (инспекция качества / склада).</p>
+            <p class="text-[11px] text-slate-400">Deals verified by a certified auditor node (cargo quality or warehouse inspection signed via Web3).</p>
           </div>
 
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs">
-              <span class="font-semibold text-white">4. Фактическое закрытие обязательств (Escrow & Invoice Settlement)</span>
-              <span id="tsVal4" class="font-mono text-emerald-400">96% без споров</span>
+              <span class="font-semibold text-white">4. Escrow & Commercial Invoice Settlement Rate</span>
+              <span id="tsVal4" class="font-mono text-emerald-400">96% dispute-free</span>
             </div>
             <input id="tsInput4" type="range" min="50" max="100" value="96" oninput="recalcTrustScore()" class="w-full accent-emerald-400" />
-            <p class="text-[11px] text-slate-400">Разблокировка USDC без споров (Disputed) и своевременное погашение инвойсов Net-30 / Net-60.</p>
+            <p class="text-[11px] text-slate-400">Dispute-free USDC escrow releases and on-time Net-30 / Net-60 commercial invoice settlements.</p>
           </div>
 
           <div class="flex items-center justify-between pt-2 border-t border-slate-800">
             <div>
-              <div class="text-xs font-semibold text-white">5. Экономическая антиспам-защита ($1 Anti-Spam Cost + DNS TXT)</div>
-              <div class="text-[11px] text-slate-400">Отсекает бот-сети без подтверждённого домена и комиссии регистрации в Base.</div>
+              <div class="text-xs font-semibold text-white">5. Economic Anti-Spam Protection ($1 Anti-Spam Cost + DNS TXT)</div>
+              <div class="text-[11px] text-slate-400">Filters out unverified Sybil botnets lacking Base registration fee and DNS TXT binding.</div>
             </div>
             <input id="tsInput5" type="checkbox" checked onchange="recalcTrustScore()" class="w-5 h-5 accent-emerald-400 rounded" />
           </div>
@@ -576,8 +573,8 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
 
         <div class="lg:col-span-5 glass-card rounded-2xl p-6 space-y-5 border border-cyan-500/30">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono uppercase text-slate-400">Итоговый ончейн-рейтинг</span>
-            <span id="tsTierBadge" class="px-2.5 py-0.5 rounded text-xs font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Tier AAA · Verified</span>
+            <span class="text-xs font-mono uppercase text-slate-400">Computed Onchain Rating</span>
+            <span id="tsTierBadge" class="px-2.5 py-0.5 rounded text-xs font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Tier AAA · Prime Partner</span>
           </div>
 
           <div class="flex items-baseline gap-3">
@@ -586,16 +583,16 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-            <div class="text-xs text-slate-400">Буст в векторной выдаче ИИ-агентов (при α = 0.35):</div>
-            <div id="tsSearchBoost" class="text-xl font-bold font-mono text-cyan-300">×2.59 к Cosine Similarity</div>
+            <div class="text-xs text-slate-400">AI Vector Search Ranking Multiplier (at α = 0.35):</div>
+            <div id="tsSearchBoost" class="text-xl font-bold font-mono text-cyan-300">×2.59 Cosine Similarity Boost</div>
             <div class="text-[11px] font-mono text-slate-400">
               1 + 0.35 × ln(1 + <span id="tsFormulaScore">94.8</span>)
             </div>
           </div>
 
           <div class="text-xs text-slate-300 space-y-1.5 leading-relaxed">
-            <div>• <strong>Защита от Sybil-атак:</strong> 1000 пустых кошельков стоят $1000 комиссии и имеют 0 линейного веса графа.</div>
-            <div>• <strong>Переносимость:</strong> Рейтинг на 100% сохраняется при смене корпоративного домена через <code class="text-cyan-300">setProfile()</code>.</div>
+            <div>• <strong>Sybil Resistance:</strong> Spawning 1,000 empty bot wallets costs $1,000 in non-refundable Base fees and yields zero lineage weight.</div>
+            <div>• <strong>Domain Portability:</strong> 100% of reputation remains bound to the wallet when migrating domains via <code class="text-cyan-300">setProfile()</code>.</div>
           </div>
         </div>
       </div>
@@ -606,46 +603,46 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
   <section id="jsonld-builder" class="py-16 border-b border-slate-800/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-10">
       <div>
-        <span class="text-xs font-mono uppercase text-emerald-400">Разделы 4 и 8 · Семантический стандарт JSON-LD и Zero-Cost Client AI</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Генератор корпоративной B2B-визитки и запуск ИИ-агентов в 1 клик</h2>
+        <span class="text-xs font-mono uppercase text-emerald-400">Sections 4 & 8 · JSON-LD Semantic Standard & Zero-Cost Client AI</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">B2B JSON-LD Business Card Generator & 1-Click AI Agent Launcher</h2>
         <p class="text-sm text-slate-400 mt-1">
-          Создайте валидный профиль <code class="text-cyan-300">trustmarkets-schema.json</code> и запустите автономного B2B-агента в ChatGPT, Claude или Gemini без серверных затрат на LLM API.
+          Generate a compliant <code class="text-cyan-300">trustmarkets-schema.json</code> profile and launch your personal B2B AI agent in ChatGPT, Claude, or Gemini with zero server-side LLM API costs.
         </p>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-6">
         <!-- Builder Form -->
         <div class="lg:col-span-5 glass-card rounded-2xl p-6 space-y-4">
-          <h3 class="text-base font-bold text-white">Параметры компании (Schema.org Organization)</h3>
+          <h3 class="text-base font-bold text-white">Company Parameters (Schema.org Organization)</h3>
 
           <div>
-            <label class="text-xs text-slate-400">Название компании</label>
+            <label class="text-xs text-slate-400">Organization Name</label>
             <input id="orgName" type="text" value="Nordic Agro Commodities BV" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
           </div>
 
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="text-xs text-slate-400">Web2 Домен</label>
+              <label class="text-xs text-slate-400">Web2 Domain</label>
               <input id="orgDomain" type="text" value="nordic-agro.eu" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
             </div>
             <div>
-              <label class="text-xs text-slate-400">Base L2 Кошелек (0x...)</label>
+              <label class="text-xs text-slate-400">Base L2 Wallet (0x...)</label>
               <input id="orgWallet" type="text" value="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
             </div>
           </div>
 
           <div>
-            <label class="text-xs text-slate-400">Публичное предложение (makesOffer — Товар, Цена в EUR/USDC, Incoterms)</label>
+            <label class="text-xs text-slate-400">Public Offer (makesOffer — Product, EUR/USDC Price, Incoterms)</label>
             <input id="orgOffer" type="text" value="Refined Sunflower Oil ISO 22000 — 920 USDC/MT CIF Rotterdam" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
           </div>
 
           <div>
-            <label class="text-xs text-slate-400">Закупочная потребность (potentialAction — BuyAction)</label>
+            <label class="text-xs text-slate-400">Procurement Demand (potentialAction — BuyAction)</label>
             <input id="orgNeed" type="text" value="Food-grade PET bottles & 40HC flexitank containers (100 MT/month)" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
           </div>
 
           <div>
-            <label class="text-xs text-slate-400">Логистический партнер (logistics на Base)</label>
+            <label class="text-xs text-slate-400">Logistics Partner (logistics on Base)</label>
             <input id="orgLogistics" type="text" value="EuroTransit Multimodal AG (0x9A8f...1A09) — Maritime & Rail 40HC" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
           </div>
         </div>
@@ -654,9 +651,9 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
         <div id="ai-agents" class="lg:col-span-7 glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
           <div class="space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-mono text-cyan-400">Сгенерированный JSON-LD (trustmarkets-schema.json)</span>
+              <span class="text-xs font-mono text-cyan-400">Generated JSON-LD (trustmarkets-schema.json)</span>
               <button onclick="copyJsonLd()" class="text-xs font-mono px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300">
-                Копировать JSON-LD
+                Copy JSON-LD
               </button>
             </div>
             <pre id="jsonLdPreview" class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-[11px] font-mono text-slate-200 max-h-64 overflow-y-auto code-scroll"></pre>
@@ -665,23 +662,23 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
           <div class="pt-3 border-t border-slate-800 space-y-3">
             <div class="flex items-center justify-between">
               <div>
-                <h4 class="text-sm font-bold text-white">Запуск клиентского B2B ИИ-агента (Zero-Cost Client AI)</h4>
-                <p class="text-xs text-slate-400">Промпт автоматически копируется в буфер обмена и передаётся по Pre-filled ссылке:</p>
+                <h4 class="text-sm font-bold text-white">1-Click Client B2B AI Agent Launch (Zero-Cost Client AI)</h4>
+                <p class="text-xs text-slate-400">Automatically copies the structured B2B agent instructions and opens your preferred LLM:</p>
               </div>
               <button onclick="copyAgentPrompt()" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30">
-                Копировать промпт агента
+                Copy Agent Prompt
               </button>
             </div>
 
             <div class="grid sm:grid-cols-3 gap-3">
               <a id="launchChatGpt" href="#" target="_blank" rel="noopener" onclick="copyAgentPrompt(true)" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-xs bg-emerald-400 text-slate-950 hover:bg-emerald-300 transition">
-                <span>Запустить в ChatGPT ↗</span>
+                <span>Launch in ChatGPT ↗</span>
               </a>
               <a id="launchClaude" href="#" target="_blank" rel="noopener" onclick="copyAgentPrompt(true)" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-xs bg-amber-400 text-slate-950 hover:bg-amber-300 transition">
-                <span>Запустить в Claude ↗</span>
+                <span>Launch in Claude ↗</span>
               </a>
               <a id="launchGemini" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="copyAgentPrompt(true)" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-xs bg-sky-400 text-slate-950 hover:bg-sky-300 transition">
-                <span>Запустить в Gemini (буфер) ↗</span>
+                <span>Launch in Gemini (Clipboard) ↗</span>
               </a>
             </div>
             <div id="copyStatusToast" class="hidden text-xs font-mono text-emerald-400"></div>
@@ -695,39 +692,39 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
   <section id="security" class="py-16 border-b border-slate-800/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
       <div>
-        <span class="text-xs font-mono uppercase text-cyan-400">Раздел 9 · Анализ векторов атак и механизмы безопасности</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Комплексная защита от Web2 и Web3 векторов атак</h2>
+        <span class="text-xs font-mono uppercase text-cyan-400">Section 9 · Attack Vector Analysis & Security Mechanisms</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Defense-in-Depth Against Web2 & Web3 Attack Vectors</h2>
       </div>
 
       <div class="overflow-x-auto glass-card rounded-2xl">
         <table class="w-full text-left border-collapse text-xs sm:text-sm">
           <thead>
             <tr class="border-b border-slate-800 bg-slate-950/60 text-slate-300 font-mono text-xs uppercase">
-              <th class="py-3.5 px-5">Вектор атаки</th>
-              <th class="py-3.5 px-5">Суть угрозы</th>
-              <th class="py-3.5 px-5">Механизм защиты в Trust Net v10.0</th>
+              <th class="py-3.5 px-5">Attack Vector</th>
+              <th class="py-3.5 px-5">Threat Description</th>
+              <th class="py-3.5 px-5">Trust Net v10.0 Defense Mechanism</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800/70 text-slate-300">
             <tr>
-              <td class="py-4 px-5 font-semibold text-white font-mono">DNS Hijacking / Спуфинг</td>
-              <td class="py-4 px-5">Указание чужого кошелька в TXT-записи вредоносного сайта или перехват домена у регистратора.</td>
-              <td class="py-4 px-5 text-emerald-300">Транзакция <code class="text-cyan-300">setProfile()</code> требует криптографической подписи приватным ключом самого кошелька <code class="text-cyan-300">0x...</code>. При захвате домена злоумышленник получает нулевую репутацию, а владелец кошелька переносит свой Trust Score на новый домен.</td>
+              <td class="py-4 px-5 font-semibold text-white font-mono">DNS Hijacking / Spoofing</td>
+              <td class="py-4 px-5">Publishing another company's wallet in a malicious domain's TXT record or seizing an existing domain at the registrar.</td>
+              <td class="py-4 px-5 text-emerald-300">Calling <code class="text-cyan-300">setProfile()</code> requires a cryptographic signature from the private key of the <code class="text-cyan-300">0x...</code> wallet. If a domain is hijacked, the attacker gets an empty profile with zero reputation, while the legitimate owner re-binds a new domain and keeps 100% of their Trust Score.</td>
             </tr>
             <tr>
               <td class="py-4 px-5 font-semibold text-white font-mono">SIWE Replay Attacks</td>
-              <td class="py-4 px-5">Перехват подписи EIP-4361 для несанкционированного доступа к приватным промптам и прайсам.</td>
-              <td class="py-4 px-5 text-emerald-300">Одноразовые криптографические <code class="text-cyan-300">nonce</code>, жёсткая привязка к <code class="text-cyan-300">domain</code>, <code class="text-cyan-300">chainId: 8453</code> и <code class="text-cyan-300">expirationTime</code> в теле подписи SIWE.</td>
+              <td class="py-4 px-5">Intercepting an EIP-4361 signature to gain unauthorized access to private prompts and wholesale price lists.</td>
+              <td class="py-4 px-5 text-emerald-300">Single-use cryptographic <code class="text-cyan-300">nonce</code>, strict binding to <code class="text-cyan-300">domain</code>, <code class="text-cyan-300">chainId: 8453</code>, and short-lived <code class="text-cyan-300">expirationTime</code> inside the signed SIWE payload.</td>
             </tr>
             <tr>
-              <td class="py-4 px-5 font-semibold text-white font-mono">Sybil / Накрутка рейтинга</td>
-              <td class="py-4 px-5">Создание тысяч бот-кошельков для искусственной накрутки Trust Score.</td>
-              <td class="py-4 px-5 text-emerald-300">Антиспам-комиссия $1 за регистрацию профиля в Base + взвешивание графа репутации по ончейн-истории контрагентов и подписям сертифицированных аудиторов.</td>
+              <td class="py-4 px-5 font-semibold text-white font-mono">Sybil / Rating Manipulation</td>
+              <td class="py-4 px-5">Creating thousands of bot wallets to artificially inflate Trust Score.</td>
+              <td class="py-4 px-5 text-emerald-300">Fixed $1 anti-spam fee per profile on Base + lineage graph weighting based on counterparty onchain history and certified independent auditor signatures.</td>
             </tr>
             <tr>
-              <td class="py-4 px-5 font-semibold text-white font-mono">Утечка коммерческой тайны</td>
-              <td class="py-4 px-5">Публичный парсинг индивидуальных цен, скидок и условий поставки конкурентами.</td>
-              <td class="py-4 px-5 text-emerald-300">Асимметричное шифрование <code class="text-cyan-300">X25519</code> для режима Confidential и бесплатная RPC-проверка взаимного ончейн-рукопожатия (<code class="text-cyan-300">hasActiveHandshake</code>) перед отдачей прайс-листа.</td>
+              <td class="py-4 px-5 font-semibold text-white font-mono">Trade Secret Leakage</td>
+              <td class="py-4 px-5">Competitors scraping bespoke pricing, volume discounts, and supply terms.</td>
+              <td class="py-4 px-5 text-emerald-300">Asymmetric <code class="text-cyan-300">X25519</code> encryption for Confidential mode combined with a free Base RPC check for an active mutual onchain handshake (<code class="text-cyan-300">hasActiveHandshake</code>) prior to serving private data.</td>
             </tr>
           </tbody>
         </table>
@@ -829,7 +826,7 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
     ];
 
     function computeCosineSim(query, docText) {
-      const qTokens = query.toLowerCase().split(/[^a-zа-я0-9-]+/).filter(Boolean);
+      const qTokens = query.toLowerCase().split(/[^a-z0-9-]+/).filter(Boolean);
       if (!qTokens.length) return 0.5;
       const dText = docText.toLowerCase();
       let hits = 0;
@@ -883,8 +880,8 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
               <span>Boost: <strong class="text-emerald-400">×${item.boost.toFixed(2)}</strong></span>
             </div>
             <div class="flex justify-between">
-              <span>Аудитов: ${item.audits}</span>
-              <span>Исполнение: ${item.settlementRate}</span>
+              <span>Audits: ${item.audits}</span>
+              <span>Settlement: ${item.settlementRate}</span>
             </div>
             <div class="truncate text-slate-500">Base: ${item.wallet}</div>
           </div>
@@ -896,7 +893,7 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
       const domain = document.getElementById('dnsDomainInput').value.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
       const box = document.getElementById('dnsResultBox');
       if (!domain) return;
-      box.innerHTML = `<span class="text-cyan-300">Выполняется DoH-запрос к Cloudflare для <strong>${domain}</strong>...</span>`;
+      box.innerHTML = `<span class="text-cyan-300">Querying Cloudflare DoH for <strong>${domain}</strong>...</span>`;
       try {
         const res = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=TXT`, {
           headers: { 'accept': 'application/dns-json' }
@@ -908,20 +905,20 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
         if (evmRecord) {
           const wallet = evmRecord.split('=')[1];
           box.innerHTML = `
-            <div class="text-emerald-400 font-bold">✓ Домен ${domain} успешно верифицирован через Cloudflare DoH!</div>
-            <div>Найдена запись: <code class="text-white">${evmRecord}</code></div>
-            <div>Привязанный кошелек Base L2: <code class="text-cyan-300">${wallet}</code></div>
-            <div class="text-slate-400 pt-1">Транзакция <code>setProfile("${domain}", ...)</code> разрешена к отправке.</div>
+            <div class="text-emerald-400 font-bold">✓ Domain ${domain} verified via Cloudflare DoH!</div>
+            <div>Found TXT Record: <code class="text-white">${evmRecord}</code></div>
+            <div>Bound Base L2 Wallet: <code class="text-cyan-300">${wallet}</code></div>
+            <div class="text-slate-400 pt-1">Onchain transaction <code>setProfile("${domain}", ...)</code> is ready to be broadcast.</div>
           `;
         } else {
           box.innerHTML = `
-            <div class="text-amber-300 font-bold">ℹ Домен ${domain} доступен в DNS (Status: ${data.Status}), но запись evm-contract=0x... пока не найдена.</div>
-            <div>Текущие TXT-записи (${answers.length}): <code class="text-slate-400">${answers.length ? answers.join(' | ') : 'нет TXT-записей'}</code></div>
-            <div class="text-emerald-300 pt-1">Добавьте в Cloudflare DNS TXT-запись: <code>evm-contract=0xВашКошелекBase</code> для привязки профиля.</div>
+            <div class="text-amber-300 font-bold">ℹ Domain ${domain} resolved in DNS (Status: ${data.Status}), but no evm-contract=0x... TXT record was found yet.</div>
+            <div>Current TXT records (${answers.length}): <code class="text-slate-400">${answers.length ? answers.join(' | ') : 'no TXT records'}</code></div>
+            <div class="text-emerald-300 pt-1">Add a DNS TXT record on your domain: <code>evm-contract=0xYourBaseWallet</code> to bind your profile.</div>
           `;
         }
       } catch (err) {
-        box.innerHTML = `<span class="text-rose-400">Ошибка запроса DoH: ${err.message}</span>`;
+        box.innerHTML = `<span class="text-rose-400">DoH query error: ${err.message}</span>`;
       }
     }
 
@@ -956,9 +953,9 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
             params: [msg, signer]
           });
           out.innerHTML = `
-            <div class="font-bold text-emerald-300">✓ Подпись EIP-4361 (SIWE) получена от кошелька ${signer}</div>
+            <div class="font-bold text-emerald-300">✓ EIP-4361 (SIWE) signature received from ${signer}</div>
             <div class="truncate">Signature: ${sig}</div>
-            <div>RPC-проверка <code>hasActiveHandshake("${signer}", "${domain}")</code> → Доступ к X25519 прайс-листу открыт.</div>
+            <div>Base RPC check <code>hasActiveHandshake("${signer}", "${domain}")</code> → X25519 confidential price list unlocked.</div>
           `;
           return;
         } catch (err) {
@@ -968,9 +965,9 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
 
       const mockSig = '0x9f8e7d6c5b4a392817263544536271809a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d' + currentSiweNonce.slice(0, 8) + '1b';
       out.innerHTML = `
-        <div class="font-bold text-emerald-300">✓ Демо-подпись EIP-4361 сформирована (Nonce: ${currentSiweNonce})</div>
+        <div class="font-bold text-emerald-300">✓ Demo EIP-4361 signature generated (Nonce: ${currentSiweNonce})</div>
         <div class="truncate">Signature: ${mockSig}</div>
-        <div>Проверка <code>TrustMarketsRegistry.hasActiveHandshake()</code> на Base (Chain ID 8453): <strong>ACTIVE</strong> · Приватный JSON-LD расшифрован (X25519).</div>
+        <div>Base RPC check <code>TrustMarketsRegistry.hasActiveHandshake()</code> (Chain ID 8453): <strong>ACTIVE</strong> · Confidential JSON-LD decrypted (X25519).</div>
       `;
     }
 
@@ -1002,13 +999,13 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
       const box = document.getElementById('dealCalldataBox');
 
       if (currentEscrowMode) {
-        badge.textContent = 'Режим С ЭСКРОУ (isEscrowEnabled = true)';
+        badge.textContent = 'WITH ESCROW MODE (isEscrowEnabled = true)';
         badge.className = 'text-xs font-mono font-semibold text-emerald-400';
-        desc.textContent = 'Покупатель блокирует 100% средств в USDC на смарт-контракте Base. Разморозка продавцу происходит только после отгрузки и подтверждения приёмки или Web3-подписи независимого аудитора.';
+        desc.textContent = 'Buyer locks 100% of USDC in the Base smart contract. Funds are released to the seller only upon confirmed shipment and delivery acceptance or an independent auditor Web3 attestation.';
       } else {
-        badge.textContent = 'Режим БЕЗ ЭСКРОУ (isEscrowEnabled = false)';
+        badge.textContent = 'WITHOUT ESCROW MODE (isEscrowEnabled = false)';
         badge.className = 'text-xs font-mono font-semibold text-cyan-400';
-        desc.textContent = 'Стороны фиксируют сделку без заморозки ликвидности (оплата SEPA / постоплата Net-30/60). Контракт служит неизменяемым реестром коммерческих инвойсов для расчёта Trust Score.';
+        desc.textContent = 'Counterparties sign the agreement without locking liquidity (settled via SEPA wire or Net-30/60 post-payment). The smart contract acts as an immutable commercial invoice registry for Trust Score calculation.';
       }
 
       box.textContent = `TrustMarketsTrade.createDeal(\n  seller: "${seller}",\n  auditor: "${auditor}",\n  amountUsdc: ${usdcUnits}, // ${amount.toLocaleString()} USDC\n  netDays: ${netDays},\n  termsHash: "0x8f4e2c...91a4",\n  isEscrowEnabled: ${currentEscrowMode}\n)`;
@@ -1021,10 +1018,10 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
       const c4 = Number(document.getElementById('tsInput4').value);
       const antiSpam = document.getElementById('tsInput5').checked;
 
-      document.getElementById('tsVal1').textContent = `${c1} контрагентов`;
+      document.getElementById('tsVal1').textContent = `${c1} counterparties`;
       document.getElementById('tsVal2').textContent = `${c2} / 100`;
-      document.getElementById('tsVal3').textContent = `${c3} аудитов`;
-      document.getElementById('tsVal4').textContent = `${c4}% без споров`;
+      document.getElementById('tsVal3').textContent = `${c3} audits`;
+      document.getElementById('tsVal4').textContent = `${c4}% dispute-free`;
 
       let raw = (Math.min(c1, 30) / 30) * 25 + (c2 / 100) * 25 + (Math.min(c3, 12) / 12) * 25 + ((c4 - 50) / 50) * 25;
       if (!antiSpam) raw = Math.min(raw * 0.08, 4.5);
@@ -1035,7 +1032,7 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
 
       document.getElementById('tsTotalScore').textContent = score;
       document.getElementById('tsFormulaScore').textContent = score;
-      document.getElementById('tsSearchBoost').textContent = `×${boost} к Cosine Similarity`;
+      document.getElementById('tsSearchBoost').textContent = `×${boost} Cosine Similarity Boost`;
 
       const badge = document.getElementById('tsTierBadge');
       if (!antiSpam) {
@@ -1094,17 +1091,17 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
       const jsonText = JSON.stringify(schemaObj, null, 2);
       document.getElementById('jsonLdPreview').textContent = jsonText;
 
-      const agentPrompt = `Ты — автономный B2B ИИ-агент экосистемы TrustMarkets.net (Trust Net v10.0 на Base L2).
-Профиль моей компании:
-- Организация: ${name} (${domain})
-- Кошелек Base L2 (TrustMarketsBaseAddress): ${wallet}
-- Наше предложение (makesOffer): ${offer}
-- Наши закупочные потребности (potentialAction): ${need}
-- Логистика (logistics): ${logistics}
+      const agentPrompt = `You are an autonomous B2B AI Agent operating on the TrustMarkets.net ecosystem (Trust Net v10.0 on Base L2).
+My Company Profile:
+- Organization: ${name} (${domain})
+- Base L2 Wallet (TrustMarketsBaseAddress): ${wallet}
+- Public Offer (makesOffer): ${offer}
+- Procurement Demand (potentialAction): ${need}
+- Logistics Partner (logistics): ${logistics}
 
-Задача:
-1. Подбери релевантных B2B-контрагентов с высоким ончейн-рейтингом по формуле Final_Rank_Score = Cosine_Similarity * (1 + 0.35 * log(1 + Trust_Score)).
-2. Проверь наличие верифицированной DNS TXT записи evm-contract=0x... и предложи оптимальный режим расчетов по смарт-контракту TrustMarketsTrade.sol (С Эскроу в USDC для новых партнеров или Без Эскроу Net-30/60 для проверенных контрагентов).`;
+Instructions:
+1. Discover and rank B2B counterparties using the Trust Net formula: Final_Rank_Score = Cosine_Similarity * (1 + 0.35 * log(1 + Trust_Score)).
+2. Verify each counterparty's DNS TXT record (evm-contract=0x...) and recommend the optimal settlement mode in TrustMarketsTrade.sol (USDC Escrow for first-time counterparties or Non-Escrow Net-30/60 commercial invoice registry for high-Trust-Score partners).`;
 
       const encoded = encodeURIComponent(agentPrompt);
       document.getElementById('launchChatGpt').href = `https://chatgpt.com/?q=${encoded}`;
@@ -1122,14 +1119,14 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
 
     function copyJsonLd() {
       navigator.clipboard.writeText(window.__currentJsonLd || '');
-      showToast('✓ JSON-LD визитка скопирована в буфер обмена!');
+      showToast('✓ JSON-LD business card copied to clipboard!');
     }
 
     function copyAgentPrompt(fromLaunch = false) {
       navigator.clipboard.writeText(window.__currentAgentPrompt || '');
       showToast(fromLaunch
-        ? '✓ Промпт B2B-агента скопирован в буфер обмена и передан в ИИ!'
-        : '✓ Промпт B2B-агента скопирован в буфер обмена!');
+        ? '✓ B2B AI Agent prompt copied to clipboard and passed to LLM!'
+        : '✓ B2B AI Agent prompt copied to clipboard!');
     }
 
     async function connectWeb3Wallet() {
@@ -1149,18 +1146,7 @@ mapping(bytes32 => address) public domainToOwner;</code></pre>
         } catch (e) {}
       }
       const demoAddr = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
-      btn.textContent = `Демо Base: ${demoAddr.slice(0, 6)}...${demoAddr.slice(-4)}`;
-    }
-
-    function toggleLang() {
-      const h1 = document.querySelector('h1');
-      if (h1.dataset.lang === 'en') {
-        h1.dataset.lang = 'ru';
-        h1.innerHTML = 'Децентрализованная бизнес-система <span class="bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">Trust Net v10.0</span>';
-      } else {
-        h1.dataset.lang = 'en';
-        h1.innerHTML = 'Decentralized B2B Trade Ecosystem <span class="bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">Trust Net v10.0</span>';
-      }
+      btn.textContent = `Demo Base: ${demoAddr.slice(0, 6)}...${demoAddr.slice(-4)}`;
     }
 
     // Initialize all interactive views on load
