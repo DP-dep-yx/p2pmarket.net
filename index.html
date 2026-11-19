@@ -959,10 +959,10 @@ button, input, select, textarea {
   gap: var(--space-sm);
 }
 
-/* Pricing & Calculator */
+/* Pricing */
 .pricing-layout {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-lg);
   align-items: start;
 }
@@ -992,10 +992,6 @@ button, input, select, textarea {
 .tier-price.sage {
   color: var(--tertiary);
 }
-.calc-grid {
-  display: grid;
-  gap: var(--space-md);
-}
 .field-group {
   display: flex;
   flex-direction: column;
@@ -1007,12 +1003,6 @@ button, input, select, textarea {
   letter-spacing: var(--label-tracking);
   text-transform: uppercase;
   color: var(--on-surface-variant);
-}
-.slider-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 140px;
-  gap: var(--space-md);
-  align-items: end;
 }
 .input-field, .select-field {
   min-height: 44px;
@@ -1037,30 +1027,6 @@ input[type="range"] {
   min-height: 44px;
   accent-color: var(--primary);
   cursor: pointer;
-}
-.calc-outputs {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-sm);
-}
-.calc-out-box {
-  background: var(--background);
-  border: var(--hairline);
-  border-radius: var(--rounded);
-  padding: var(--space-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-}
-.calc-out-val {
-  font-family: var(--font-headline);
-  font-size: 1.375rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: var(--on-surface);
-}
-.calc-out-val.positive {
-  color: var(--tertiary);
 }
 
 /* Contract Types Table */
@@ -1263,7 +1229,6 @@ input[type="range"] {
     gap: var(--space-xl);
   }
   .hero-metrics,
-  .calc-outputs,
   .kv-grid,
   .launcher-row {
     grid-template-columns: 1fr;
@@ -1514,61 +1479,6 @@ input[type="range"] {
           <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.9375rem;">
             Uses the user's own client-side models (ChatGPT, Claude, Gemini, Cursor). Access checks via Base RPC <code style="font-family: var(--font-label);">view</code> calls are free.
           </p>
-        </div>
-      </div>
-
-      <!-- Interactive Calculator -->
-      <div class="panel calc-grid" aria-label="Deal fee and savings calculator">
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-sm);">
-          <span class="data-label">Deal fee calculator</span>
-          <span id="calc-mode-chip" class="status-chip">USDC Escrow</span>
-        </div>
-
-        <div class="field-group">
-          <label for="calc-type" class="field-label">Smart contract type (6 business types + registry)</label>
-          <select id="calc-type" class="select-field" onchange="onCalcTypeChange(this.value)">
-            <option value="escrow">1. Sale with escrow (USDC on Base) — $1 + 0.1%</option>
-            <option value="invoice">2. Net-30 / SEPA invoice registry (no escrow) — $1</option>
-            <option value="nda">3. Mutual trust / partnership (NDA handshake) — $1</option>
-            <option value="validator">4. Independent product validation — $1 + 0.1%</option>
-            <option value="loan">5. Trade-backed lending — $1 + 0.1%</option>
-            <option value="insurance">6. Logistics risk insurance — $1 + 0.1%</option>
-            <option value="info">7. Informational one-way contract (domain) — $1</option>
-          </select>
-        </div>
-
-        <div class="field-group">
-          <label for="calc-amount-num" class="field-label">Deal amount (USDC / EUR)</label>
-          <div class="slider-row">
-            <input type="range" id="calc-amount-slider" min="1000" max="250000" step="500" value="25000" oninput="syncAmountFromSlider(this.value)">
-            <input type="number" id="calc-amount-num" class="input-field" min="0" max="5000000" step="100" value="25000" oninput="syncAmountFromNumber(this.value)">
-          </div>
-        </div>
-
-        <div class="field-group">
-          <label for="calc-market-num" class="field-label">Classic marketplace / broker fee (%)</label>
-          <div class="slider-row">
-            <input type="range" id="calc-market-slider" min="15" max="30" step="1" value="20" oninput="syncMarketFeeFromSlider(this.value)">
-            <input type="number" id="calc-market-num" class="input-field" min="5" max="40" step="1" value="20" oninput="syncMarketFeeFromNumber(this.value)">
-          </div>
-        </div>
-
-        <div class="calc-outputs">
-          <div class="calc-out-box">
-            <span class="data-label">Trust Markets fee</span>
-            <span id="out-tm-fee" class="calc-out-val">$26.00</span>
-            <span id="out-tm-breakdown" class="data-label" style="text-transform: none; letter-spacing: 0;">$1 + 0.1% USDC</span>
-          </div>
-          <div class="calc-out-box">
-            <span class="data-label">Classic platform</span>
-            <span id="out-market-fee" class="calc-out-val">$5,000.00</span>
-            <span id="out-market-pct" class="data-label" style="text-transform: none; letter-spacing: 0;">20% of volume</span>
-          </div>
-          <div class="calc-out-box">
-            <span class="data-label">Net savings</span>
-            <span id="out-savings" class="calc-out-val positive">$4,974.00</span>
-            <span id="out-savings-pct" class="metric-delta">99.5% savings</span>
-          </div>
         </div>
       </div>
     </div>
@@ -2138,9 +2048,6 @@ let appState = {
   roleStep: 0,
   dealPreviewMode: `escrow`,
   topology: `domain`,
-  calcType: `escrow`,
-  calcAmount: 25000,
-  calcMarketPct: 20,
   toolkitMode: `cli`,
   securityLayer: `dns`,
   codeTab: `registry`,
@@ -2450,93 +2357,6 @@ Amount: 22,080 USDC (Base Escrow) · Terms: FCA Zurich
 Action: [Sign the supply contract on Base]</pre>
     `;
   }
-}
-
-/* Calculator handlers */
-function onCalcTypeChange(val) {
-  appState.calcType = val;
-  updateCalculator();
-  persistState();
-}
-
-function syncAmountFromSlider(val) {
-  const numEl = document.getElementById('calc-amount-num');
-  if (numEl) numEl.value = val;
-  appState.calcAmount = Number(val) || 0;
-  updateCalculator();
-  persistState();
-}
-
-function syncAmountFromNumber(val) {
-  const clamped = Math.max(0, Number(val) || 0);
-  const sliderEl = document.getElementById('calc-amount-slider');
-  if (sliderEl) sliderEl.value = Math.min(250000, Math.max(1000, clamped));
-  appState.calcAmount = clamped;
-  updateCalculator();
-  persistState();
-}
-
-function syncMarketFeeFromSlider(val) {
-  const numEl = document.getElementById('calc-market-num');
-  if (numEl) numEl.value = val;
-  appState.calcMarketPct = Number(val) || 15;
-  updateCalculator();
-  persistState();
-}
-
-function syncMarketFeeFromNumber(val) {
-  const clamped = Math.min(40, Math.max(5, Number(val) || 15));
-  const sliderEl = document.getElementById('calc-market-slider');
-  if (sliderEl) sliderEl.value = Math.min(30, Math.max(15, clamped));
-  appState.calcMarketPct = clamped;
-  updateCalculator();
-  persistState();
-}
-
-function formatUsd(num) {
-  return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-
-function updateCalculator() {
-  const type = appState.calcType;
-  const amount = appState.calcAmount;
-  const marketPct = appState.calcMarketPct;
-
-  const cryptoPctApplies = (type === 'escrow' || type === 'validator' || type === 'loan' || type === 'insurance');
-  const tmFee = 1 + (cryptoPctApplies ? amount * 0.001 : 0);
-  const marketFee = amount * (marketPct / 100);
-  const savings = Math.max(0, marketFee - tmFee);
-  const savingsPct = marketFee > 0 ? ((savings / marketFee) * 100) : 0;
-
-  const chip = document.getElementById('calc-mode-chip');
-  const outTm = document.getElementById('out-tm-fee');
-  const outTmBreak = document.getElementById('out-tm-breakdown');
-  const outMarket = document.getElementById('out-market-fee');
-  const outMarketPct = document.getElementById('out-market-pct');
-  const outSavings = document.getElementById('out-savings');
-  const outSavingsPct = document.getElementById('out-savings-pct');
-
-  const chipLabels = {
-    escrow: `USDC Escrow`,
-    invoice: `Net-30 Invoice (no 0.1%)`,
-    nda: `Partnership / NDA`,
-    validator: `Deal + Validator`,
-    loan: `Trade-backed lending`,
-    insurance: `Cargo insurance`,
-    info: `Informational registry`
-  };
-
-  if (chip) chip.textContent = chipLabels[type] || `Base Contract`;
-  if (outTm) outTm.textContent = formatUsd(tmFee);
-  if (outTmBreak) {
-    outTmBreak.textContent = cryptoPctApplies
-      ? `$1 contract + ${formatUsd(amount * 0.001)} (0.1% USDC)`
-      : `Only $1 for signing on Base`;
-  }
-  if (outMarket) outMarket.textContent = formatUsd(marketFee);
-  if (outMarketPct) outMarketPct.textContent = `${marketPct}% of deal amount`;
-  if (outSavings) outSavings.textContent = formatUsd(savings);
-  if (outSavingsPct) outSavingsPct.textContent = `${savingsPct.toFixed(1)}% savings`;
 }
 
 /* MCP & CLI Toolkit */
@@ -2923,9 +2743,6 @@ function resetAppState(btn) {
     roleStep: 0,
     dealPreviewMode: `escrow`,
     topology: `domain`,
-    calcType: `escrow`,
-    calcAmount: 25000,
-    calcMarketPct: 20,
     toolkitMode: `cli`,
     securityLayer: `dns`,
     codeTab: `registry`,
@@ -2945,19 +2762,6 @@ function applyAllUI() {
   selectTopology(appState.topology);
   renderRolesSection();
 
-  const calcTypeEl = document.getElementById('calc-type');
-  const calcAmtSlider = document.getElementById('calc-amount-slider');
-  const calcAmtNum = document.getElementById('calc-amount-num');
-  const calcMktSlider = document.getElementById('calc-market-slider');
-  const calcMktNum = document.getElementById('calc-market-num');
-
-  if (calcTypeEl) calcTypeEl.value = appState.calcType;
-  if (calcAmtSlider) calcAmtSlider.value = Math.min(250000, Math.max(1000, appState.calcAmount));
-  if (calcAmtNum) calcAmtNum.value = appState.calcAmount;
-  if (calcMktSlider) calcMktSlider.value = Math.min(30, Math.max(15, appState.calcMarketPct));
-  if (calcMktNum) calcMktNum.value = appState.calcMarketPct;
-
-  updateCalculator();
   renderToolkit();
   selectSecurityLayer(appState.securityLayer);
   selectCodeTab(appState.codeTab);
