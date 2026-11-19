@@ -213,6 +213,124 @@ button, input, select, textarea {
   background-color: var(--surface-container);
 }
 
+/* Global search bar */
+.topbar-search {
+  position: relative;
+  flex: 1 1 280px;
+  max-width: 480px;
+  min-width: 220px;
+}
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--surface-container);
+  border: var(--hairline-strong);
+  border-radius: var(--rounded-full);
+  padding: var(--space-xs) var(--space-md);
+  transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+}
+.search-field:focus-within {
+  border-color: var(--primary);
+  box-shadow: var(--focus-ring);
+}
+.search-field svg {
+  width: 16px;
+  height: 16px;
+  color: var(--on-surface-variant);
+  flex: none;
+}
+.search-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+}
+.search-input::placeholder {
+  color: var(--on-surface-variant);
+}
+.search-go {
+  flex: none;
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--on-primary);
+  background: var(--primary);
+  border: none;
+  border-radius: var(--rounded-full);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+}
+.search-go:hover {
+  background: color-mix(in srgb, var(--primary) 85%, white 15%);
+}
+.search-results {
+  position: absolute;
+  top: calc(100% + var(--space-sm));
+  left: 0;
+  right: 0;
+  z-index: 60;
+  background: var(--surface-container-high);
+  border: var(--hairline-strong);
+  border-radius: var(--rounded-lg);
+  box-shadow: 0 18px 44px rgba(3, 8, 10, 0.55);
+  overflow: hidden;
+  display: none;
+}
+.search-results.open {
+  display: block;
+}
+.search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: var(--hairline);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+}
+.search-result:last-child {
+  border-bottom: none;
+}
+.search-result:hover,
+.search-result:focus-visible {
+  background: var(--cyan-tint);
+  outline: none;
+}
+.sr-kicker {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--primary);
+}
+.sr-snippet {
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+.search-empty {
+  padding: var(--space-md);
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+}
+.search-flash {
+  animation: searchFlash 1.8s var(--ease-out);
+}
+@keyframes searchFlash {
+  0% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 60%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
 /* Typography helpers */
 .data-label {
   font-family: var(--font-label);
@@ -975,6 +1093,16 @@ input[type="range"] {
     <div class="brand-group">
       <a href="#hero" class="brand-name">trustmarkets.net</a>
       <span class="net-tag">Base L2 · EVM</span>
+    </div>
+    <div class="topbar-search" role="search">
+      <div class="search-field">
+        <i data-lucide="search" aria-hidden="true"></i>
+        <input id="site-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false"
+               placeholder="Type a product, company, crypto wallet, or smart contract…"
+               aria-label="Search the platform: products, companies, crypto wallets, smart contracts" />
+        <button type="button" class="search-go" onclick="runSiteSearchFromInput()">Search</button>
+      </div>
+      <div id="search-results" class="search-results" aria-live="polite"></div>
     </div>
     <nav class="nav-links" aria-label="Platform sections">
       <a href="#roles" class="nav-link">For Buyers &amp; Sellers</a>
@@ -2649,6 +2777,139 @@ function initApp() {
     window.lucide.createIcons();
   }
 }
+
+/* Global site search (products, companies, crypto wallets, smart contracts) */
+const SITE_SEARCH_SECTIONS = ['hero', 'roles', 'pricing', 'mcp-toolkit', 'security', 'register-sandbox'];
+const SEARCH_SECTION_LABELS = {
+  'hero': 'Overview',
+  'roles': 'Buyers & Sellers',
+  'pricing': 'Pricing & Contracts',
+  'mcp-toolkit': 'MCP & CLI Toolkit',
+  'security': 'Security & Smart Contracts',
+  'register-sandbox': '$1 Registration Sandbox'
+};
+
+function escapeSearchHtml(str) {
+  return String(str).replace(/[&<>"']/g, function(c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+function collectSearchTargets() {
+  return SITE_SEARCH_SECTIONS.map(function(id) {
+    const sec = document.getElementById(id);
+    if (!sec) return null;
+    const heading = sec.querySelector('h1, h2');
+    const text = (sec.textContent || '').replace(/\s+/g, ' ').trim();
+    return {
+      id: id,
+      label: SEARCH_SECTION_LABELS[id] || id,
+      heading: heading ? heading.textContent.replace(/\s+/g, ' ').trim() : id,
+      text: text,
+      lower: text.toLowerCase()
+    };
+  }).filter(Boolean);
+}
+
+function performSiteSearch(rawQuery) {
+  const q = String(rawQuery || '').trim().toLowerCase();
+  const box = document.getElementById('search-results');
+  if (!box) return [];
+  if (!q) {
+    box.classList.remove('open');
+    box.innerHTML = '';
+    return [];
+  }
+  const results = [];
+  if (/^0x[0-9a-f]{40}$/.test(q)) {
+    results.push({
+      type: 'wallet',
+      target: 'register-sandbox',
+      kicker: 'Crypto wallet detected',
+      snippet: 'Open this address in the $1 registration sandbox and bind it to a domain via a DNS TXT record.',
+      wallet: q
+    });
+  }
+  collectSearchTargets().forEach(function(t) {
+    const idx = t.lower.indexOf(q);
+    if (idx === -1) return;
+    const start = Math.max(0, idx - 42);
+    const snippet = (start > 0 ? '…' : '') + t.text.slice(start, idx + q.length + 72) + '…';
+    results.push({ type: 'section', target: t.id, kicker: t.label, snippet: snippet });
+  });
+  box.innerHTML = results.length
+    ? results.map(function(r, i) {
+        return '<button type="button" class="search-result" data-idx="' + i + '">' +
+          '<span class="sr-kicker">' + escapeSearchHtml(r.kicker) + '</span>' +
+          '<span class="sr-snippet">' + escapeSearchHtml(r.snippet) + '</span>' +
+        '</button>';
+      }).join('')
+    : '<div class="search-empty">No matches on this page. Try a product, company, crypto wallet, or smart contract name.</div>';
+  box.classList.add('open');
+  Array.prototype.forEach.call(box.querySelectorAll('.search-result'), function(btn) {
+    btn.addEventListener('click', function() {
+      applySearchResult(results[Number(btn.dataset.idx)]);
+    });
+  });
+  return results;
+}
+
+function applySearchResult(res) {
+  if (!res) return;
+  if (res.type === 'wallet' && res.wallet) {
+    const walEl = document.getElementById('sandbox-wallet');
+    if (walEl) {
+      walEl.value = res.wallet;
+      onSandboxInput();
+    }
+  }
+  closeSearchResults();
+  const sec = document.getElementById(res.target);
+  if (!sec) return;
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  window.setTimeout(function() { window.scrollBy(0, -90); }, 420);
+  sec.classList.remove('search-flash');
+  void sec.offsetWidth;
+  sec.classList.add('search-flash');
+}
+
+function closeSearchResults() {
+  const box = document.getElementById('search-results');
+  if (box) {
+    box.classList.remove('open');
+    box.innerHTML = '';
+  }
+}
+
+function runSiteSearchFromInput() {
+  const input = document.getElementById('site-search-input');
+  performSiteSearch(input ? input.value : '');
+}
+
+function setupSiteSearch() {
+  const input = document.getElementById('site-search-input');
+  if (!input) return;
+  let debounceTimer = null;
+  input.addEventListener('input', function() {
+    window.clearTimeout(debounceTimer);
+    debounceTimer = window.setTimeout(function() { performSiteSearch(input.value); }, 160);
+  });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const results = performSiteSearch(input.value);
+      if (results && results.length) applySearchResult(results[0]);
+    } else if (e.key === 'Escape') {
+      closeSearchResults();
+    }
+  });
+  document.addEventListener('click', function(e) {
+    const wrap = document.querySelector('.topbar-search');
+    if (wrap && !wrap.contains(e.target)) closeSearchResults();
+  });
+}
+
+setupSiteSearch();
 
 document.addEventListener('DOMContentLoaded', initApp);
 </script>
