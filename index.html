@@ -1,1119 +1,2655 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrustMarkets.net — Decentralized Marketplace Powered by AI Agents & Smart Contracts</title>
-  <meta name="description" content="Decentralized B2B marketplace powered by AI agents and Base L2 smart contracts: DNS TXT domain verification, SIWE authentication, 6 smart contract types, and the Trust Score algorithm." />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="canonical" href="https://trustmarkets.net/" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Turn any website into an autonomous trade node: AI-agent discovery via MCP, JSON-LD offers, DNS TXT verification, SIWE private pricing, and Base L2 smart contracts with $1 flat fees and 0.1% USDC settlement.">
+<meta name="theme-color" content="#0c1214">
+<link rel="canonical" href="https://trustmarkets.net/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:title" content="TrustMarkets.net — Decentralized AI Marketplace &amp; Universal Trade Node on Base L2">
+<meta property="og:description" content="No intermediaries, no SEO, no ad spend. AI agents discover your offers via MCP and settle through Base L2 smart contracts.">
+<meta property="og:url" content="https://trustmarkets.net/">
+<meta property="og:type" content="website">
+<title>TrustMarkets.net — Decentralized AI Marketplace &amp; Universal Trade Node on Base L2</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://trustmarkets.net/#organization",
+  "name": "TrustMarkets.net",
+  "url": "https://trustmarkets.net",
+  "description": "Decentralized AI marketplace and universal trade node on Base L2: MCP integration, JSON-LD offers, DNS TXT verification, SIWE private pricing, and smart contract settlement.",
+  "identifier": {
+    "@type": "PropertyValue",
+    "propertyID": "TrustMarketsBaseAddress",
+    "value": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+  }
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+<style>
+:root {
+  color-scheme: dark;
 
-  <meta property="og:title" content="TrustMarkets.net — Decentralized Marketplace with AI Agents & Smart Contracts" />
-  <meta property="og:description" content="International B2B trade without intermediaries: Base L2 smart contracts, DNS TXT verification, JSON-LD Schema.org, hybrid USDC escrow, and autonomous AI agents." />
-  <meta property="og:url" content="https://trustmarkets.net/" />
-  <meta property="og:type" content="website" />
+  /* 1. Aurora palette & surfaces */
+  --background: #0c1214;
+  --surface-container-low: #111a1e;
+  --surface-container: #152024;
+  --surface-container-high: #1c2a30;
 
-  <script type="application/ld+json">
-  {
+  /* Text */
+  --on-surface: #edf3f5;
+  --on-surface-variant: #94a8b0;
+
+  /* Borders */
+  --outline: #38515c;
+  --outline-variant: #213138;
+
+  /* Accents */
+  --primary: #63c7d6;
+  --on-primary: #081214;
+  --primary-container: #163840;
+  --on-primary-container: #c7f0f7;
+  --secondary: #5d7882;
+  --tertiary: #87d69b;
+  --error: #f27474;
+  --on-error: #1a0606;
+
+  /* Data series */
+  --data-1: #63c7d6;
+  --data-2: #87d69b;
+  --data-3: #e8b954;
+  --data-4: #f08c70;
+  --data-context: #415861;
+
+  /* Fonts (Cyrillic-first geometric grotesk + monospace) */
+  --font-headline: 'Inter', 'Instrument Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'JetBrains Mono', monospace;
+
+  /* Shape */
+  --rounded: 0.5rem;
+  --rounded-lg: 0.75rem;
+  --rounded-full: 9999px;
+
+  /* Style effects */
+  --hairline: 1px solid var(--outline-variant);
+  --hairline-strong: 1px solid var(--outline);
+  --panel-gradient: linear-gradient(180deg, #162226 0%, #111a1e 100%);
+  --heading-tracking: -0.025em;
+  --label-tracking: 0.06em;
+  --sage-tint: color-mix(in srgb, var(--tertiary) 13%, transparent);
+  --cyan-tint: color-mix(in srgb, var(--primary) 13%, transparent);
+  --amber-tint: color-mix(in srgb, var(--data-3) 14%, transparent);
+  --error-tint: color-mix(in srgb, var(--error) 14%, transparent);
+  --sage-border: 1px solid color-mix(in srgb, var(--tertiary) 35%, transparent);
+  --cyan-border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--focus) 35%, transparent);
+
+  /* 3. Shared tokens */
+  --positive: #87d69b;
+  --warning: #e8b954;
+  --focus: #63c7d6;
+
+  /* Narrative Type Scale */
+  --display-size: clamp(2.125rem, 1.35rem + 2.8vw, 3.35rem);
+  --headline-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.25rem);
+  --subhead-size: clamp(1.125rem, 1rem + 0.45vw, 1.35rem);
+  --body-size: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+  --label-size: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+
+  /* Spacing scale (4pt base) */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+}
+
+/* Base reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  overflow-x: clip;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  font-size: var(--body-size);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+header { position: static !important; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+.page-grid {
+  display: grid;
+  gap: var(--space-2xl);
+  padding: var(--space-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.page-grid * { min-width: 0; }
+
+/* Focus accessibility */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Top bar */
+.topbar {
+  border-bottom: var(--hairline);
+  background: var(--surface-container-low);
+}
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.brand-name {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: var(--heading-tracking);
+  color: var(--on-surface);
+  text-decoration: none;
+}
+.net-tag {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--cyan-tint);
+  border: var(--cyan-border);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--rounded);
+}
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+}
+.nav-link {
+  color: var(--on-surface-variant);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--rounded);
+  transition: color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+}
+.nav-link:hover {
+  color: var(--on-surface);
+  background-color: var(--surface-container);
+}
+
+/* Typography helpers */
+.data-label {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 500;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+}
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+.section-head h2 {
+  font-family: var(--font-headline);
+  font-size: var(--headline-size);
+  font-weight: 600;
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.14;
+  margin: 0;
+  color: var(--on-surface);
+}
+.section-lede {
+  color: var(--on-surface-variant);
+  max-width: 65ch;
+  margin: 0;
+}
+
+/* Panels & Wells (Aurora treatments 1 & 5) */
+.panel {
+  background: var(--panel-gradient);
+  border: var(--hairline);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-lg);
+}
+.well {
+  background: var(--background);
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  padding: var(--space-md);
+}
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--sage-tint);
+  color: var(--tertiary);
+  border: var(--sage-border);
+  border-radius: var(--rounded);
+  padding: var(--space-xs) var(--space-sm);
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+}
+.cyan-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--cyan-tint);
+  color: var(--primary);
+  border: var(--cyan-border);
+  border-radius: var(--rounded);
+  padding: var(--space-xs) var(--space-sm);
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+}
+
+/* Buttons */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--rounded);
+  font-family: var(--font-headline);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.btn-primary:hover {
+  background: var(--on-primary-container);
+}
+.btn-secondary {
+  background: var(--surface-container);
+  color: var(--on-surface);
+  border: var(--hairline-strong);
+}
+.btn-secondary:hover {
+  background: var(--surface-container-high);
+}
+.btn-compact {
+  min-height: 44px;
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+}
+
+/* Hero Section */
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.95fr);
+  gap: var(--space-xl);
+  align-items: start;
+  padding-top: var(--space-md);
+}
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+.hero-title {
+  font-family: var(--font-headline);
+  font-size: var(--display-size);
+  font-weight: 600;
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.08;
+  margin: 0;
+  color: var(--on-surface);
+}
+.hero-title .accent-word {
+  color: var(--primary);
+}
+.hero-lede {
+  color: var(--on-surface-variant);
+  max-width: 60ch;
+  margin: 0;
+  font-size: var(--subhead-size);
+  line-height: 1.5;
+}
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+.metric-tile {
+  background: var(--panel-gradient);
+  border: var(--hairline);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.metric-value {
+  font-family: var(--font-headline);
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.1;
+  color: var(--on-surface);
+}
+.metric-delta {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  color: var(--tertiary);
+}
+
+/* Topology SVG card */
+.topology-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.topology-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+.topology-nodes-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+.topo-btn {
+  min-height: 36px;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--rounded);
+  border: var(--hairline);
+  background: var(--background);
+  color: var(--on-surface-variant);
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+}
+.topo-btn:hover {
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+}
+.topo-btn.active {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+.topology-svg-wrap {
+  background: var(--background);
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  padding: var(--space-sm);
+}
+.topology-svg-wrap svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.topo-caption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  border-left: 2px solid var(--primary);
+  padding-left: var(--space-md);
+}
+.topo-caption-title {
+  font-family: var(--font-headline);
+  font-weight: 600;
+  color: var(--on-surface);
+  font-size: 0.9375rem;
+}
+.topo-caption-desc {
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Section divider */
+.section-block {
+  border-top: var(--hairline);
+  padding-top: var(--space-xl);
+}
+
+/* Interactive Two-Column Roles Block */
+.role-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  background: var(--background);
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  padding: var(--space-xs);
+  gap: var(--space-xs);
+}
+.seg-btn {
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-lg);
+  border: none;
+  border-radius: calc(var(--rounded) - 2px);
+  background: transparent;
+  color: var(--on-surface-variant);
+  font-family: var(--font-headline);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: background-color var(--dur-short) var(--ease-in-out), color var(--dur-short) var(--ease-in-out);
+}
+.seg-btn:hover {
+  color: var(--on-surface);
+  background: var(--surface-container);
+}
+.seg-btn.active {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.roles-two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+.steps-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.step-card {
+  width: 100%;
+  text-align: left;
+  background: var(--panel-gradient);
+  border: var(--hairline);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-lg);
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: start;
+  transition: background-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+}
+.step-card:hover {
+  background: var(--surface-container-high);
+}
+.step-card.active {
+  box-shadow: inset 0 0 0 1px var(--primary);
+  background: var(--surface-container);
+}
+.step-num {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--cyan-tint);
+  border: var(--cyan-border);
+  border-radius: var(--rounded);
+  padding: var(--space-xs) var(--space-sm);
+  font-variant-numeric: tabular-nums;
+}
+.step-card.active .step-num {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.step-body h3 {
+  margin: 0 0 var(--space-xs) 0;
+  font-family: var(--font-headline);
+  font-size: var(--subhead-size);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--on-surface);
+}
+.step-body p {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--on-surface-variant);
+}
+.step-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+.mini-tag {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  color: var(--on-surface-variant);
+  background: var(--background);
+  border: var(--hairline);
+  padding: 2px var(--space-sm);
+  border-radius: var(--rounded);
+}
+
+/* Role preview simulator */
+.role-preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.preview-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  border-bottom: var(--hairline);
+  padding-bottom: var(--space-md);
+}
+.preview-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.code-pre {
+  margin: 0;
+  background: var(--background);
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  padding: var(--space-md);
+  font-family: var(--font-label);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--on-surface);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.kv-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+.kv-item {
+  background: var(--background);
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  padding: var(--space-sm) var(--space-md);
+}
+.kv-val {
+  font-family: var(--font-label);
+  font-size: 0.875rem;
+  color: var(--on-surface);
+  margin-top: var(--space-xs);
+  word-break: break-word;
+}
+.deal-mode-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* Pricing & Calculator */
+.pricing-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+.tier-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.tier-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.tier-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.tier-price {
+  font-family: var(--font-headline);
+  font-size: clamp(1.5rem, 1.25rem + 0.8vw, 2rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--primary);
+}
+.tier-price.sage {
+  color: var(--tertiary);
+}
+.calc-grid {
+  display: grid;
+  gap: var(--space-md);
+}
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.field-label {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+}
+.slider-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 140px;
+  gap: var(--space-md);
+  align-items: end;
+}
+.input-field, .select-field {
+  min-height: 44px;
+  width: 100%;
+  background: var(--background);
+  border: var(--hairline-strong);
+  border-radius: var(--rounded);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--on-surface);
+  font-size: 0.9375rem;
+  font-family: var(--font-body);
+}
+.select-field {
+  padding-right: var(--space-xl);
+}
+.input-field:focus, .select-field:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+input[type="range"] {
+  width: 100%;
+  min-height: 44px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+.calc-outputs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+.calc-out-box {
+  background: var(--background);
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.calc-out-val {
+  font-family: var(--font-headline);
+  font-size: 1.375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-surface);
+}
+.calc-out-val.positive {
+  color: var(--tertiary);
+}
+
+/* Contract Types Table */
+.table-wrap {
+  overflow-x: auto;
+  margin-top: var(--space-lg);
+}
+.aurora-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+.aurora-table th {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  font-weight: 500;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: var(--hairline-strong);
+}
+.aurora-table td {
+  padding: var(--space-md);
+  border-bottom: var(--hairline);
+  color: var(--on-surface);
+  vertical-align: top;
+}
+.aurora-table td.num, .aurora-table th.num {
+  text-align: right;
+  font-family: var(--font-label);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.aurora-table tr:hover td {
+  background: var(--surface-container-high);
+}
+
+/* MCP & CLI Toolkit */
+.toolkit-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+.toolkit-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+.copy-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+.inline-toast {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  color: var(--tertiary);
+  min-height: 1.25rem;
+}
+.launcher-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+/* Security Architecture */
+.security-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.sec-card {
+  text-align: left;
+  background: var(--panel-gradient);
+  border: var(--hairline);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-lg);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  transition: background-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+}
+.sec-card:hover {
+  background: var(--surface-container-high);
+}
+.sec-card.active {
+  box-shadow: inset 0 0 0 1px var(--primary);
+  background: var(--surface-container);
+}
+.sec-card h3 {
+  margin: 0;
+  font-family: var(--font-headline);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--on-surface);
+}
+.sec-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--on-surface-variant);
+}
+
+/* Code Inspector */
+.inspector-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+/* Registration Sandbox */
+.sandbox-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: 44px;
+  cursor: pointer;
+}
+.checkbox-row input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+}
+.step-status-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  background: var(--background);
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* Footer */
+.site-footer {
+  border-top: var(--hairline);
+  padding: var(--space-xl) 0 var(--space-2xl) 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+}
+
+/* Reveal utility */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive breakpoints */
+@media (max-width: 900px) {
+  .hero-grid,
+  .roles-two-col,
+  .pricing-layout,
+  .toolkit-grid,
+  .sandbox-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-grid {
+    grid-template-columns: 1fr;
+    padding: var(--space-md);
+    gap: var(--space-xl);
+  }
+  .hero-metrics,
+  .calc-outputs,
+  .kv-grid,
+  .launcher-row {
+    grid-template-columns: 1fr;
+  }
+  .slider-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand-group">
+      <a href="#hero" class="brand-name">trustmarkets.net</a>
+      <span class="net-tag">Base L2 · EVM</span>
+    </div>
+    <nav class="nav-links" aria-label="Platform sections">
+      <a href="#roles" class="nav-link">For Buyers &amp; Sellers</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#mcp-toolkit" class="nav-link">MCP &amp; CLI</a>
+      <a href="#security" class="nav-link">Security</a>
+      <a href="#register-sandbox" class="nav-link">Register ($1)</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page-grid">
+
+  <!-- 1. HERO BANNER -->
+  <section id="hero" class="hero-grid" aria-labelledby="hero-heading">
+    <div class="hero-copy">
+      <span class="data-label">Decentralized AI marketplace &amp; universal trade node on Base L2</span>
+      <h1 id="hero-heading" class="hero-title">
+        Turn your website into an <span class="accent-word">autonomous trade node</span>. No platforms, no commissions.
+      </h1>
+      <p class="hero-lede">
+        An open trade protocol for websites and AI agents: publish offers as JSON-LD, get instant semantic discovery, protect private price lists with SIWE (EIP-4361), and settle through USDC escrow or Net-30 invoices on Base.
+      </p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-primary" onclick="jumpToSection('register-sandbox', 'sandbox-domain')">
+          <i data-lucide="shield-check" aria-hidden="true"></i>
+          <span>Register domain ($1)</span>
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="jumpToSection('mcp-toolkit', 'mcp-copy-btn')">
+          <i data-lucide="plug" aria-hidden="true"></i>
+          <span>Connect MCP to AI</span>
+        </button>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric-tile">
+          <span class="data-label">Base registry entry</span>
+          <span class="metric-value">$1</span>
+          <span class="metric-delta">Bot-free anti-spam filter</span>
+        </div>
+        <div class="metric-tile">
+          <span class="data-label">USDC crypto settlement</span>
+          <span class="metric-value">0.1%</span>
+          <span class="metric-delta">Instead of 15–30% on marketplaces</span>
+        </div>
+        <div class="metric-tile">
+          <span class="data-label">Server-side LLM costs</span>
+          <span class="metric-value">$0</span>
+          <span class="metric-delta">Zero-cost client agents</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Architecture Topology -->
+    <aside class="panel topology-card" aria-label="Trust Markets trade node topology">
+      <div class="topology-header">
+        <span class="data-label">Node architecture · Click a layer</span>
+        <span class="status-chip">Base Mainnet / Sepolia</span>
+      </div>
+      <div class="topology-nodes-bar" role="tablist" aria-label="Protocol layers">
+        <button type="button" class="topo-btn active" data-topo="domain" onclick="selectTopology('domain')">1. Website + DNS TXT</button>
+        <button type="button" class="topo-btn" data-topo="registry" onclick="selectTopology('registry')">2. Base Registry</button>
+        <button type="button" class="topo-btn" data-topo="index" onclick="selectTopology('index')">3. AI Index</button>
+        <button type="button" class="topo-btn" data-topo="trade" onclick="selectTopology('trade')">4. Escrow / Net-30</button>
+      </div>
+      <div class="topology-svg-wrap">
+        <svg viewBox="0 0 520 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of the website, Base blockchain, vector index, and AI agents">
+          <defs>
+            <marker id="arrowCyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#63c7d6"/>
+            </marker>
+            <marker id="arrowSage" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#87d69b"/>
+            </marker>
+          </defs>
+          <!-- Connections -->
+          <line x1="170" y1="68" x2="292" y2="68" stroke="#63c7d6" stroke-width="1.8" marker-end="url(#arrowCyan)"/>
+          <line x1="95" y1="106" x2="95" y2="162" stroke="#87d69b" stroke-width="1.8" marker-end="url(#arrowSage)"/>
+          <line x1="385" y1="106" x2="385" y2="162" stroke="#63c7d6" stroke-width="1.8" marker-end="url(#arrowCyan)"/>
+          <line x1="170" y1="202" x2="292" y2="202" stroke="#87d69b" stroke-width="1.8" stroke-dasharray="4 3" marker-end="url(#arrowSage)"/>
+
+          <!-- Node 1: Website & JSON-LD -->
+          <g id="svg-node-domain">
+            <rect x="16" y="28" width="154" height="78" rx="10" fill="#152024" stroke="#63c7d6" stroke-width="1.8"/>
+            <text x="30" y="52" fill="#63c7d6" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">01 · COMPANY DOMAIN</text>
+            <text x="30" y="72" fill="#edf3f5" font-family="Inter, sans-serif" font-size="12.5" font-weight="600">JSON-LD + DNS TXT</text>
+            <text x="30" y="90" fill="#94a8b0" font-family="JetBrains Mono, monospace" font-size="9.5">evm-contract=0x4B2…9f1</text>
+          </g>
+
+          <!-- Node 2: Base L2 Registry -->
+          <g id="svg-node-registry">
+            <rect x="296" y="28" width="208" height="78" rx="10" fill="#152024" stroke="#38515c" stroke-width="1.4"/>
+            <text x="310" y="52" fill="#87d69b" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">02 · BASE L2 REGISTRY</text>
+            <text x="310" y="72" fill="#edf3f5" font-family="Inter, sans-serif" font-size="12.5" font-weight="600">TrustMarketsRegistry.sol</text>
+            <text x="310" y="90" fill="#94a8b0" font-family="JetBrains Mono, monospace" font-size="9.5">setProfile() · $1 Anti-Spam</text>
+          </g>
+
+          <!-- Node 3: Vector Index & MCP -->
+          <g id="svg-node-index">
+            <rect x="16" y="166" width="154" height="78" rx="10" fill="#152024" stroke="#38515c" stroke-width="1.4"/>
+            <text x="30" y="190" fill="#e8b954" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">03 · AI INDEX &amp; MCP</text>
+            <text x="30" y="210" fill="#edf3f5" font-family="Inter, sans-serif" font-size="12.5" font-weight="600">SQLite + Embeddings</text>
+            <text x="30" y="228" fill="#94a8b0" font-family="JetBrains Mono, monospace" font-size="9.5">Cosine Search · SIWE</text>
+          </g>
+
+          <!-- Node 4: Escrow & Net-30 Trade -->
+          <g id="svg-node-trade">
+            <rect x="296" y="166" width="208" height="78" rx="10" fill="#152024" stroke="#38515c" stroke-width="1.4"/>
+            <text x="310" y="190" fill="#63c7d6" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">04 · SETTLEMENT &amp; ESCROW</text>
+            <text x="310" y="210" fill="#edf3f5" font-family="Inter, sans-serif" font-size="12.5" font-weight="600">TrustMarketsTrade.sol</text>
+            <text x="310" y="228" fill="#94a8b0" font-family="JetBrains Mono, monospace" font-size="9.5">USDC Escrow (0.1%) · Net-30</text>
+          </g>
+        </svg>
+      </div>
+      <div class="topo-caption">
+        <span id="topo-title" class="topo-caption-title">Website binding via DNS TXT and JSON-LD</span>
+        <p id="topo-desc" class="topo-caption-desc">
+          The domain owner adds an evm-contract=0x… TXT record and publishes /.well-known/trustmarkets-prompt.json. Domain verification runs instantly through the Cloudflare DoH API.
+        </p>
+      </div>
+    </aside>
+  </section>
+
+  <!-- 2. INTERACTIVE TWO-COLUMN BLOCK: FOR BUYERS / FOR SELLERS -->
+  <section id="roles" class="section-block reveal" aria-labelledby="roles-heading">
+    <div class="section-head">
+      <span class="data-label">Protocol scenarios</span>
+      <h2 id="roles-heading">One node for direct purchasing and autonomous sales</h2>
+      <p class="section-lede">
+        Switch between buyer and seller mode and pick a step on the left — the interactive inspector on the right shows real AI-agent requests, SIWE signatures, and Base contract states.
+      </p>
+    </div>
+
+    <div class="role-controls">
+      <div class="segmented" role="tablist" aria-label="Select participant role">
+        <button type="button" id="tab-buyers" class="seg-btn active" role="tab" aria-selected="true" onclick="setRoleMode('buyers')">
+          For Buyers
+        </button>
+        <button type="button" id="tab-sellers" class="seg-btn" role="tab" aria-selected="false" onclick="setRoleMode('sellers')">
+          For Sellers
+        </button>
+      </div>
+      <span id="role-summary-chip" class="cyan-chip">Buyer mode: discovery, SIWE access, and escrow</span>
+    </div>
+
+    <div class="roles-two-col">
+      <!-- Left Column: 3 Steps -->
+      <div id="role-steps-container" class="steps-column" aria-label="Steps for the selected scenario"></div>
+
+      <!-- Right Column: Live Interactive Preview -->
+      <div class="panel role-preview" aria-live="polite">
+        <div class="preview-head">
+          <div>
+            <span id="preview-kicker" class="data-label">Protocol simulator</span>
+            <h3 id="preview-title" style="margin: var(--space-xs) 0 0 0; font-family: var(--font-headline); font-size: var(--subhead-size);">Loading…</h3>
+          </div>
+          <span id="preview-badge" class="status-chip">Base L2</span>
+        </div>
+        <div id="preview-body" class="preview-body"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. PRICING & FEE CALCULATOR -->
+  <section id="pricing" class="section-block reveal" aria-labelledby="pricing-heading">
+    <div class="section-head">
+      <span class="data-label">Pricing &amp; economics</span>
+      <h2 id="pricing-heading">A flat $1 per contract and 0.1% on crypto settlement</h2>
+      <p class="section-lede">
+        No listing subscriptions and no hidden 15–30% marketplace fees. The micro-fee on Base keeps the vector registry spam-free and funds the indexing infrastructure.
+      </p>
+    </div>
+
+    <div class="pricing-layout">
+      <!-- Pricing Tiers -->
+      <div class="tier-stack">
+        <div class="panel tier-card">
+          <div class="tier-top">
+            <span class="data-label">Contract issuance &amp; signing</span>
+            <span class="tier-price">$1</span>
+          </div>
+          <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.9375rem;">
+            A single anti-spam fee on Base for domain registration (<code style="font-family: var(--font-label);">setProfile()</code>), an NDA/partnership, or a commercial contract. It keeps bots out and preserves a clean registry for AI agents.
+          </p>
+        </div>
+
+        <div class="panel tier-card">
+          <div class="tier-top">
+            <span class="data-label">Price fixing &amp; crypto settlement</span>
+            <span class="tier-price sage">+ 0.1%</span>
+          </div>
+          <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.9375rem;">
+            Charged only when a deal amount is set and settled in native USDC on Base through the <code style="font-family: var(--font-label);">TrustMarketsTrade.sol</code> escrow contract. Post-paid invoices (SEPA / Net-30) carry no extra percentage.
+          </p>
+        </div>
+
+        <div class="panel tier-card">
+          <div class="tier-top">
+            <span class="data-label">AI search, MCP &amp; SIWE RPC checks</span>
+            <span class="tier-price">$0</span>
+          </div>
+          <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.9375rem;">
+            Uses the user's own client-side models (ChatGPT, Claude, Gemini, Cursor). Access checks via Base RPC <code style="font-family: var(--font-label);">view</code> calls are free.
+          </p>
+        </div>
+      </div>
+
+      <!-- Interactive Calculator -->
+      <div class="panel calc-grid" aria-label="Deal fee and savings calculator">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-sm);">
+          <span class="data-label">Deal fee calculator</span>
+          <span id="calc-mode-chip" class="status-chip">USDC Escrow</span>
+        </div>
+
+        <div class="field-group">
+          <label for="calc-type" class="field-label">Smart contract type (6 business types + registry)</label>
+          <select id="calc-type" class="select-field" onchange="onCalcTypeChange(this.value)">
+            <option value="escrow">1. Sale with escrow (USDC on Base) — $1 + 0.1%</option>
+            <option value="invoice">2. Net-30 / SEPA invoice registry (no escrow) — $1</option>
+            <option value="nda">3. Mutual trust / partnership (NDA handshake) — $1</option>
+            <option value="validator">4. Independent product validation — $1 + 0.1%</option>
+            <option value="loan">5. Trade-backed lending — $1 + 0.1%</option>
+            <option value="insurance">6. Logistics risk insurance — $1 + 0.1%</option>
+            <option value="info">7. Informational one-way contract (domain) — $1</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="calc-amount-num" class="field-label">Deal amount (USDC / EUR)</label>
+          <div class="slider-row">
+            <input type="range" id="calc-amount-slider" min="1000" max="250000" step="500" value="25000" oninput="syncAmountFromSlider(this.value)">
+            <input type="number" id="calc-amount-num" class="input-field" min="0" max="5000000" step="100" value="25000" oninput="syncAmountFromNumber(this.value)">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="calc-market-num" class="field-label">Classic marketplace / broker fee (%)</label>
+          <div class="slider-row">
+            <input type="range" id="calc-market-slider" min="15" max="30" step="1" value="20" oninput="syncMarketFeeFromSlider(this.value)">
+            <input type="number" id="calc-market-num" class="input-field" min="5" max="40" step="1" value="20" oninput="syncMarketFeeFromNumber(this.value)">
+          </div>
+        </div>
+
+        <div class="calc-outputs">
+          <div class="calc-out-box">
+            <span class="data-label">Trust Markets fee</span>
+            <span id="out-tm-fee" class="calc-out-val">$26.00</span>
+            <span id="out-tm-breakdown" class="data-label" style="text-transform: none; letter-spacing: 0;">$1 + 0.1% USDC</span>
+          </div>
+          <div class="calc-out-box">
+            <span class="data-label">Classic platform</span>
+            <span id="out-market-fee" class="calc-out-val">$5,000.00</span>
+            <span id="out-market-pct" class="data-label" style="text-transform: none; letter-spacing: 0;">20% of volume</span>
+          </div>
+          <div class="calc-out-box">
+            <span class="data-label">Net savings</span>
+            <span id="out-savings" class="calc-out-val positive">$4,974.00</span>
+            <span id="out-savings-pct" class="metric-delta">99.5% savings</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6+1 Contract Types Matrix -->
+    <div class="panel table-wrap" aria-label="Indexing matrix for all smart contract types">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
+        <span class="data-label">Smart contract specialization across the Trust Markets ecosystem</span>
+        <span class="data-label">Hybrid: Base L2 + SQLite vector index</span>
+      </div>
+      <table class="aurora-table">
+        <thead>
+          <tr>
+            <th>Contract type</th>
+            <th>Recorded on Base</th>
+            <th>Backend indexing &amp; AI role</th>
+            <th class="num">Fee</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sale with escrow</strong></td>
+            <td>Party addresses, terms hash, USDC deposit, status (<code style="font-family: var(--font-label);">Funded / Completed</code>).</td>
+            <td><code style="font-family: var(--font-label);">makesOffer</code> categories, volumes, EUR/USDC prices, Incoterms; vector search in milliseconds.</td>
+            <td class="num">$1 + 0.1%</td>
+          </tr>
+          <tr>
+            <td><strong>Mutual trust (NDA)</strong></td>
+            <td>Mutual attestation (<code style="font-family: var(--font-label);">Mutual Attestation</code>) between domain hashes.</td>
+            <td>Sets <code style="font-family: var(--font-label);">isTrustedPartner: true</code> and unlocks private price exchange via SIWE.</td>
+            <td class="num">$1</td>
+          </tr>
+          <tr>
+            <td><strong>Product validation (validator)</strong></td>
+            <td>Binds an independent auditor to the deal and cryptographically signs the report.</td>
+            <td><code style="font-family: var(--font-label);">Validator</code> role tag; updates the seller's <code style="font-family: var(--font-label);">Trust Score</code> in AI search results.</td>
+            <td class="num">$1 + 0.1%</td>
+          </tr>
+          <tr>
+            <td><strong>Trade-backed lending</strong></td>
+            <td>Rate, maturity, and collateral rights over the underlying trade.</td>
+            <td>Financial registry; the AI agent arranges leverage when the buyer is short on USDC.</td>
+            <td class="num">$1 + 0.1%</td>
+          </tr>
+          <tr>
+            <td><strong>Deal insurance</strong></td>
+            <td>Covers damage and delay risks, USDC premium, carrier history.</td>
+            <td>Trade corridor index; automatic hedging of the logistics chain.</td>
+            <td class="num">$1 + 0.1%</td>
+          </tr>
+          <tr>
+            <td><strong>Informational (domain)</strong></td>
+            <td>One-way <code style="font-family: var(--font-label);">setProfile()</code> transaction after DNS TXT verification via DoH.</td>
+            <td>Vectorizes the description and catalog with <code style="font-family: var(--font-label);">text-embedding-3-small</code> for global search.</td>
+            <td class="num">$1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. MCP & CLI TOOLKIT -->
+  <section id="mcp-toolkit" class="section-block reveal" aria-labelledby="mcp-heading">
+    <div class="section-head">
+      <span class="data-label">Integrations · MCP &amp; CLI toolkit</span>
+      <h2 id="mcp-heading">Dual architecture: connect AI agents in 60 seconds</h2>
+      <p class="section-lede">
+        Developers and terminal agents run <code style="font-family: var(--font-label);">npx @trustmarkets/cli</code> locally, while Claude.ai and ChatGPT web users add the remote SSE MCP connector via <code style="font-family: var(--font-label);">Settings → Connectors</code>.
+      </p>
+    </div>
+
+    <div class="toolkit-tabs" role="tablist" aria-label="AI connection methods">
+      <button type="button" id="tk-btn-cli" class="seg-btn active" role="tab" aria-selected="true" onclick="setToolkitMode('cli')">
+        npx @trustmarkets/cli (Terminal / Cursor / Claude Code)
+      </button>
+      <button type="button" id="tk-btn-sse" class="seg-btn" role="tab" aria-selected="false" onclick="setToolkitMode('sse')">
+        Remote SSE MCP Connector (Claude.ai / ChatGPT Web)
+      </button>
+      <button type="button" id="tk-btn-prompt" class="seg-btn" role="tab" aria-selected="false" onclick="setToolkitMode('prompt')">
+        Zero-Cost Mega-Prompt (1-click launch)
+      </button>
+    </div>
+
+    <div class="toolkit-grid">
+      <div class="panel" id="tk-left-panel" style="display: flex; flex-direction: column; gap: var(--space-md);"></div>
+      <div class="panel" style="display: flex; flex-direction: column; gap: var(--space-md);">
+        <div class="copy-bar">
+          <span id="tk-code-label" class="data-label">Configuration</span>
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <span id="tk-copy-toast" class="inline-toast" aria-live="polite"></span>
+            <button type="button" id="mcp-copy-btn" class="btn btn-secondary btn-compact" onclick="copyToolkitSnippet()">
+              <i data-lucide="copy" aria-hidden="true"></i>
+              <span>Copy</span>
+            </button>
+          </div>
+        </div>
+        <pre id="tk-code-block" class="code-pre"></pre>
+        <div id="tk-extra-actions"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ARCHITECTURAL SECURITY & SMART CONTRACTS -->
+  <section id="security" class="section-block reveal" aria-labelledby="security-heading">
+    <div class="section-head">
+      <span class="data-label">Architectural security</span>
+      <h2 id="security-heading">Cryptographic domain binding, price privacy, and Base contracts</h2>
+      <p class="section-lede">
+        The platform avoids heavyweight third-party oracles. Domain ownership is verified via DNS TXT, private prompts are sealed with SIWE (EIP-4361), and settlement is guaranteed by audited Solidity code.
+      </p>
+    </div>
+
+    <div class="security-grid">
+      <button type="button" id="sec-card-dns" class="sec-card active" onclick="selectSecurityLayer('dns')">
+        <span class="data-label">Layer 01 · Ownership verification</span>
+        <h3>DNS TXT + Cloudflare DoH</h3>
+        <p>
+          The <code style="font-family: var(--font-label);">evm-contract=0x…</code> record is verified through the Cloudflare DoH API before the transaction. The <code style="font-family: var(--font-label);">domainToOwner</code> reverse mapping at the contract level blocks domain hijacking.
+        </p>
+      </button>
+
+      <button type="button" id="sec-card-siwe" class="sec-card" onclick="selectSecurityLayer('siwe')">
+        <span class="data-label">Layer 02 · Commercial secrecy</span>
+        <h3>SIWE (EIP-4361) + private prompts</h3>
+        <p>
+          Private price lists and NDAs are never indexed. The seller's server verifies the agent's SIWE signature and makes a free Base RPC <code style="font-family: var(--font-label);">view</code> call to confirm the mutual handshake.
+        </p>
+      </button>
+
+      <button type="button" id="sec-card-registry" class="sec-card" onclick="selectSecurityLayer('registry')">
+        <span class="data-label">Layer 03 · Onchain catalog</span>
+        <h3>TrustMarketsRegistry.sol</h3>
+        <p>
+          An immutable Base L2 registry linking the wallet, <code style="font-family: var(--font-label);">keccak256(domain)</code> hash, and <code style="font-family: var(--font-label);">aiPromptUri</code>. It emits events for the SQLite indexer.
+        </p>
+      </button>
+
+      <button type="button" id="sec-card-trade" class="sec-card" onclick="selectSecurityLayer('trade')">
+        <span class="data-label">Layer 04 · Settlement &amp; arbitration</span>
+        <h3>TrustMarketsTrade.sol</h3>
+        <p>
+          A hybrid contract with <code style="font-family: var(--font-label);">ReentrancyGuard</code> and <code style="font-family: var(--font-label);">SafeERC20</code>: it supports USDC escrow locks, a Net-30 invoice registry, and validator dispute resolution.
+        </p>
+      </button>
+    </div>
+
+    <div class="panel" style="display: flex; flex-direction: column; gap: var(--space-md);">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md);">
+        <div>
+          <span id="sec-detail-label" class="data-label">Specification &amp; source code inspector</span>
+          <h3 id="sec-detail-title" style="margin: var(--space-xs) 0 0 0; font-family: var(--font-headline);">Domain spoofing protection (DNS TXT + domainToOwner)</h3>
+        </div>
+        <div class="inspector-tabs" style="margin-bottom: 0;">
+          <button type="button" id="code-tab-registry" class="topo-btn active" onclick="selectCodeTab('registry')">TrustMarketsRegistry.sol</button>
+          <button type="button" id="code-tab-trade" class="topo-btn" onclick="selectCodeTab('trade')">TrustMarketsTrade.sol</button>
+          <button type="button" id="code-tab-jsonld" class="topo-btn" onclick="selectCodeTab('jsonld')">trustmarkets-schema.json</button>
+        </div>
+      </div>
+
+      <p id="sec-detail-text" style="margin: 0; color: var(--on-surface-variant); max-width: 78ch;">
+        The company owner publishes a TXT record with their EVM wallet in the domain's root DNS zone. When setProfile() is called, the smart contract computes keccak256(abi.encodePacked(_domain)) and rejects the transaction if the domain is already bound to another address.
+      </p>
+
+      <div class="copy-bar" style="margin-bottom: 0;">
+        <span id="code-tab-caption" class="data-label">Solidity ^0.8.20 · Base L2</span>
+        <div style="display: flex; align-items: center; gap: var(--space-sm);">
+          <span id="code-copy-toast" class="inline-toast" aria-live="polite"></span>
+          <button type="button" class="btn btn-secondary btn-compact" onclick="copyCodeInspector()">
+            <i data-lucide="copy" aria-hidden="true"></i>
+            <span>Copy code</span>
+          </button>
+        </div>
+      </div>
+      <pre id="code-inspector-pre" class="code-pre" style="max-height: 360px; overflow-y: auto;"></pre>
+    </div>
+  </section>
+
+  <!-- 6. DOMAIN REGISTRATION ($1) SANDBOX -->
+  <section id="register-sandbox" class="section-block reveal" aria-labelledby="sandbox-heading">
+    <div class="section-head">
+      <span class="data-label">Interactive $1 onboarding</span>
+      <h2 id="sandbox-heading">Prepare your website for Base registry registration</h2>
+      <p class="section-lede">
+        Enter a domain, wallet, and primary product — the builder instantly generates a DNS TXT record, a valid <code style="font-family: var(--font-label);">trustmarkets-schema.json</code> file, and simulates the <code style="font-family: var(--font-label);">setProfile()</code> transaction. Your settings persist between sessions.
+      </p>
+    </div>
+
+    <div class="sandbox-grid">
+      <div class="panel form-stack">
+        <div class="field-group">
+          <label for="sandbox-domain" class="field-label">Company domain</label>
+          <input type="text" id="sandbox-domain" class="input-field" value="trustmarkets.net" oninput="onSandboxInput()">
+          <span class="data-label" style="text-transform: none; letter-spacing: 0;">Live demo: prefilled with the trustmarkets.net TXT record — replace with your own domain.</span>
+        </div>
+
+        <div class="field-group">
+          <label for="sandbox-wallet" class="field-label">Owner Web3 wallet on Base</label>
+          <input type="text" id="sandbox-wallet" class="input-field" value="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" oninput="onSandboxInput()">
+        </div>
+
+        <div class="field-group">
+          <label for="sandbox-offer" class="field-label">Primary product / service and Incoterms</label>
+          <input type="text" id="sandbox-offer" class="input-field" value="Decentralized trade node — AI discovery, USDC escrow & Net-30 settlement" oninput="onSandboxInput()">
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" id="sandbox-public" checked onchange="onSandboxInput()">
+          <span>Public mode (indexed by AI vector search; uncheck to operate incognito)</span>
+        </label>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" onclick="simulateDnsCheck()">
+            <i data-lucide="globe" aria-hidden="true"></i>
+            <span>Verify DNS via DoH</span>
+          </button>
+          <button type="button" class="btn btn-primary" onclick="simulateSetProfile()">
+            <i data-lucide="check-circle-2" aria-hidden="true"></i>
+            <span>Sign setProfile() ($1)</span>
+          </button>
+        </div>
+        <span id="sandbox-inline-msg" class="inline-toast" aria-live="polite"></span>
+      </div>
+
+      <div class="panel form-stack">
+        <div class="step-status-list">
+          <div class="status-row">
+            <div>
+              <span class="data-label">DNS TXT record (@)</span>
+              <div id="sandbox-txt-val" class="kv-val" style="margin-top: 2px;">evm-contract=0x742d35Cc6634C0532925a3b844Bc454e4438f44e</div>
+            </div>
+            <span id="sandbox-dns-badge" class="cyan-chip">Awaiting verification</span>
+          </div>
+
+          <div class="status-row">
+            <div>
+              <span class="data-label">Base transaction (TrustMarketsRegistry.sol)</span>
+              <div id="sandbox-tx-val" class="kv-val" style="margin-top: 2px;">setProfile("trustmarkets.net", …) · $1.00</div>
+            </div>
+            <span id="sandbox-tx-badge" class="cyan-chip">Draft</span>
+          </div>
+        </div>
+
+        <div class="copy-bar" style="margin-bottom: 0;">
+          <span class="data-label">Preview /.well-known/trustmarkets-prompt.json</span>
+          <button type="button" class="btn btn-secondary btn-compact" onclick="exportGeneratedJsonLd()">
+            <i data-lucide="download" aria-hidden="true"></i>
+            <span>Download JSON-LD</span>
+          </button>
+        </div>
+        <pre id="sandbox-json-preview" class="code-pre" style="max-height: 250px; overflow-y: auto;"></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div>
+      <strong>trustmarkets.net</strong> — a decentralized trade protocol on Base L2. Sources: Trust Markets v12.0 specification, <code style="font-family: var(--font-label);">TrustMarketsRegistry.sol</code> and <code style="font-family: var(--font-label);">TrustMarketsTrade.sol</code> contracts, the Alpina Foods GmbH reference JSON-LD profile, and a Node.js + SQLite backend architecture.
+      <div style="margin-top: var(--space-sm); display: flex; flex-wrap: wrap; gap: var(--space-md);">
+        <a href="contracts/TrustMarketsRegistry.sol" style="color: var(--primary);">TrustMarketsRegistry.sol</a>
+        <a href="contracts/TrustMarketsTrade.sol" style="color: var(--primary);">TrustMarketsTrade.sol</a>
+        <a href="schema/trustmarkets-schema.json" style="color: var(--primary);">trustmarkets-schema.json</a>
+        <a href="backend/indexer.js" style="color: var(--primary);">indexer.js</a>
+      </div>
+    </div>
+    <button type="button" class="btn btn-secondary btn-compact" onclick="resetAppState(this)">
+      Reset saved state
+    </button>
+  </footer>
+
+</main>
+
+<api-shim></api-shim>
+<script>
+const TOPOLOGY_DATA = {
+  domain: {
+    title: `Website binding via DNS TXT and JSON-LD`,
+    desc: `The domain owner adds an evm-contract=0x… TXT record and publishes /.well-known/trustmarkets-prompt.json. Domain verification runs instantly through the Cloudflare DoH API.`
+  },
+  registry: {
+    title: `TrustMarketsRegistry.sol onchain registry on Base L2`,
+    desc: `A one-way setProfile() transaction for $1 records the Domain ↔ Wallet ↔ aiPromptUri binding. The domainToOwner mapping (keccak256) prevents spoofing of other companies' domains.`
+  },
+  index: {
+    title: `Hybrid semantic index and MCP / CLI`,
+    desc: `The offchain indexer (Node.js + SQLite) vectorizes public JSON-LD business cards with openai/text-embedding-3-small. AI agents in ChatGPT, Claude, and Cursor find suppliers in milliseconds.`
+  },
+  trade: {
+    title: `Deal execution: USDC escrow or Net-30 invoices`,
+    desc: `TrustMarketsTrade.sol supports a USDC-locking mode (0.1%) and a non-escrow mode for bank invoices (SEPA/Net-30), with independent validators attached.`
+  }
+};
+
+const ROLE_CONFIG = {
+  buyers: {
+    chip: `Buyer mode: discovery, SIWE access, and escrow`,
+    steps: [
+      {
+        num: `01`,
+        title: `Discover through any AI agent (ChatGPT / Claude / Cursor / CLI)`,
+        desc: `The agent queries the trustmarkets.net vector index via MCP or CLI. Semantic search powered by openai/text-embedding-3-small matches suppliers by meaning, Incoterms, and volume in milliseconds.`,
+        tags: [`MCP Connector`, `Cosine Similarity`, `$0 LLM cost`]
+      },
+      {
+        num: `02`,
+        title: `Get personalized terms via SIWE (EIP-4361)`,
+        desc: `To access private price lists, the agent signs a SIWE request with your wallet. The seller's server checks the mutual handshake status through a Base RPC node for free and returns the confidential prompt.`,
+        tags: [`SIWE EIP-4361`, `RPC view lookup`, `No oracles`]
+      },
+      {
+        num: `03`,
+        title: `Safe deals with USDC escrow or Net-30 invoices on Base`,
+        desc: `Agents agree on terms in TrustMarketsTrade.sol: choose escrow with USDC locked until shipment confirmation, or register a post-paid Net-30 invoice to grow your onchain Trust Score.`,
+        tags: [`USDC Escrow`, `Net-30 Invoice`, `Dispute validator`]
+      }
+    ]
+  },
+  sellers: {
+    chip: `Seller mode: $1 per domain, JSON-LD, and 0% to intermediaries`,
+    steps: [
+      {
+        num: `01`,
+        title: `Bind your domain to a Base wallet for $1`,
+        desc: `Add an evm-contract=0x… TXT record to your website's DNS. The platform verifies ownership via Cloudflare DoH and records the profile with setProfile() for a flat $1 anti-spam fee.`,
+        tags: [`DNS TXT`, `Cloudflare DoH`, `setProfile() $1`]
+      },
+      {
+        num: `02`,
+        title: `Publish offers as JSON-LD / MCP`,
+        desc: `Publish /.well-known/trustmarkets-prompt.json with products (makesOffer), EUR/USDC prices, and logistics — or fill in the no-code form on this site. Private discounts stay behind the SIWE lock.`,
+        tags: [`Schema.org JSON-LD`, `Zero-Infra AI`, `Public / Private`]
+      },
+      {
+        num: `03`,
+        title: `Sell directly without 15–30% platform fees`,
+        desc: `Buyers' autonomous AI agents discover your node, check availability, and send ready-to-sign smart contract drafts straight to your wallet — with no ad budget, SEO, or marketplace listings.`,
+        tags: [`Inbound trade leads`, `Direct wallet`, `0.1% only in USDC`]
+      }
+    ]
+  }
+};
+
+const SECURITY_LAYERS = {
+  dns: {
+    label: `Layer 01 · Domain ownership verification`,
+    title: `Domain spoofing protection (DNS TXT + domainToOwner)`,
+    text: `The company owner publishes a TXT record with their EVM wallet in the root DNS zone. The frontend verifies it through the Cloudflare DoH API, and the smart contract computes keccak256(abi.encodePacked(_domain)) and blocks registration if the domain is already taken by another address.`
+  },
+  siwe: {
+    label: `Layer 02 · Commercial secrecy`,
+    title: `Prompt separation via SIWE (EIP-4361) and Base RPC`,
+    text: `The public profile is open for semantic indexing, while private price lists and exclusive instructions live behind the company's HTTPS API. Access is granted only after verifying a cryptographic SIWE signature and a free RPC call confirming the mutual handshake on Base.`
+  },
+  registry: {
+    label: `Layer 03 · Onchain domain registry`,
+    title: `TrustMarketsRegistry.sol smart contract on Base L2`,
+    text: `Stores the BusinessProfile struct (domain, businessInfo, aiPromptUri, updatedAt, isActive) and releases the old domain hash when the owner updates it. Thanks to EIP-4844 optimization on Base, profile writes and updates cost a fraction of a cent in gas.`
+  },
+  trade: {
+    label: `Layer 04 · Hybrid deals and arbitration`,
+    title: `TrustMarketsTrade.sol smart contract (Escrow + Non-Escrow)`,
+    text: `Implements a single state machine (Created → Funded → Delivered → Completed / Disputed) with ReentrancyGuard and SafeERC20 protection. It supports both native USDC escrow deposits and post-paid invoice accounting with arbitration through an appointed validator.`
+  }
+};
+
+const CODE_SNIPPETS = {
+  registry: {
+    caption: `TrustMarketsRegistry.sol · Solidity ^0.8.20 · Base L2`,
+    code: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract TrustMarketsRegistry {
+    struct BusinessProfile {
+        string domain;
+        string businessInfo;
+        string aiPromptUri;
+        uint256 updatedAt;
+        bool isActive;
+    }
+
+    mapping(address => BusinessProfile) public profiles;
+    mapping(bytes32 => address) public domainToOwner;
+
+    event ProfileUpdated(address indexed owner, string domain, string aiPromptUri);
+    event ProfileDeactivated(address indexed owner);
+
+    function setProfile(
+        string calldata _domain,
+        string calldata _businessInfo,
+        string calldata _aiPromptUri
+    ) external {
+        require(bytes(_domain).length > 0, "Domain cannot be empty");
+        require(bytes(_aiPromptUri).length > 0, "AI Prompt URI cannot be empty");
+
+        bytes32 domainHash = keccak256(abi.encodePacked(_domain));
+        address existingOwner = domainToOwner[domainHash];
+
+        if (existingOwner != address(0) && existingOwner != msg.sender) {
+            revert("Domain already registered by another wallet");
+        }
+
+        string memory oldDomain = profiles[msg.sender].domain;
+        if (bytes(oldDomain).length > 0) {
+            bytes32 oldDomainHash = keccak256(abi.encodePacked(oldDomain));
+            if (oldDomainHash != domainHash) {
+                delete domainToOwner[oldDomainHash];
+            }
+        }
+
+        domainToOwner[domainHash] = msg.sender;
+        profiles[msg.sender] = BusinessProfile({
+            domain: _domain,
+            businessInfo: _businessInfo,
+            aiPromptUri: _aiPromptUri,
+            updatedAt: block.timestamp,
+            isActive: true
+        });
+
+        emit ProfileUpdated(msg.sender, _domain, _aiPromptUri);
+    }
+}`
+  },
+  trade: {
+    caption: `TrustMarketsTrade.sol · Hybrid Escrow / Net-30 Invoice`,
+    code: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+
+contract TrustMarketsTrade is ReentrancyGuard {
+    using SafeERC20 for IERC20;
+    IERC20 public immutable usdcToken;
+
+    enum DealStatus { Created, Funded, Delivered, Completed, Disputed, Cancelled }
+
+    struct Deal {
+        uint256 dealId;
+        address buyer;
+        address seller;
+        address validator;
+        uint256 amount;
+        string termsUri;
+        bool isEscrowEnabled;
+        DealStatus status;
+        uint256 createdAt;
+        uint256 dueDate;
+    }
+
+    uint256 public dealCounter;
+    mapping(uint256 => Deal) public deals;
+
+    function createDeal(
+        address _seller,
+        address _validator,
+        uint256 _amount,
+        string calldata _termsUri,
+        bool _isEscrowEnabled,
+        uint256 _durationDays
+    ) external returns (uint256) {
+        require(_seller != address(0) && _seller != msg.sender, "Invalid seller");
+        require(_amount > 0, "Amount must be > 0");
+        dealCounter++;
+        deals[dealCounter] = Deal({
+            dealId: dealCounter,
+            buyer: msg.sender,
+            seller: _seller,
+            validator: _validator,
+            amount: _amount,
+            termsUri: _termsUri,
+            isEscrowEnabled: _isEscrowEnabled,
+            status: DealStatus.Created,
+            createdAt: block.timestamp,
+            dueDate: block.timestamp + (_durationDays * 1 days)
+        });
+        return dealCounter;
+    }
+
+    function fundEscrow(uint256 _dealId) external nonReentrant {
+        Deal storage deal = deals[_dealId];
+        require(deal.isEscrowEnabled, "Deal is non-escrow");
+        require(msg.sender == deal.buyer, "Only buyer");
+        require(deal.status == DealStatus.Created, "Invalid status");
+        deal.status = DealStatus.Funded;
+        usdcToken.safeTransferFrom(msg.sender, address(this), deal.amount);
+    }
+
+    function completeDeal(uint256 _dealId) external nonReentrant {
+        Deal storage deal = deals[_dealId];
+        require(msg.sender == deal.buyer || msg.sender == deal.validator, "Not authorized");
+        deal.status = DealStatus.Completed;
+        if (deal.isEscrowEnabled) {
+            usdcToken.safeTransfer(deal.seller, deal.amount);
+        }
+    }
+}`
+  },
+  jsonld: {
+    caption: `trustmarkets-schema.json · JSON-LD standard (Alpina Foods GmbH example)`,
+    code: `{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Alpina Foods GmbH",
+  "url": "alpina-foods.eu",
+  "description": "European B2B food distributor and importer of premium agricultural and grocery goods.",
+  "identifier": {
+    "@type": "PropertyValue",
+    "propertyID": "TrustMarketsBaseAddress",
+    "value": "0x4B2...9f1"
+  },
+  "knowsAbout": [
+    "Organic Grains",
+    "Grocery Import and Export",
+    "Agricultural Commodities",
+    "Multimodal Freight Transportation"
+  ],
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Organic Durum Wheat Semolina",
+        "sku": "GR-SEM-01"
+      },
+      "price": "1200",
+      "priceCurrency": "EUR",
+      "incotermsDetails": "FCA Zurich Warehouse / CPT European Hub",
+      "acceptedPaymentMethod": [
+        "Bank Transfer (SEPA)",
+        "Cryptocurrency (USDC on Base)"
+      ]
+    }
+  ],
+  "potentialAction": {
+    "@type": "Demand",
+    "itemOffered": [
+      {
+        "@type": "Product",
+        "name": "Raw Cane Sugar (Bulk)",
+        "targetVolume": "Min. 50 metric tons / quarterly",
+        "preferredIncoterms": "CIF / DAP",
+        "maxBudget": "40000",
+        "priceCurrency": "EUR"
+      }
+    ]
+  }
+}`
+  }
+};
+
+let appState = {
+  roleMode: `buyers`,
+  roleStep: 0,
+  dealPreviewMode: `escrow`,
+  topology: `domain`,
+  calcType: `escrow`,
+  calcAmount: 25000,
+  calcMarketPct: 20,
+  toolkitMode: `cli`,
+  securityLayer: `dns`,
+  codeTab: `registry`,
+  sandboxDomain: `trustmarkets.net`,
+  sandboxWallet: `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`,
+  sandboxOffer: `Decentralized trade node — AI discovery, USDC escrow & Net-30 settlement`,
+  sandboxPublic: true,
+  sandboxDnsVerified: false,
+  sandboxTxSigned: false
+};
+
+function persistState() {
+  try { localStorage.setItem('trustmarkets_v12_state', JSON.stringify(appState)); } catch (e) {}
+}
+
+function jumpToSection(sectionId, focusId) {
+  const sec = document.getElementById(sectionId);
+  if (sec) {
+    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  if (focusId) {
+    setTimeout(function() {
+      const target = document.getElementById(focusId);
+      if (target) target.focus({ preventScroll: true });
+    }, 350);
+  }
+}
+
+function selectTopology(key) {
+  if (!TOPOLOGY_DATA[key]) return;
+  appState.topology = key;
+
+  const btns = document.querySelectorAll('.topo-btn[data-topo]');
+  btns.forEach(function(b) {
+    b.classList.toggle('active', b.dataset.topo === key);
+  });
+
+  const nodes = ['domain', 'registry', 'index', 'trade'];
+  nodes.forEach(function(n) {
+    const g = document.getElementById('svg-node-' + n);
+    if (!g) return;
+    const rect = g.querySelector('rect');
+    if (rect) {
+      rect.setAttribute('stroke', n === key ? '#63c7d6' : '#38515c');
+      rect.setAttribute('stroke-width', n === key ? '2' : '1.4');
+    }
+  });
+
+  const titleEl = document.getElementById('topo-title');
+  const descEl = document.getElementById('topo-desc');
+  if (titleEl) titleEl.textContent = TOPOLOGY_DATA[key].title;
+  if (descEl) descEl.textContent = TOPOLOGY_DATA[key].desc;
+
+  persistState();
+}
+
+function setRoleMode(mode) {
+  if (!ROLE_CONFIG[mode]) return;
+  appState.roleMode = mode;
+  appState.roleStep = 0;
+  renderRolesSection();
+  persistState();
+}
+
+function selectRoleStep(idx) {
+  appState.roleStep = idx;
+  renderRolesSection();
+  persistState();
+}
+
+function setDealPreviewMode(mode) {
+  appState.dealPreviewMode = mode;
+  renderRolePreview();
+  persistState();
+}
+
+function renderRolesSection() {
+  const mode = appState.roleMode;
+  const cfg = ROLE_CONFIG[mode];
+
+  const tabBuyers = document.getElementById('tab-buyers');
+  const tabSellers = document.getElementById('tab-sellers');
+  if (tabBuyers) {
+    tabBuyers.classList.toggle('active', mode === 'buyers');
+    tabBuyers.setAttribute('aria-selected', mode === 'buyers' ? 'true' : 'false');
+  }
+  if (tabSellers) {
+    tabSellers.classList.toggle('active', mode === 'sellers');
+    tabSellers.setAttribute('aria-selected', mode === 'sellers' ? 'true' : 'false');
+  }
+
+  const chip = document.getElementById('role-summary-chip');
+  if (chip) chip.textContent = cfg.chip;
+
+  const container = document.getElementById('role-steps-container');
+  if (container) {
+    container.innerHTML = '';
+    cfg.steps.forEach(function(st, i) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'step-card' + (appState.roleStep === i ? ' active' : '');
+      btn.onclick = function() { selectRoleStep(i); };
+
+      const tagsHtml = st.tags.map(function(t) {
+        return `<span class="mini-tag">${t}</span>`;
+      }).join('');
+
+      btn.innerHTML = `
+        <span class="step-num">${st.num}</span>
+        <div class="step-body">
+          <h3>${st.title}</h3>
+          <p>${st.desc}</p>
+          <div class="step-tags">${tagsHtml}</div>
+        </div>
+      `;
+      container.appendChild(btn);
+    });
+  }
+
+  renderRolePreview();
+}
+
+function renderRolePreview() {
+  const kicker = document.getElementById('preview-kicker');
+  const title = document.getElementById('preview-title');
+  const badge = document.getElementById('preview-badge');
+  const body = document.getElementById('preview-body');
+  if (!kicker || !title || !badge || !body) return;
+
+  const mode = appState.roleMode;
+  const step = appState.roleStep;
+
+  if (mode === 'buyers' && step === 0) {
+    kicker.textContent = `Step 01 · AI-agent vector search`;
+    title.textContent = `Query via ChatGPT / Claude / Cursor / CLI`;
+    badge.textContent = `Cosine Score: 0.94`;
+    body.innerHTML = `
+      <div class="well">
+        <span class="data-label">Agent request (POST /api/ai-search)</span>
+        <div class="kv-val">"Find a European supplier of organic durum wheat semolina (20t), FCA Zurich, payment in USDC or SEPA"</div>
+      </div>
+      <div class="kv-grid">
+        <div class="kv-item">
+          <span class="data-label">Matched node</span>
+          <div class="kv-val">Alpina Foods GmbH (alpina-foods.eu)</div>
+        </div>
+        <div class="kv-item">
+          <span class="data-label">Offer (SKU: GR-SEM-01)</span>
+          <div class="kv-val">1200 EUR/t · FCA Zurich Warehouse</div>
+        </div>
+      </div>
+      <pre class="code-pre">{
+  "status": "success",
+  "embeddingModel": "openai/text-embedding-3-small",
+  "topMatch": {
+    "domain": "alpina-foods.eu",
+    "aiPromptUri": "alpina-foods.eu/.well-known/trustmarkets-prompt.json",
+    "cosineSimilarity": 0.9412,
+    "trustScore": "Verified (14 closed deals)"
+  }
+}</pre>
+    `;
+  } else if (mode === 'buyers' && step === 1) {
+    kicker.textContent = `Step 02 · Personalized terms (SIWE EIP-4361)`;
+    title.textContent = `Authorization without passwords or third-party oracles`;
+    badge.textContent = `isTrustedPartner: true`;
+    body.innerHTML = `
+      <div class="kv-grid">
+        <div class="kv-item">
+          <span class="data-label">Agent signature</span>
+          <div class="kv-val">SIWE Message (EIP-4361) · Base ChainID 8453</div>
+        </div>
+        <div class="kv-item">
+          <span class="data-label">Seller RPC check</span>
+          <div class="kv-val">Mutual Attestation Active (0 gas)</div>
+        </div>
+      </div>
+      <pre class="code-pre">alpina-foods.eu wants you to sign in with your Ethereum account:
+0x89c4...12F0
+
+URI: alpina-foods.eu/api/private-prompt
+Version: 1 · Chain ID: 8453 (Base)
+
+--- Protected HTTPS API response ---
+{
+  "partnerTier": "Wholesale Tier A",
+  "volumeDiscount": "-8% from 20 metric tons",
+  "net30Eligible": true,
+  "privatePriceUSDC": "1104 USDC / ton"
+}</pre>
+    `;
+  } else if (mode === 'buyers' && step === 2) {
+    const isEscrow = appState.dealPreviewMode === 'escrow';
+    kicker.textContent = `Step 03 · TrustMarketsTrade.sol`;
+    title.textContent = `Switch the settlement mode`;
+    badge.textContent = isEscrow ? `USDC Escrow (0.1%)` : `Net-30 Invoice ($1)`;
+    const escrowSample = [
+      'createDeal(',
+      '  seller: 0x4B2...9f1,',
+      '  validator: 0x9D1...Audit,',
+      '  amount: 22080_000000, // 22,080 USDC',
+      '  termsUri: "ipfs://bafybeig...terms",',
+      '  isEscrowEnabled: true,',
+      '  durationDays: 14',
+      ') → fundEscrow(dealId) // Funds protected until acceptance'
+    ].join('\n');
+    const invoiceSample = [
+      'createDeal(',
+      '  seller: 0x4B2...9f1,',
+      '  validator: address(0),',
+      '  amount: 22080_000000, // Invoice equivalent',
+      '  termsUri: "ipfs://bafybeig...net30",',
+      '  isEscrowEnabled: false, // No token lock',
+      '  durationDays: 30',
+      ') → completeDeal(dealId) // Increases Trust Score'
+    ].join('\n');
+    const stateMachineText = isEscrow
+      ? 'Created → Funded → Delivered → Completed'
+      : 'Created (Invoice) → Delivered → Completed';
+    const paymentMechText = isEscrow
+      ? 'USDC locked in the smart contract'
+      : 'SEPA / SWIFT post-payment, Trust Score growth';
+    body.innerHTML = `
+      <div class="deal-mode-switch">
+        <button type="button" class="topo-btn ${isEscrow ? 'active' : ''}" onclick="setDealPreviewMode('escrow')">USDC Escrow (isEscrowEnabled = true)</button>
+        <button type="button" class="topo-btn ${!isEscrow ? 'active' : ''}" onclick="setDealPreviewMode('invoice')">Net-30 Invoice (isEscrowEnabled = false)</button>
+      </div>
+      <div class="kv-grid">
+        <div class="kv-item">
+          <span class="data-label">State machine on Base</span>
+          <div class="kv-val">${stateMachineText}</div>
+        </div>
+        <div class="kv-item">
+          <span class="data-label">Payment mechanism</span>
+          <div class="kv-val">${paymentMechText}</div>
+        </div>
+      </div>
+      <pre class="code-pre">${isEscrow ? escrowSample : invoiceSample}</pre>
+    `;
+  } else if (mode === 'sellers' && step === 0) {
+    kicker.textContent = `Step 01 · Domain ownership verification`;
+    title.textContent = `DNS TXT binding and $1 registration`;
+    badge.textContent = `Anti-Spam $1`;
+    const sellerStep0Code = [
+      '// Call TrustMarketsRegistry.sol on Base',
+      'setProfile(',
+      '  _domain: "alpina-foods.eu",',
+      '  _businessInfo: "European B2B food distributor",',
+      '  _aiPromptUri: "alpina-foods.eu/.well-known/trustmarkets-prompt.json"',
+      ')',
+      '// Anti-spam fee: $1.00 · domainToOwner[keccak256] protected from spoofing'
+    ].join('\n');
+    body.innerHTML = `
+      <div class="kv-grid">
+        <div class="kv-item">
+          <span class="data-label">DNS TXT (@)</span>
+          <div class="kv-val">evm-contract=0x4B2a...9f1</div>
+        </div>
+        <div class="kv-item">
+          <span class="data-label">Cloudflare DoH check</span>
+          <div class="kv-val">Status: NOERROR · Match confirmed</div>
+        </div>
+      </div>
+      <pre class="code-pre">${sellerStep0Code}</pre>
+    `;
+  } else if (mode === 'sellers' && step === 1) {
+    kicker.textContent = `Step 02 · Machine-readable catalog`;
+    title.textContent = `Publish offers as JSON-LD and MCP`;
+    badge.textContent = `Zero-Infra AI`;
+    body.innerHTML = `
+      <div class="well">
+        <span class="data-label">No server or API of your own?</span>
+        <div class="kv-val">Fill in the builder form on trustmarkets.net — the platform packages your profile into JSON-LD and indexes it for all external AI agents.</div>
+      </div>
+      <pre class="code-pre">{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Alpina Foods GmbH",
+  "makesOffer": [{
+    "@type": "Offer",
+    "itemOffered": { "name": "Organic Durum Wheat Semolina", "sku": "GR-SEM-01" },
+    "price": "1200",
+    "priceCurrency": "EUR",
+    "incotermsDetails": "FCA Zurich Warehouse"
+  }]
+}</pre>
+    `;
+  } else {
+    kicker.textContent = `Step 03 · Direct margin without intermediaries`;
+    title.textContent = `Inbound deals straight to your wallet`;
+    badge.textContent = `0% listing fee`;
+    body.innerHTML = `
+      <div class="kv-grid">
+        <div class="kv-item">
+          <span class="data-label">$25,000 deal on a marketplace (20%)</span>
+          <div class="kv-val">Intermediary fee: $5,000</div>
+        </div>
+        <div class="kv-item">
+          <span class="data-label">Deal on Trust Markets (USDC)</span>
+          <div class="kv-val" style="color: var(--tertiary);">Fee: $1 + $25 (0.1%) = $26</div>
+        </div>
+      </div>
+      <pre class="code-pre">[Inbound notification to the seller's wallet]
+Contract request #412 from the buyer's agent (0x89c4...12F0)
+Item: 20 t Organic Durum Wheat Semolina (GR-SEM-01)
+Amount: 22,080 USDC (Base Escrow) · Terms: FCA Zurich
+Action: [Sign the supply contract on Base]</pre>
+    `;
+  }
+}
+
+/* Calculator handlers */
+function onCalcTypeChange(val) {
+  appState.calcType = val;
+  updateCalculator();
+  persistState();
+}
+
+function syncAmountFromSlider(val) {
+  const numEl = document.getElementById('calc-amount-num');
+  if (numEl) numEl.value = val;
+  appState.calcAmount = Number(val) || 0;
+  updateCalculator();
+  persistState();
+}
+
+function syncAmountFromNumber(val) {
+  const clamped = Math.max(0, Number(val) || 0);
+  const sliderEl = document.getElementById('calc-amount-slider');
+  if (sliderEl) sliderEl.value = Math.min(250000, Math.max(1000, clamped));
+  appState.calcAmount = clamped;
+  updateCalculator();
+  persistState();
+}
+
+function syncMarketFeeFromSlider(val) {
+  const numEl = document.getElementById('calc-market-num');
+  if (numEl) numEl.value = val;
+  appState.calcMarketPct = Number(val) || 15;
+  updateCalculator();
+  persistState();
+}
+
+function syncMarketFeeFromNumber(val) {
+  const clamped = Math.min(40, Math.max(5, Number(val) || 15));
+  const sliderEl = document.getElementById('calc-market-slider');
+  if (sliderEl) sliderEl.value = Math.min(30, Math.max(15, clamped));
+  appState.calcMarketPct = clamped;
+  updateCalculator();
+  persistState();
+}
+
+function formatUsd(num) {
+  return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function updateCalculator() {
+  const type = appState.calcType;
+  const amount = appState.calcAmount;
+  const marketPct = appState.calcMarketPct;
+
+  const cryptoPctApplies = (type === 'escrow' || type === 'validator' || type === 'loan' || type === 'insurance');
+  const tmFee = 1 + (cryptoPctApplies ? amount * 0.001 : 0);
+  const marketFee = amount * (marketPct / 100);
+  const savings = Math.max(0, marketFee - tmFee);
+  const savingsPct = marketFee > 0 ? ((savings / marketFee) * 100) : 0;
+
+  const chip = document.getElementById('calc-mode-chip');
+  const outTm = document.getElementById('out-tm-fee');
+  const outTmBreak = document.getElementById('out-tm-breakdown');
+  const outMarket = document.getElementById('out-market-fee');
+  const outMarketPct = document.getElementById('out-market-pct');
+  const outSavings = document.getElementById('out-savings');
+  const outSavingsPct = document.getElementById('out-savings-pct');
+
+  const chipLabels = {
+    escrow: `USDC Escrow`,
+    invoice: `Net-30 Invoice (no 0.1%)`,
+    nda: `Partnership / NDA`,
+    validator: `Deal + Validator`,
+    loan: `Trade-backed lending`,
+    insurance: `Cargo insurance`,
+    info: `Informational registry`
+  };
+
+  if (chip) chip.textContent = chipLabels[type] || `Base Contract`;
+  if (outTm) outTm.textContent = formatUsd(tmFee);
+  if (outTmBreak) {
+    outTmBreak.textContent = cryptoPctApplies
+      ? `$1 contract + ${formatUsd(amount * 0.001)} (0.1% USDC)`
+      : `Only $1 for signing on Base`;
+  }
+  if (outMarket) outMarket.textContent = formatUsd(marketFee);
+  if (outMarketPct) outMarketPct.textContent = `${marketPct}% of deal amount`;
+  if (outSavings) outSavings.textContent = formatUsd(savings);
+  if (outSavingsPct) outSavingsPct.textContent = `${savingsPct.toFixed(1)}% savings`;
+}
+
+/* MCP & CLI Toolkit */
+const TOOLKIT_DATA = {
+  cli: {
+    label: `Terminal / Cursor / Claude Code (npx @trustmarkets/cli)`,
+    leftHtml: `
+      <span class="data-label">Local developer toolkit</span>
+      <h3 style="margin: 0; font-family: var(--font-headline); font-size: var(--subhead-size);">CLI and local stdio MCP server</h3>
+      <p style="margin: 0; color: var(--on-surface-variant);">
+        The <code style="font-family: var(--font-label);">@trustmarkets/cli</code> package runs without a global install via <code style="font-family: var(--font-label);">npx</code>. It supports JSON-LD business card generation, DNS TXT verification, vector search, and launching a local MCP server for Cursor and Claude Code.
+      </p>
+      <div class="well">
+        <span class="data-label">Available CLI commands</span>
+        <div class="kv-val" style="line-height: 1.7;">
+          • npx @trustmarkets/cli init — create trustmarkets-schema.json<br>
+          • npx @trustmarkets/cli verify-dns — check the TXT record via DoH<br>
+          • npx @trustmarkets/cli search "query" — semantic search<br>
+          • npx @trustmarkets/cli mcp — stdio server for Cursor / Claude Code
+        </div>
+      </div>
+    `,
+    code: `{
+  "mcpServers": {
+    "trustmarkets": {
+      "command": "npx",
+      "args": ["-y", "@trustmarkets/cli", "mcp"],
+      "env": {
+        "BASE_NETWORK": "base-mainnet",
+        "TRUSTMARKETS_DOMAIN": "trustmarkets.net"
+      }
+    }
+  }
+}`,
+    extra: ``
+  },
+  sse: {
+    label: `Remote SSE MCP Connector (Claude.ai / ChatGPT Web)`,
+    leftHtml: `
+      <span class="data-label">Zero-install web integration</span>
+      <h3 style="margin: 0; font-family: var(--font-headline); font-size: var(--subhead-size);">Connect via Settings → Connectors</h3>
+      <p style="margin: 0; color: var(--on-surface-variant);">
+        For Claude.ai and ChatGPT web clients, a remote SSE MCP gateway is provided. A business user only needs to paste the connector address into the model's settings — no terminal or local Node.js required.
+      </p>
+      <div class="well">
+        <span class="data-label">Connection steps in Claude.ai / ChatGPT</span>
+        <div class="kv-val" style="line-height: 1.7;">
+          1. Open Settings → Connectors (or Integrations).<br>
+          2. Click Add Custom MCP Connector.<br>
+          3. Paste the SSE endpoint: mcp.trustmarkets.net/sse.<br>
+          4. Optionally sign SIWE to access private price lists.
+        </div>
+      </div>
+    `,
+    code: `# Remote SSE MCP connector parameters
+Connector Name : Trust Markets B2B Node
+Transport      : Server-Sent Events (SSE)
+Endpoint       : mcp.trustmarkets.net/sse
+Chain Context  : Base L2 (Chain ID 8453)
+Auth (Private) : SIWE EIP-4361 Signature
+
+# MCP tools available to the AI agent:
+- search_suppliers(query, incoterms, maxPrice)
+- get_public_jsonld(domain)
+- request_private_prompt(domain, siweSignature)
+- prepare_trade_contract(seller, amountUSDC, isEscrow)`,
+    extra: ``
+  },
+  prompt: {
+    label: `Zero-Cost Client AI Agents (Mega-Prompt)`,
+    leftHtml: `
+      <span class="data-label">Zero server-cost architecture</span>
+      <h3 style="margin: 0; font-family: var(--font-headline); font-size: var(--subhead-size);">Personal mega-prompt for any LLM</h3>
+      <p style="margin: 0; color: var(--on-surface-variant);">
+        The platform spends nothing on server-side LLM APIs: a ready-made system instruction inserts your domain and Base contract and moves all analytics into your client chat in ChatGPT, Claude, or Gemini.
+      </p>
+      <div class="well">
+        <span class="data-label">What goes into the mega-prompt</span>
+        <div class="kv-val" style="line-height: 1.7;">
+          • Role model of an autonomous trade agent<br>
+          • Company domain and address on Base<br>
+          • Deal safety rules and Trust Score checks
+        </div>
+      </div>
+    `,
+    code: ``,
+    extra: `buttons`
+  }
+};
+
+function buildMegaPrompt() {
+  const domain = appState.sandboxDomain || `trustmarkets.net`;
+  const wallet = appState.sandboxWallet || `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`;
+  return `You are my personal autonomous trade agent on the Trust Markets platform (trustmarkets.net).
+My domain: ${domain}
+My wallet / contract on Base (Chain ID 8453): ${wallet}
+
+Your task is to help me find reliable suppliers and buyers through the semantic registry at trustmarkets.net, analyze public JSON-LD business cards (makesOffer / potentialAction), check Trust Scores, and prepare smart contract parameters for TrustMarketsTrade.sol (USDC escrow or Net-30 invoice).
+
+Safety rules:
+1. Never give financial guarantees without my explicit confirmation of the transaction in my wallet.
+2. For private price lists, request a SIWE signature (EIP-4361) after a mutual handshake.
+
+Greet me, clarify my current purchases or offers, and propose a strategy for finding counterparties.`;
+}
+
+function setToolkitMode(mode) {
+  if (!TOOLKIT_DATA[mode]) return;
+  appState.toolkitMode = mode;
+  renderToolkit();
+  persistState();
+}
+
+function renderToolkit() {
+  const mode = appState.toolkitMode;
+  ['cli', 'sse', 'prompt'].forEach(function(k) {
+    const btn = document.getElementById('tk-btn-' + k);
+    if (btn) {
+      btn.classList.toggle('active', k === mode);
+      btn.setAttribute('aria-selected', k === mode ? 'true' : 'false');
+    }
+  });
+
+  const data = TOOLKIT_DATA[mode];
+  const left = document.getElementById('tk-left-panel');
+  const label = document.getElementById('tk-code-label');
+  const codeBlock = document.getElementById('tk-code-block');
+  const extra = document.getElementById('tk-extra-actions');
+  const toast = document.getElementById('tk-copy-toast');
+  if (toast) toast.textContent = '';
+
+  if (left) left.innerHTML = data.leftHtml;
+  if (label) label.textContent = data.label;
+  if (codeBlock) {
+    codeBlock.textContent = mode === 'prompt' ? buildMegaPrompt() : data.code;
+  }
+  if (extra) {
+    if (mode === 'prompt') {
+      extra.innerHTML = `
+        <div class="launcher-row">
+          <button type="button" class="btn btn-secondary btn-compact" onclick="copyMegaPromptFor('ChatGPT')">Copy for ChatGPT</button>
+          <button type="button" class="btn btn-secondary btn-compact" onclick="copyMegaPromptFor('Claude')">Copy for Claude</button>
+          <button type="button" class="btn btn-secondary btn-compact" onclick="copyMegaPromptFor('Gemini')">Copy for Gemini</button>
+        </div>
+      `;
+    } else {
+      extra.innerHTML = ``;
+    }
+  }
+}
+
+function copyTextSafe(text, toastId, message) {
+  const toast = document.getElementById(toastId);
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+    navigator.clipboard.writeText(text).then(function() {
+      if (toast) toast.textContent = message;
+    }).catch(function() {
+      if (toast) toast.textContent = message + ' (select manually)';
+    });
+  } else {
+    if (toast) toast.textContent = message + ' (clipboard unavailable)';
+  }
+}
+
+function copyToolkitSnippet() {
+  const codeBlock = document.getElementById('tk-code-block');
+  if (!codeBlock) return;
+  copyTextSafe(codeBlock.textContent, 'tk-copy-toast', 'Copied to clipboard');
+}
+
+function copyMegaPromptFor(llmName) {
+  const promptText = buildMegaPrompt();
+  copyTextSafe(promptText, 'tk-copy-toast', `Mega-prompt copied — paste into ${llmName}`);
+}
+
+/* Security & Code Inspector */
+function selectSecurityLayer(layer) {
+  if (!SECURITY_LAYERS[layer]) return;
+  appState.securityLayer = layer;
+
+  ['dns', 'siwe', 'registry', 'trade'].forEach(function(k) {
+    const card = document.getElementById('sec-card-' + k);
+    if (card) card.classList.toggle('active', k === layer);
+  });
+
+  const lbl = document.getElementById('sec-detail-label');
+  const title = document.getElementById('sec-detail-title');
+  const txt = document.getElementById('sec-detail-text');
+  if (lbl) lbl.textContent = SECURITY_LAYERS[layer].label;
+  if (title) title.textContent = SECURITY_LAYERS[layer].title;
+  if (txt) txt.textContent = SECURITY_LAYERS[layer].text;
+
+  if (layer === 'registry') selectCodeTab('registry');
+  else if (layer === 'trade') selectCodeTab('trade');
+  else if (layer === 'siwe') selectCodeTab('jsonld');
+
+  persistState();
+}
+
+function selectCodeTab(tab) {
+  if (!CODE_SNIPPETS[tab]) return;
+  appState.codeTab = tab;
+
+  ['registry', 'trade', 'jsonld'].forEach(function(k) {
+    const btn = document.getElementById('code-tab-' + k);
+    if (btn) btn.classList.toggle('active', k === tab);
+  });
+
+  const cap = document.getElementById('code-tab-caption');
+  const pre = document.getElementById('code-inspector-pre');
+  const toast = document.getElementById('code-copy-toast');
+  if (toast) toast.textContent = '';
+  if (cap) cap.textContent = CODE_SNIPPETS[tab].caption;
+  if (pre) pre.textContent = CODE_SNIPPETS[tab].code;
+
+  persistState();
+}
+
+function copyCodeInspector() {
+  const pre = document.getElementById('code-inspector-pre');
+  if (!pre) return;
+  copyTextSafe(pre.textContent, 'code-copy-toast', 'Code copied');
+}
+
+/* Registration Sandbox */
+function buildSandboxJson() {
+  const domain = appState.sandboxDomain.trim() || `example.com`;
+  const wallet = appState.sandboxWallet.trim() || `0x0000...0000`;
+  const offer = appState.sandboxOffer.trim() || `B2B Product`;
+  const visibility = appState.sandboxPublic ? `Public (AI Indexed)` : `Incognito (Direct Contracts Only)`;
+
+  return JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://trustmarkets.net/#organization",
-    "name": "TrustMarkets.net — Trust Net Protocol v10.0",
-    "url": "https://trustmarkets.net",
-    "description": "Decentralized B2B marketplace powered by AI agents and Base L2 smart contracts, with Cloudflare DoH DNS TXT verification and SIWE (EIP-4361) authentication.",
+    "url": domain,
+    "visibilityMode": visibility,
     "identifier": {
       "@type": "PropertyValue",
       "propertyID": "TrustMarketsBaseAddress",
-      "value": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
-    }
+      "value": wallet
+    },
+    "makesOffer": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": offer
+        },
+        "acceptedPaymentMethod": [
+          "Cryptocurrency (USDC on Base)",
+          "Bank Transfer (SEPA)"
+        ]
+      }
+    ]
+  }, null, 2);
+}
+
+function onSandboxInput() {
+  const domEl = document.getElementById('sandbox-domain');
+  const walEl = document.getElementById('sandbox-wallet');
+  const offEl = document.getElementById('sandbox-offer');
+  const pubEl = document.getElementById('sandbox-public');
+
+  if (domEl) appState.sandboxDomain = domEl.value;
+  if (walEl) appState.sandboxWallet = walEl.value;
+  if (offEl) appState.sandboxOffer = offEl.value;
+  if (pubEl) appState.sandboxPublic = pubEl.checked;
+
+  appState.sandboxDnsVerified = false;
+  appState.sandboxTxSigned = false;
+
+  renderSandbox();
+  if (appState.toolkitMode === 'prompt') renderToolkit();
+  persistState();
+}
+
+function renderSandbox() {
+  const domEl = document.getElementById('sandbox-domain');
+  const walEl = document.getElementById('sandbox-wallet');
+  const offEl = document.getElementById('sandbox-offer');
+  const pubEl = document.getElementById('sandbox-public');
+
+  if (domEl && domEl.value !== appState.sandboxDomain) domEl.value = appState.sandboxDomain;
+  if (walEl && walEl.value !== appState.sandboxWallet) walEl.value = appState.sandboxWallet;
+  if (offEl && offEl.value !== appState.sandboxOffer) offEl.value = appState.sandboxOffer;
+  if (pubEl) pubEl.checked = Boolean(appState.sandboxPublic);
+
+  const txtEl = document.getElementById('sandbox-txt-val');
+  const txEl = document.getElementById('sandbox-tx-val');
+  const dnsBadge = document.getElementById('sandbox-dns-badge');
+  const txBadge = document.getElementById('sandbox-tx-badge');
+  const jsonPre = document.getElementById('sandbox-json-preview');
+
+  const domain = appState.sandboxDomain.trim() || `example.com`;
+  const wallet = appState.sandboxWallet.trim() || `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`;
+
+  if (txtEl) txtEl.textContent = `evm-contract=${wallet}`;
+  if (txEl) txEl.textContent = `setProfile("${domain}", …) · $1.00`;
+  if (jsonPre) jsonPre.textContent = buildSandboxJson();
+
+  if (dnsBadge) {
+    dnsBadge.className = appState.sandboxDnsVerified ? 'status-chip' : 'cyan-chip';
+    dnsBadge.textContent = appState.sandboxDnsVerified ? 'DoH: Verified' : 'Awaiting verification';
   }
-  </script>
+  if (txBadge) {
+    txBadge.className = appState.sandboxTxSigned ? 'status-chip' : 'cyan-chip';
+    txBadge.textContent = appState.sandboxTxSigned ? 'In Base registry' : 'Draft';
+  }
+}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          }
-        }
+async function simulateDnsCheck() {
+  const msg = document.getElementById('sandbox-inline-msg');
+  const domain = appState.sandboxDomain.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  const wallet = appState.sandboxWallet.trim();
+  if (!domain || !wallet) {
+    if (msg) msg.textContent = 'Enter a domain and a Base wallet address before verifying.';
+    return;
+  }
+  appState.sandboxDnsVerified = false;
+  renderSandbox();
+  if (msg) msg.textContent = `Querying Cloudflare DoH for ${domain}…`;
+  try {
+    const res = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=TXT`, { headers: { 'accept': 'application/dns-json' } });
+    const data = await res.json();
+    const answers = (data.Answer || []).map(a => a.data.replace(/^"|"$/g, ''));
+    const expected = `evm-contract=${wallet}`;
+    const found = answers.find(r => r.toLowerCase() === expected.toLowerCase());
+    if (found) {
+      appState.sandboxDnsVerified = true;
+      renderSandbox();
+      if (msg) msg.textContent = `Cloudflare DoH confirmed the TXT record for ${domain}. You can sign setProfile().`;
+    } else {
+      renderSandbox();
+      if (msg) msg.textContent = `No matching evm-contract TXT record found for ${domain} (DNS status: ${data.Status}). Publish "${expected}" and retry.`;
+    }
+  } catch (err) {
+    if (msg) msg.textContent = `DoH query failed: ${err.message}. Check the domain and try again.`;
+  }
+  persistState();
+}
+
+function simulateSetProfile() {
+  const msg = document.getElementById('sandbox-inline-msg');
+  if (!appState.sandboxDnsVerified) {
+    if (msg) msg.textContent = 'Verify the DNS TXT record via DoH before signing setProfile().';
+    return;
+  }
+  appState.sandboxTxSigned = true;
+  renderSandbox();
+  if (msg) msg.textContent = `Simulation of setProfile() on Base complete ($1 anti-spam fee). The profile ${appState.sandboxDomain} is ready for indexing.`;
+  persistState();
+}
+
+function exportGeneratedJsonLd() {
+  const jsonText = buildSandboxJson();
+  const msg = document.getElementById('sandbox-inline-msg');
+  try {
+    const blob = new Blob([jsonText], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'trustmarkets-schema.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+    if (msg) msg.textContent = 'File trustmarkets-schema.json exported.';
+  } catch (e) {
+    copyTextSafe(jsonText, 'sandbox-inline-msg', 'JSON-LD copied to clipboard');
+  }
+}
+
+function resetAppState(btn) {
+  if (btn.dataset.armed !== 'true') {
+    btn.dataset.armed = 'true';
+    btn.textContent = 'Click again to reset';
+    return;
+  }
+  btn.dataset.armed = 'false';
+  btn.textContent = 'Reset saved state';
+
+  appState = {
+    roleMode: `buyers`,
+    roleStep: 0,
+    dealPreviewMode: `escrow`,
+    topology: `domain`,
+    calcType: `escrow`,
+    calcAmount: 25000,
+    calcMarketPct: 20,
+    toolkitMode: `cli`,
+    securityLayer: `dns`,
+    codeTab: `registry`,
+    sandboxDomain: `alpina-foods.eu`,
+    sandboxWallet: `0x4B2a91c8e3D0f7aB2190E4c8B52a9f1`,
+    sandboxOffer: `Organic Durum Wheat Semolina — 1200 EUR/t, FCA Zurich`,
+    sandboxPublic: true,
+    sandboxDnsVerified: false,
+    sandboxTxSigned: false
+  };
+
+  applyAllUI();
+  persistState();
+}
+
+function applyAllUI() {
+  selectTopology(appState.topology);
+  renderRolesSection();
+
+  const calcTypeEl = document.getElementById('calc-type');
+  const calcAmtSlider = document.getElementById('calc-amount-slider');
+  const calcAmtNum = document.getElementById('calc-amount-num');
+  const calcMktSlider = document.getElementById('calc-market-slider');
+  const calcMktNum = document.getElementById('calc-market-num');
+
+  if (calcTypeEl) calcTypeEl.value = appState.calcType;
+  if (calcAmtSlider) calcAmtSlider.value = Math.min(250000, Math.max(1000, appState.calcAmount));
+  if (calcAmtNum) calcAmtNum.value = appState.calcAmount;
+  if (calcMktSlider) calcMktSlider.value = Math.min(30, Math.max(15, appState.calcMarketPct));
+  if (calcMktNum) calcMktNum.value = appState.calcMarketPct;
+
+  updateCalculator();
+  renderToolkit();
+  selectSecurityLayer(appState.securityLayer);
+  selectCodeTab(appState.codeTab);
+  renderSandbox();
+}
+
+function setupScrollReveals() {
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function(el) { el.classList.add('is-visible'); });
+    return;
+  }
+  const obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
       }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(function(el) { obs.observe(el); });
+}
+
+function initApp() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('trustmarkets_v12_state') || 'null');
+    if (saved && typeof saved === 'object') {
+      appState = Object.assign({}, appState, saved);
     }
-  </script>
-  <style>
-    body {
-      background:
-        radial-gradient(circle at 12% 15%, rgba(56, 189, 248, 0.12), transparent 35%),
-        radial-gradient(circle at 88% 20%, rgba(16, 185, 129, 0.12), transparent 38%),
-        radial-gradient(circle at 50% 85%, rgba(99, 102, 241, 0.10), transparent 45%),
-        linear-gradient(155deg, #07111e 0%, #0c192c 40%, #091c26 75%, #071a16 100%);
-      color: #e2e8f0;
-      min-height: 100vh;
-    }
-    .glass-card {
-      background: rgba(15, 23, 42, 0.72);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(148, 163, 184, 0.16);
-    }
-    .glass-card:hover {
-      border-color: rgba(56, 189, 248, 0.38);
-    }
-    .neon-badge {
-      background: linear-gradient(90deg, rgba(56, 189, 248, 0.15), rgba(16, 185, 129, 0.15));
-      border: 1px solid rgba(56, 189, 248, 0.35);
-    }
-    .code-scroll::-webkit-scrollbar {
-      height: 6px;
-      width: 6px;
-    }
-    .code-scroll::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.3);
-      border-radius: 4px;
-    }
-  </style>
-</head>
-<body class="antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
-
-  <!-- Sticky Top Bar & Navigation -->
-  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md">
-    <div class="bg-gradient-to-r from-cyan-950/70 via-slate-900 to-emerald-950/70 border-b border-slate-800/60 px-4 py-1.5 text-xs">
-      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-        <div class="flex items-center gap-2 text-cyan-300 font-medium">
-          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Trust Net Architecture v10.0 · Base L2 Network (Chain ID: 8453) · DNS over HTTPS + SIWE EIP-4361</span>
-        </div>
-        <div class="flex items-center gap-4 font-mono text-[11px] text-slate-400">
-          <span>Anti-Spam Fee: <strong class="text-emerald-400">$1.00 USDC/ETH</strong></span>
-          <a href="schema/trustmarkets-schema.json" target="_blank" class="text-cyan-400 hover:underline">trustmarkets-schema.json ↗</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
-      <a href="#" class="flex items-center gap-3 group">
-        <img src="favicon.svg" alt="TrustMarkets" class="w-10 h-10 rounded-xl shadow-lg shadow-cyan-500/15" />
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">trustmarkets.net</span>
-            <span class="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">v10.0</span>
-          </div>
-          <p class="text-xs text-slate-400">Decentralized B2B Trade & Web of Trust</p>
-        </div>
-      </a>
-
-      <nav class="hidden lg:flex items-center gap-6 text-sm text-slate-300">
-        <a href="#ai-search" class="hover:text-cyan-400 transition">AI Search & Registry</a>
-        <a href="#dns-siwe" class="hover:text-cyan-400 transition">DNS & SIWE</a>
-        <a href="#contracts" class="hover:text-cyan-400 transition">6 Base Contracts</a>
-        <a href="#trust-score" class="hover:text-cyan-400 transition">Trust Score Engine</a>
-        <a href="#jsonld-builder" class="hover:text-cyan-400 transition">JSON-LD & AI Agent</a>
-        <a href="#security" class="hover:text-cyan-400 transition">Security</a>
-      </nav>
-
-      <div class="flex items-center gap-2.5">
-        <button id="connectWalletBtn" onclick="connectWeb3Wallet()" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-sky-500 to-emerald-500 text-slate-950 hover:opacity-95 transition shadow-lg shadow-cyan-500/20">
-          Connect Base Wallet
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="relative overflow-hidden pt-12 pb-16 sm:py-20 border-b border-slate-800/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="grid lg:grid-cols-12 gap-10 items-center">
-        <div class="lg:col-span-12 space-y-6">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full neon-badge text-xs font-medium text-cyan-300">
-            <span>Base L2 (Ethereum) · Schema.org JSON-LD · Zero-Cost Client AI</span>
-          </div>
-
-          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.15]">
-            Decentralized Marketplace
-            <span class="bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">Powered by AI Agents &amp; Smart Contracts</span>
-          </h1>
-
-          <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
-            <strong class="text-white">trustmarkets.net</strong> is a decentralized marketplace for everyone — it removes intermediaries, SEO, and advertising costs from trade.
-          </p>
-
-          <div class="flex flex-wrap gap-3 pt-2">
-            <a href="#dns-siwe" class="px-5 py-3 rounded-xl font-semibold text-sm bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition shadow-lg shadow-cyan-500/20">
-              Register Domain ($1)
-            </a>
-            <a href="#ai-search" class="px-5 py-3 rounded-xl font-semibold text-sm glass-card text-white hover:border-cyan-400 transition">
-              AI Supplier Search
-            </a>
-            <a href="#ai-agents" class="px-5 py-3 rounded-xl font-semibold text-sm border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 transition">
-              Launch B2B AI Agent ↗
-            </a>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
-            <div class="glass-card rounded-xl p-3.5">
-              <div class="text-xs text-slate-400">Profile Registration</div>
-              <div class="text-xl font-bold text-white mt-0.5">$1.00</div>
-              <div class="text-[11px] text-emerald-400 font-mono">Anti-Spam Base L2</div>
-            </div>
-            <div class="glass-card rounded-xl p-3.5">
-              <div class="text-xs text-slate-400">Smart Contracts</div>
-              <div class="text-xl font-bold text-white mt-0.5">6 Types</div>
-              <div class="text-[11px] text-cyan-400 font-mono">Escrow & Net-30/60</div>
-            </div>
-            <div class="glass-card rounded-xl p-3.5">
-              <div class="text-xs text-slate-400">Core Identity</div>
-              <div class="text-xl font-bold text-white mt-0.5">0x... Wallet</div>
-              <div class="text-[11px] text-indigo-300 font-mono">Portable Reputation</div>
-            </div>
-            <div class="glass-card rounded-xl p-3.5">
-              <div class="text-xs text-slate-400">Price Privacy</div>
-              <div class="text-xl font-bold text-white mt-0.5">SIWE + X25519</div>
-              <div class="text-[11px] text-amber-300 font-mono">EIP-4361 Handshake</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 1: AI Vector Search & Live B2B Registry -->
-  <section id="ai-search" class="py-16 border-b border-slate-800/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <span class="text-xs font-mono uppercase text-cyan-400">Sections 6.1 & 7 · Semantic Vector Search + Trust Score</span>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Verified B2B Counterparty Discovery for AI Agents</h2>
-          <p class="text-sm text-slate-400 mt-1">
-            Interactive simulation of <code class="text-cyan-300">GET /api/ai-search?q=query</code>: blends JSON-LD embedding Cosine Similarity with onchain Base Trust Score.
-          </p>
-        </div>
-        <div class="flex items-center gap-3 bg-slate-900/90 border border-slate-800 px-3.5 py-2 rounded-xl">
-          <label for="alphaSlider" class="text-xs font-mono text-slate-300">Trust Weight α:</label>
-          <input id="alphaSlider" type="range" min="0.1" max="1.0" step="0.05" value="0.35" oninput="runAiSearch()" class="accent-cyan-400 w-24" />
-          <span id="alphaValue" class="text-xs font-mono font-bold text-cyan-400">0.35</span>
-        </div>
-      </div>
-
-      <div class="glass-card rounded-2xl p-5 space-y-5">
-        <div class="flex flex-col sm:flex-row gap-3">
-          <input
-            id="searchInput"
-            type="text"
-            value="sunflower oil CIF Rotterdam escrow USDC"
-            oninput="runAiSearch()"
-            placeholder="Enter AI agent query: e.g. sunflower oil CIF Rotterdam, PET preforms, 40HC container logistics, polymers..."
-            class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono"
-          />
-          <button onclick="runAiSearch()" class="px-5 py-3 rounded-xl font-semibold text-sm bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition">
-            Rank Suppliers
-          </button>
-        </div>
-
-        <div class="flex flex-wrap gap-2 text-xs">
-          <span class="text-slate-400 py-1">Sample B2B Queries:</span>
-          <button onclick="setSearchQuery('sunflower oil CIF Rotterdam USDC')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-cyan-300 font-mono">sunflower oil CIF Rotterdam</button>
-          <button onclick="setSearchQuery('40HC container rail freight China Europe')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-emerald-300 font-mono">40HC container freight</button>
-          <button onclick="setSearchQuery('SGS warehouse quality audit inspection')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-indigo-300 font-mono">warehouse quality audit</button>
-          <button onclick="setSearchQuery('granulated polymers HDPE Net-30 SEPA')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-amber-300 font-mono">HDPE polymers Net-30</button>
-          <button onclick="setSearchQuery('bot spam cheap oil')" class="px-2.5 py-1 rounded-lg bg-rose-950/60 border border-rose-500/30 hover:bg-rose-900/50 text-rose-300 font-mono">Sybil Anti-Spam Test (Bot vs Leader)</button>
-        </div>
-
-        <div id="searchResultsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 2: Live Cloudflare DoH DNS TXT Verifier & SIWE Auth -->
-  <section id="dns-siwe" class="py-16 border-b border-slate-800/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="mb-8">
-        <span class="text-xs font-mono uppercase text-emerald-400">Section 3 · One-Way DNS Verification & SIWE Authentication</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Live DNS TXT Verification (Cloudflare DoH) & EIP-4361 Handshake</h2>
-      </div>
-
-      <div class="grid lg:grid-cols-2 gap-6">
-        <!-- DNS TXT Verifier Card -->
-        <div class="glass-card rounded-2xl p-6 space-y-5">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="text-lg font-bold text-white">1. Domain TXT Record Check via Cloudflare DoH</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Live query to <code class="text-cyan-300">https://cloudflare-dns.com/dns-query?type=TXT</code></p>
-            </div>
-            <span class="px-2.5 py-1 rounded text-xs font-mono bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Live DoH API</span>
-          </div>
-
-          <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs space-y-1.5">
-            <div class="text-slate-400">Required TXT record format on corporate domain:</div>
-            <div class="font-mono text-emerald-400 select-all">evm-contract=0x742d35Cc6634C0532925a3b844Bc454e4438f44e</div>
-          </div>
-
-          <div class="flex flex-col sm:flex-row gap-2.5">
-            <input
-              id="dnsDomainInput"
-              type="text"
-              value="trustmarkets.net"
-              placeholder="company.com"
-              class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-cyan-400"
-            />
-            <button onclick="verifyDomainDns()" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition">
-              Verify DNS TXT
-            </button>
-          </div>
-
-          <div id="dnsResultBox" class="rounded-xl bg-slate-950/90 border border-slate-800 p-4 text-xs font-mono text-slate-300 space-y-2">
-            Click "Verify DNS TXT" to execute a real-time DNS-over-HTTPS query against Cloudflare and validate <code class="text-cyan-300">setProfile()</code> eligibility.
-          </div>
-        </div>
-
-        <!-- SIWE (Sign-In with Ethereum, EIP-4361) Card -->
-        <div class="glass-card rounded-2xl p-6 space-y-5">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="text-lg font-bold text-white">2. SIWE Auth (EIP-4361) for Private Prompts & Price Lists</h3>
-              <p class="text-xs text-slate-400 mt-0.5">Replay-attack protection + Free Base RPC check for active NDA Handshake</p>
-            </div>
-            <span class="px-2.5 py-1 rounded text-xs font-mono bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">EIP-4361 + X25519</span>
-          </div>
-
-          <div class="grid sm:grid-cols-2 gap-3">
-            <div>
-              <label class="text-xs text-slate-400">Supplier Domain</label>
-              <input id="siweDomain" type="text" value="agro-alliance.eu" oninput="updateSiweMessage()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-400">Buyer Wallet (Base L2)</label>
-              <input id="siweWallet" type="text" value="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" oninput="updateSiweMessage()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
-            </div>
-          </div>
-
-          <pre id="siweMessagePreview" class="bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] font-mono text-slate-300 overflow-x-auto code-scroll"></pre>
-
-          <div class="flex flex-wrap gap-2.5">
-            <button onclick="signSiweMessage()" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-400 text-slate-950 hover:bg-emerald-300 transition">
-              Sign SIWE (personal_sign)
-            </button>
-            <button onclick="regenerateSiweNonce()" class="px-3.5 py-2.5 rounded-xl text-xs font-mono border border-slate-700 bg-slate-900 text-slate-300 hover:border-cyan-400">
-              New Nonce
-            </button>
-          </div>
-
-          <div id="siweResultBox" class="hidden rounded-xl bg-emerald-950/40 border border-emerald-500/30 p-3.5 text-xs font-mono text-emerald-200 space-y-1"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 3: Arsenal of 6 Smart Contracts & Hybrid Trade Interactive Simulator -->
-  <section id="contracts" class="py-16 border-b border-slate-800/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-10">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <span class="text-xs font-mono uppercase text-cyan-400">Section 5 · Arsenal of 6 Trust Net Smart Contract Types</span>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Onchain Commercial & Legal Infrastructure on Base L2</h2>
-          <p class="text-sm text-slate-400 mt-1">Explore all 6 specialized Base smart contracts or configure a hybrid B2B trade settlement below.</p>
-        </div>
-        <a href="contracts/TrustMarketsTrade.sol" target="_blank" class="text-xs font-mono px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-cyan-300 hover:border-cyan-400">
-          Download TrustMarketsTrade.sol ↗
-        </a>
-      </div>
-
-      <!-- 6 Contracts Grid -->
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">Type 1 · Registry</span>
-              <span class="text-xs font-mono text-emerald-400">$1 Anti-Spam</span>
-            </div>
-            <h3 class="text-lg font-bold text-white">1. Informational Profile</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Links <code class="text-cyan-300">Domain ↔ Wallet ↔ aiPromptUri</code> in <code class="text-cyan-300">TrustMarketsRegistry.sol</code> after one-way DNS TXT verification.
-            </p>
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Function: <span class="text-sky-300">setProfile(domain, info, uri)</span>
-          </div>
-        </div>
-
-        <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">Type 2 · Handshake / NDA</span>
-              <span class="text-xs font-mono text-indigo-300">EIP-4361 Gate</span>
-            </div>
-            <h3 class="text-lg font-bold text-white">2. Mutual Trust / NDA</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Mutual Attestation Handshake (domain hashes). Bilateral onchain partnership attestation unlocking SIWE access to private prompts and wholesale price lists.
-            </p>
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Function: <span class="text-indigo-300">proposeOrAcceptHandshake(partner)</span>
-          </div>
-        </div>
-
-        <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4 border-cyan-500/40">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Type 3 · Hybrid Trade</span>
-              <span class="text-xs font-mono text-cyan-300">Escrow / Net-30</span>
-            </div>
-            <h3 class="text-lg font-bold text-white">3. Sale & Purchase (Hybrid)</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              <code class="text-emerald-300">TrustMarketsTrade.sol</code>: supports <strong>With Escrow</strong> (100% USDC locked until acceptance) or <strong>Without Escrow</strong> (Net-30/60 commercial invoice registry & SEPA).
-            </p>
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Function: <span class="text-emerald-300">createDeal(..., isEscrowEnabled)</span>
-          </div>
-        </div>
-
-        <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">Type 4 · Audit</span>
-              <span class="text-xs font-mono text-amber-300">Max Multiplier</span>
-            </div>
-            <h3 class="text-lg font-bold text-white">4. Validation & Audit</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Independent cargo batch or warehouse quality inspection signed onchain by a certified auditor node, granting the highest Trust Score multiplier.
-            </p>
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Function: <span class="text-amber-300">submitAuditorAttestation(id, hash)</span>
-          </div>
-        </div>
-
-        <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">Type 5 · Credit Pool</span>
-              <span class="text-xs font-mono text-purple-300">USDC Factoring</span>
-            </div>
-            <h3 class="text-lg font-bold text-white">5. Deal-Collateralized Credit</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Provides borrowed USDC liquidity directly into the smart contract escrow, collateralized by the underlying B2B trade receivable.
-            </p>
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Function: <span class="text-purple-300">fundDealWithCredit(dealId)</span>
-          </div>
-        </div>
-
-        <div class="glass-card rounded-2xl p-5 flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30">Type 6 · Hedging</span>
-              <span class="text-xs font-mono text-rose-300">Parametric USDC</span>
-            </div>
-            <h3 class="text-lg font-bold text-white">6. Trade & Cargo Insurance</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">
-              Onchain insurance coverage in USDC: automated risk hedging and instant payout upon verified logistics disruption.
-            </p>
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 font-mono text-[11px] text-slate-400">
-            Function: <span class="text-rose-300">attachInsurance(dealId, coverage)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Interactive Hybrid Deal Configurator (Section 5.1) -->
-      <div class="glass-card rounded-2xl p-6 border border-emerald-500/30 space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-          <div>
-            <span class="text-xs font-mono text-emerald-400 uppercase">Section 5.1 · TrustMarketsTrade.sol Deep Dive</span>
-            <h3 class="text-xl font-bold text-white">Hybrid B2B Deal Configurator (With Escrow / Without Escrow)</h3>
-          </div>
-          <div class="inline-flex rounded-xl bg-slate-950 p-1 border border-slate-800">
-            <button id="modeEscrowBtn" onclick="setTradeMode(true)" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-emerald-400 text-slate-950 transition">
-              isEscrowEnabled = true (USDC Escrow)
-            </button>
-            <button id="modeInvoiceBtn" onclick="setTradeMode(false)" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-400 hover:text-white transition">
-              isEscrowEnabled = false (Net-30/60 SEPA)
-            </button>
-          </div>
-        </div>
-
-        <div class="grid lg:grid-cols-12 gap-6 items-center">
-          <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-            <div>
-              <label class="text-xs text-slate-400">Seller Wallet (Base L2)</label>
-              <input id="dealSeller" type="text" value="0x8B3f92c1A4e05D6E7f1239a00B4c89E12c941B11" oninput="renderDealCalldata()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-400">Independent Auditor (Type 4)</label>
-              <input id="dealAuditor" type="text" value="0x55A1b8E9c40F22D190aBcE34901f2D19C77E0042" oninput="renderDealCalldata()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-400">Contract Amount (USDC)</label>
-              <input id="dealAmount" type="number" value="46000" oninput="renderDealCalldata()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-400">Settlement / Invoice Maturity (Days)</label>
-              <select id="dealNetDays" onchange="renderDealCalldata()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono">
-                <option value="14">14 Days (Spot Escrow Delivery)</option>
-                <option value="30" selected>Net-30 (30 Days Commercial Invoice)</option>
-                <option value="60">Net-60 (60 Days Commercial Invoice)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="lg:col-span-5 bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2.5">
-            <div id="dealModeBadge" class="text-xs font-mono font-semibold text-emerald-400"></div>
-            <p id="dealModeDesc" class="text-xs text-slate-300 leading-relaxed"></p>
-            <pre id="dealCalldataBox" class="text-[11px] font-mono text-cyan-300 bg-slate-900/90 p-3 rounded-lg overflow-x-auto"></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 4: Trust Score & Web of Trust Calculator (Section 6) -->
-  <section id="trust-score" class="py-16 border-b border-slate-800/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
-      <div>
-        <span class="text-xs font-mono uppercase text-cyan-400">Section 6 · Key Components of the Trust Score & Web of Trust</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Interactive Onchain Reputation Calculator (Trust Score)</h2>
-        <p class="text-sm text-slate-400 mt-1">
-          A dynamic wallet reputation index derived from 5 verifiable economic graph components and immune to Sybil manipulation.
-        </p>
-      </div>
-
-      <div class="grid lg:grid-cols-12 gap-6 items-start">
-        <div class="lg:col-span-7 glass-card rounded-2xl p-6 space-y-5">
-          <div class="space-y-1.5">
-            <div class="flex justify-between text-xs">
-              <span class="font-semibold text-white">1. Multi-Party Connection Graph</span>
-              <span id="tsVal1" class="font-mono text-cyan-400">14 counterparties</span>
-            </div>
-            <input id="tsInput1" type="range" min="0" max="50" value="14" oninput="recalcTrustScore()" class="w-full accent-cyan-400" />
-            <p class="text-[11px] text-slate-400">Diversity and count of active verified smart contracts (trade, supply, logistics, NDA handshakes).</p>
-          </div>
-
-          <div class="space-y-1.5">
-            <div class="flex justify-between text-xs">
-              <span class="font-semibold text-white">2. Counterparty Graph Weight & Lineage</span>
-              <span id="tsVal2" class="font-mono text-cyan-400">78 / 100</span>
-            </div>
-            <input id="tsInput2" type="range" min="1" max="100" value="78" oninput="recalcTrustScore()" class="w-full accent-cyan-400" />
-            <p class="text-[11px] text-slate-400">Average Trust Score and Base onchain history of trading partners (zero-history bots transfer near-zero weight).</p>
-          </div>
-
-          <div class="space-y-1.5">
-            <div class="flex justify-between text-xs">
-              <span class="font-semibold text-white">3. Independent Validator Verification Multiplier</span>
-              <span id="tsVal3" class="font-mono text-amber-300">5 audits</span>
-            </div>
-            <input id="tsInput3" type="range" min="0" max="20" value="5" oninput="recalcTrustScore()" class="w-full accent-amber-400" />
-            <p class="text-[11px] text-slate-400">Deals verified by a certified auditor node (cargo quality or warehouse inspection signed via Web3).</p>
-          </div>
-
-          <div class="space-y-1.5">
-            <div class="flex justify-between text-xs">
-              <span class="font-semibold text-white">4. Escrow & Commercial Invoice Settlement Rate</span>
-              <span id="tsVal4" class="font-mono text-emerald-400">96% dispute-free</span>
-            </div>
-            <input id="tsInput4" type="range" min="50" max="100" value="96" oninput="recalcTrustScore()" class="w-full accent-emerald-400" />
-            <p class="text-[11px] text-slate-400">Dispute-free USDC escrow releases and on-time Net-30 / Net-60 commercial invoice settlements.</p>
-          </div>
-
-          <div class="flex items-center justify-between pt-2 border-t border-slate-800">
-            <div>
-              <div class="text-xs font-semibold text-white">5. Economic Anti-Spam Protection ($1 Anti-Spam Cost + DNS TXT)</div>
-              <div class="text-[11px] text-slate-400">Filters out unverified Sybil botnets lacking Base registration fee and DNS TXT binding.</div>
-            </div>
-            <input id="tsInput5" type="checkbox" checked onchange="recalcTrustScore()" class="w-5 h-5 accent-emerald-400 rounded" />
-          </div>
-        </div>
-
-        <div class="lg:col-span-5 glass-card rounded-2xl p-6 space-y-5 border border-cyan-500/30">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-mono uppercase text-slate-400">Computed Onchain Rating</span>
-            <span id="tsTierBadge" class="px-2.5 py-0.5 rounded text-xs font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Tier AAA · Prime Partner</span>
-          </div>
-
-          <div class="flex items-baseline gap-3">
-            <div id="tsTotalScore" class="text-5xl font-extrabold bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent">94.8</div>
-            <div class="text-sm text-slate-400 font-mono">/ 100.0 Trust Score</div>
-          </div>
-
-          <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-            <div class="text-xs text-slate-400">AI Vector Search Ranking Multiplier (at α = 0.35):</div>
-            <div id="tsSearchBoost" class="text-xl font-bold font-mono text-cyan-300">×2.59 Cosine Similarity Boost</div>
-            <div class="text-[11px] font-mono text-slate-400">
-              1 + 0.35 × ln(1 + <span id="tsFormulaScore">94.8</span>)
-            </div>
-          </div>
-
-          <div class="text-xs text-slate-300 space-y-1.5 leading-relaxed">
-            <div>• <strong>Sybil Resistance:</strong> Spawning 1,000 empty bot wallets costs $1,000 in non-refundable Base fees and yields zero lineage weight.</div>
-            <div>• <strong>Domain Portability:</strong> 100% of reputation remains bound to the wallet when migrating domains via <code class="text-cyan-300">setProfile()</code>.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 5: JSON-LD Schema.org Generator & Zero-Cost Client AI Agents (Sections 4 & 8) -->
-  <section id="jsonld-builder" class="py-16 border-b border-slate-800/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-10">
-      <div>
-        <span class="text-xs font-mono uppercase text-emerald-400">Sections 4 & 8 · JSON-LD Semantic Standard & Zero-Cost Client AI</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">B2B JSON-LD Business Card Generator & 1-Click AI Agent Launcher</h2>
-        <p class="text-sm text-slate-400 mt-1">
-          Generate a compliant <code class="text-cyan-300">trustmarkets-schema.json</code> profile and launch your personal B2B AI agent in ChatGPT, Claude, or Gemini with zero server-side LLM API costs.
-        </p>
-      </div>
-
-      <div class="grid lg:grid-cols-12 gap-6">
-        <!-- Builder Form -->
-        <div class="lg:col-span-5 glass-card rounded-2xl p-6 space-y-4">
-          <h3 class="text-base font-bold text-white">Company Parameters (Schema.org Organization)</h3>
-
-          <div>
-            <label class="text-xs text-slate-400">Organization Name</label>
-            <input id="orgName" type="text" value="Nordic Agro Commodities BV" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="text-xs text-slate-400">Web2 Domain</label>
-              <input id="orgDomain" type="text" value="nordic-agro.eu" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-400">Base L2 Wallet (0x...)</label>
-              <input id="orgWallet" type="text" value="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
-            </div>
-          </div>
-
-          <div>
-            <label class="text-xs text-slate-400">Public Offer (makesOffer — Product, EUR/USDC Price, Incoterms)</label>
-            <input id="orgOffer" type="text" value="Refined Sunflower Oil ISO 22000 — 920 USDC/MT CIF Rotterdam" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
-          </div>
-
-          <div>
-            <label class="text-xs text-slate-400">Procurement Demand (potentialAction — BuyAction)</label>
-            <input id="orgNeed" type="text" value="Food-grade PET bottles & 40HC flexitank containers (100 MT/month)" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
-          </div>
-
-          <div>
-            <label class="text-xs text-slate-400">Logistics Partner (logistics on Base)</label>
-            <input id="orgLogistics" type="text" value="EuroTransit Multimodal AG (0x9A8f...1A09) — Maritime & Rail 40HC" oninput="updateJsonLdAndPrompt()" class="w-full mt-1 rounded-lg bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
-          </div>
-        </div>
-
-        <!-- Output JSON-LD & Zero-Cost AI Launchers -->
-        <div id="ai-agents" class="lg:col-span-7 glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
-          <div class="space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono text-cyan-400">Generated JSON-LD (trustmarkets-schema.json)</span>
-              <button onclick="copyJsonLd()" class="text-xs font-mono px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300">
-                Copy JSON-LD
-              </button>
-            </div>
-            <pre id="jsonLdPreview" class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-[11px] font-mono text-slate-200 max-h-64 overflow-y-auto code-scroll"></pre>
-          </div>
-
-          <div class="pt-3 border-t border-slate-800 space-y-3">
-            <div class="flex items-center justify-between">
-              <div>
-                <h4 class="text-sm font-bold text-white">1-Click Client B2B AI Agent Launch (Zero-Cost Client AI)</h4>
-                <p class="text-xs text-slate-400">Automatically copies the structured B2B agent instructions and opens your preferred LLM:</p>
-              </div>
-              <button onclick="copyAgentPrompt()" class="text-xs font-mono px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30">
-                Copy Agent Prompt
-              </button>
-            </div>
-
-            <div class="grid sm:grid-cols-3 gap-3">
-              <a id="launchChatGpt" href="#" target="_blank" rel="noopener" onclick="copyAgentPrompt(true)" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-xs bg-emerald-400 text-slate-950 hover:bg-emerald-300 transition">
-                <span>Launch in ChatGPT ↗</span>
-              </a>
-              <a id="launchClaude" href="#" target="_blank" rel="noopener" onclick="copyAgentPrompt(true)" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-xs bg-amber-400 text-slate-950 hover:bg-amber-300 transition">
-                <span>Launch in Claude ↗</span>
-              </a>
-              <a id="launchGemini" href="https://gemini.google.com/app" target="_blank" rel="noopener" onclick="copyAgentPrompt(true)" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-xs bg-sky-400 text-slate-950 hover:bg-sky-300 transition">
-                <span>Launch in Gemini (Clipboard) ↗</span>
-              </a>
-            </div>
-            <div id="copyStatusToast" class="hidden text-xs font-mono text-emerald-400"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 6: Attack Vectors & Security Matrix (Section 9) -->
-  <section id="security" class="py-16 border-b border-slate-800/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
-      <div>
-        <span class="text-xs font-mono uppercase text-cyan-400">Section 9 · Attack Vector Analysis & Security Mechanisms</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Defense-in-Depth Against Web2 & Web3 Attack Vectors</h2>
-      </div>
-
-      <div class="overflow-x-auto glass-card rounded-2xl">
-        <table class="w-full text-left border-collapse text-xs sm:text-sm">
-          <thead>
-            <tr class="border-b border-slate-800 bg-slate-950/60 text-slate-300 font-mono text-xs uppercase">
-              <th class="py-3.5 px-5">Attack Vector</th>
-              <th class="py-3.5 px-5">Threat Description</th>
-              <th class="py-3.5 px-5">Trust Net v10.0 Defense Mechanism</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-800/70 text-slate-300">
-            <tr>
-              <td class="py-4 px-5 font-semibold text-white font-mono">DNS Hijacking / Spoofing</td>
-              <td class="py-4 px-5">Publishing another company's wallet in a malicious domain's TXT record or seizing an existing domain at the registrar.</td>
-              <td class="py-4 px-5 text-emerald-300">Calling <code class="text-cyan-300">setProfile()</code> requires a cryptographic signature from the private key of the <code class="text-cyan-300">0x...</code> wallet. If a domain is hijacked, the attacker gets an empty profile with zero reputation, while the legitimate owner re-binds a new domain and keeps 100% of their Trust Score.</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-5 font-semibold text-white font-mono">SIWE Replay Attacks</td>
-              <td class="py-4 px-5">Intercepting an EIP-4361 signature to gain unauthorized access to private prompts and wholesale price lists.</td>
-              <td class="py-4 px-5 text-emerald-300">Single-use cryptographic <code class="text-cyan-300">nonce</code>, strict binding to <code class="text-cyan-300">domain</code>, <code class="text-cyan-300">chainId: 8453</code>, and short-lived <code class="text-cyan-300">expirationTime</code> inside the signed SIWE payload.</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-5 font-semibold text-white font-mono">Sybil / Rating Manipulation</td>
-              <td class="py-4 px-5">Creating thousands of bot wallets to artificially inflate Trust Score.</td>
-              <td class="py-4 px-5 text-emerald-300">Fixed $1 anti-spam fee per profile on Base + lineage graph weighting based on counterparty onchain history and certified independent auditor signatures.</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-5 font-semibold text-white font-mono">Trade Secret Leakage</td>
-              <td class="py-4 px-5">Competitors scraping bespoke pricing, volume discounts, and supply terms.</td>
-              <td class="py-4 px-5 text-emerald-300">Asymmetric <code class="text-cyan-300">X25519</code> encryption for Confidential mode combined with a free Base RPC check for an active mutual onchain handshake (<code class="text-cyan-300">hasActiveHandshake</code>) prior to serving private data.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="py-10 bg-slate-950/90 text-xs text-slate-400">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <img src="favicon.svg" alt="TrustMarkets" class="w-7 h-7 rounded-lg" />
-        <span>© 2026 <strong>trustmarkets.net</strong> — Decentralized B2B System Trust Net v10.0 (Base L2)</span>
-      </div>
-      <div class="flex flex-wrap gap-4 font-mono">
-        <a href="contracts/TrustMarketsRegistry.sol" target="_blank" class="hover:text-cyan-400">TrustMarketsRegistry.sol</a>
-        <a href="contracts/TrustMarketsTrade.sol" target="_blank" class="hover:text-cyan-400">TrustMarketsTrade.sol</a>
-        <a href="schema/trustmarkets-schema.json" target="_blank" class="hover:text-cyan-400">trustmarkets-schema.json</a>
-        <a href="backend/indexer.js" target="_blank" class="hover:text-cyan-400">indexer.js</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Client-Side Application Logic -->
-  <script>
-    const B2B_PROFILES = [
-      {
-        domain: "nordic-agro.eu",
-        name: "Nordic Agro Commodities BV",
-        wallet: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-        trustScore: 98.4,
-        audits: 12,
-        settlementRate: "99.2%",
-        category: "Agro & Oils",
-        offer: "Refined Sunflower Oil ISO 22000 — 920 USDC/MT CIF Rotterdam / FOB Black Sea",
-        keywords: "sunflower oil agro commodities cif rotterdam fob black sea iso 22000 usdc escrow food grade",
-        verifiedDns: true
-      },
-      {
-        domain: "eurotransit-freight.de",
-        name: "EuroTransit Multimodal Logistics AG",
-        wallet: "0x9A8f7C6d5E4b3A2f1E0D9C8B7A6F5E4D3C2B1A09",
-        trustScore: 95.1,
-        audits: 9,
-        settlementRate: "98.5%",
-        category: "Logistics & 40HC",
-        offer: "40HC Container Rail & Maritime Freight China ↔ Europe, Customs Clearance, Cargo Insurance",
-        keywords: "40hc container rail freight china europe logistics multimodal customs insurance",
-        verifiedDns: true
-      },
-      {
-        domain: "veritas-audit-node.ch",
-        name: "Veritas Independent B2B Validator SA",
-        wallet: "0x55A1b8E9c40F22D190aBcE34901f2D19C77E0042",
-        trustScore: 99.1,
-        audits: 44,
-        settlementRate: "100%",
-        category: "Validator & Audit (Type 4)",
-        offer: "SGS-grade Warehouse & Pre-Shipment Quality Inspection with Onchain Web3 Attestation on Base",
-        keywords: "sgs warehouse quality audit inspection validator attestation pre-shipment certificate",
-        verifiedDns: true
-      },
-      {
-        domain: "baltic-polymers.pl",
-        name: "Baltic Polymers & Packaging Sp. z o.o.",
-        wallet: "0x8B3f92c1A4e05D6E7f1239a00B4c89E12c941B11",
-        trustScore: 89.6,
-        audits: 6,
-        settlementRate: "96.8%",
-        category: "Polymers & Packaging",
-        offer: "Food-Grade PET Preforms & Granulated HDPE — 1,140 EUR/MT DAP Central Europe (Net-30 SEPA / USDC)",
-        keywords: "pet preforms packaging granulated polymers hdpe net-30 sepa dap europe bottles",
-        verifiedDns: true
-      },
-      {
-        domain: "anatolia-steel-trade.tr",
-        name: "Anatolia Coils & Industrial Metals A.S.",
-        wallet: "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-        trustScore: 84.2,
-        audits: 4,
-        settlementRate: "94.0%",
-        category: "Metals & Hardware",
-        offer: "Hot-Rolled Steel Coils EN 10025 — 610 USDC/MT FOB Istanbul (Hybrid Escrow + Cargo Insurance)",
-        keywords: "steel coils metals hardware fob istanbul escrow insurance industrial",
-        verifiedDns: true
-      },
-      {
-        domain: "cheap-oil-bot-772.xyz",
-        name: "Unverified Sybil Bot Node #772",
-        wallet: "0x000000000000000000000000000000000000dead",
-        trustScore: 1.2,
-        audits: 0,
-        settlementRate: "0%",
-        category: "Sybil / Low-Trust Example",
-        offer: "Cheap Sunflower Oil 500 USDC CIF Rotterdam Bot Spam",
-        keywords: "sunflower oil cif rotterdam bot spam cheap oil usdc",
-        verifiedDns: false
-      }
-    ];
-
-    function computeCosineSim(query, docText) {
-      const qTokens = query.toLowerCase().split(/[^a-z0-9-]+/).filter(Boolean);
-      if (!qTokens.length) return 0.5;
-      const dText = docText.toLowerCase();
-      let hits = 0;
-      qTokens.forEach(tok => {
-        if (dText.includes(tok)) hits += 1;
-      });
-      return Math.min(0.99, 0.25 + (hits / qTokens.length) * 0.72);
-    }
-
-    function setSearchQuery(q) {
-      document.getElementById('searchInput').value = q;
-      runAiSearch();
-    }
-
-    function runAiSearch() {
-      const query = document.getElementById('searchInput').value.trim();
-      const alpha = parseFloat(document.getElementById('alphaSlider').value);
-      document.getElementById('alphaValue').textContent = alpha.toFixed(2);
-
-      const scored = B2B_PROFILES.map(item => {
-        const sim = computeCosineSim(query, `${item.domain} ${item.name} ${item.offer} ${item.keywords}`);
-        const boost = 1 + alpha * Math.log(1 + item.trustScore);
-        const finalRank = sim * boost;
-        return { ...item, sim, boost, finalRank };
-      }).sort((a, b) => b.finalRank - a.finalRank);
-
-      const grid = document.getElementById('searchResultsGrid');
-      grid.innerHTML = scored.map((item, idx) => `
-        <div class="rounded-xl p-4 border ${item.verifiedDns ? 'bg-slate-950/80 border-slate-800 hover:border-cyan-500/40' : 'bg-rose-950/20 border-rose-500/30'} transition flex flex-col justify-between space-y-3">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between gap-2">
-              <span class="text-xs font-mono px-2 py-0.5 rounded ${idx === 0 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-slate-800 text-slate-300'}">
-                #${idx + 1} · Rank: ${item.finalRank.toFixed(3)}
-              </span>
-              <span class="text-xs font-mono ${item.trustScore > 50 ? 'text-cyan-300' : 'text-rose-400'}">
-                Trust Score: <strong>${item.trustScore}</strong>
-              </span>
-            </div>
-            <div>
-              <div class="font-bold text-white text-sm flex items-center gap-1.5">
-                <span>${item.domain}</span>
-                ${item.verifiedDns ? '<span class="text-emerald-400 text-xs" title="DNS TXT Verified">✓ DNS</span>' : '<span class="text-rose-400 text-xs">⚠ Sybil</span>'}
-              </div>
-              <div class="text-xs text-slate-400">${item.name}</div>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed">${item.offer}</p>
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 space-y-1 text-[11px] font-mono text-slate-400">
-            <div class="flex justify-between">
-              <span>Cosine Sim: <strong class="text-slate-200">${item.sim.toFixed(3)}</strong></span>
-              <span>Boost: <strong class="text-emerald-400">×${item.boost.toFixed(2)}</strong></span>
-            </div>
-            <div class="flex justify-between">
-              <span>Audits: ${item.audits}</span>
-              <span>Settlement: ${item.settlementRate}</span>
-            </div>
-            <div class="truncate text-slate-500">Base: ${item.wallet}</div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    async function verifyDomainDns() {
-      const domain = document.getElementById('dnsDomainInput').value.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
-      const box = document.getElementById('dnsResultBox');
-      if (!domain) return;
-      box.innerHTML = `<span class="text-cyan-300">Querying Cloudflare DoH for <strong>${domain}</strong>...</span>`;
-      try {
-        const res = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=TXT`, {
-          headers: { 'accept': 'application/dns-json' }
-        });
-        const data = await res.json();
-        const answers = (data.Answer || []).map(a => a.data.replace(/^"|"$/g, ''));
-        const evmRecord = answers.find(r => r.startsWith('evm-contract=0x'));
-
-        if (evmRecord) {
-          const wallet = evmRecord.split('=')[1];
-          box.innerHTML = `
-            <div class="text-emerald-400 font-bold">✓ Domain ${domain} verified via Cloudflare DoH!</div>
-            <div>Found TXT Record: <code class="text-white">${evmRecord}</code></div>
-            <div>Bound Base L2 Wallet: <code class="text-cyan-300">${wallet}</code></div>
-            <div class="text-slate-400 pt-1">Onchain transaction <code>setProfile("${domain}", ...)</code> is ready to be broadcast.</div>
-          `;
-        } else {
-          box.innerHTML = `
-            <div class="text-amber-300 font-bold">ℹ Domain ${domain} resolved in DNS (Status: ${data.Status}), but no evm-contract=0x... TXT record was found yet.</div>
-            <div>Current TXT records (${answers.length}): <code class="text-slate-400">${answers.length ? answers.join(' | ') : 'no TXT records'}</code></div>
-            <div class="text-emerald-300 pt-1">Add a DNS TXT record on your domain: <code>evm-contract=0xYourBaseWallet</code> to bind your profile.</div>
-          `;
-        }
-      } catch (err) {
-        box.innerHTML = `<span class="text-rose-400">DoH query error: ${err.message}</span>`;
-      }
-    }
-
-    let currentSiweNonce = Math.random().toString(36).substring(2, 12) + Math.random().toString(36).substring(2, 8);
-
-    function regenerateSiweNonce() {
-      currentSiweNonce = Math.random().toString(36).substring(2, 12) + Math.random().toString(36).substring(2, 8);
-      updateSiweMessage();
-    }
-
-    function updateSiweMessage() {
-      const domain = document.getElementById('siweDomain').value.trim() || 'trustmarkets.net';
-      const wallet = document.getElementById('siweWallet').value.trim() || '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
-      const now = new Date().toISOString();
-      const exp = new Date(Date.now() + 15 * 60 * 1000).toISOString();
-      const msg = `${domain} wants you to sign in with your Ethereum account:\n${wallet}\n\nTrust Net v10.0 Confidential B2B Prompt & Price-List Access (Requires Mutual Handshake on Base L2).\n\nURI: https://${domain}/api/private-prompt\nVersion: 1\nChain ID: 8453\nNonce: ${currentSiweNonce}\nIssued At: ${now}\nExpiration Time: ${exp}`;
-      document.getElementById('siweMessagePreview').textContent = msg;
-      return { msg, wallet, domain };
-    }
-
-    async function signSiweMessage() {
-      const { msg, wallet, domain } = updateSiweMessage();
-      const out = document.getElementById('siweResultBox');
-      out.classList.remove('hidden');
-
-      if (window.ethereum) {
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const signer = accounts[0] || wallet;
-          const sig = await window.ethereum.request({
-            method: 'personal_sign',
-            params: [msg, signer]
-          });
-          out.innerHTML = `
-            <div class="font-bold text-emerald-300">✓ EIP-4361 (SIWE) signature received from ${signer}</div>
-            <div class="truncate">Signature: ${sig}</div>
-            <div>Base RPC check <code>hasActiveHandshake("${signer}", "${domain}")</code> → X25519 confidential price list unlocked.</div>
-          `;
-          return;
-        } catch (err) {
-          // Fall through to deterministic simulation if user cancels wallet popup
-        }
-      }
-
-      const mockSig = '0x9f8e7d6c5b4a392817263544536271809a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d' + currentSiweNonce.slice(0, 8) + '1b';
-      out.innerHTML = `
-        <div class="font-bold text-emerald-300">✓ Demo EIP-4361 signature generated (Nonce: ${currentSiweNonce})</div>
-        <div class="truncate">Signature: ${mockSig}</div>
-        <div>Base RPC check <code>TrustMarketsRegistry.hasActiveHandshake()</code> (Chain ID 8453): <strong>ACTIVE</strong> · Confidential JSON-LD decrypted (X25519).</div>
-      `;
-    }
-
-    let currentEscrowMode = true;
-
-    function setTradeMode(isEscrow) {
-      currentEscrowMode = isEscrow;
-      const btnEscrow = document.getElementById('modeEscrowBtn');
-      const btnInvoice = document.getElementById('modeInvoiceBtn');
-      if (isEscrow) {
-        btnEscrow.className = 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-emerald-400 text-slate-950 transition';
-        btnInvoice.className = 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-400 hover:text-white transition';
-      } else {
-        btnInvoice.className = 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-cyan-400 text-slate-950 transition';
-        btnEscrow.className = 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-400 hover:text-white transition';
-      }
-      renderDealCalldata();
-    }
-
-    function renderDealCalldata() {
-      const seller = document.getElementById('dealSeller').value.trim();
-      const auditor = document.getElementById('dealAuditor').value.trim();
-      const amount = Number(document.getElementById('dealAmount').value || 0);
-      const netDays = Number(document.getElementById('dealNetDays').value || 30);
-      const usdcUnits = (amount * 1e6).toLocaleString('fullwide', { useGrouping: false });
-
-      const badge = document.getElementById('dealModeBadge');
-      const desc = document.getElementById('dealModeDesc');
-      const box = document.getElementById('dealCalldataBox');
-
-      if (currentEscrowMode) {
-        badge.textContent = 'WITH ESCROW MODE (isEscrowEnabled = true)';
-        badge.className = 'text-xs font-mono font-semibold text-emerald-400';
-        desc.textContent = 'Buyer locks 100% of USDC in the Base smart contract. Funds are released to the seller only upon confirmed shipment and delivery acceptance or an independent auditor Web3 attestation.';
-      } else {
-        badge.textContent = 'WITHOUT ESCROW MODE (isEscrowEnabled = false)';
-        badge.className = 'text-xs font-mono font-semibold text-cyan-400';
-        desc.textContent = 'Counterparties sign the agreement without locking liquidity (settled via SEPA wire or Net-30/60 post-payment). The smart contract acts as an immutable commercial invoice registry for Trust Score calculation.';
-      }
-
-      box.textContent = `TrustMarketsTrade.createDeal(\n  seller: "${seller}",\n  auditor: "${auditor}",\n  amountUsdc: ${usdcUnits}, // ${amount.toLocaleString()} USDC\n  netDays: ${netDays},\n  termsHash: "0x8f4e2c...91a4",\n  isEscrowEnabled: ${currentEscrowMode}\n)`;
-    }
-
-    function recalcTrustScore() {
-      const c1 = Number(document.getElementById('tsInput1').value);
-      const c2 = Number(document.getElementById('tsInput2').value);
-      const c3 = Number(document.getElementById('tsInput3').value);
-      const c4 = Number(document.getElementById('tsInput4').value);
-      const antiSpam = document.getElementById('tsInput5').checked;
-
-      document.getElementById('tsVal1').textContent = `${c1} counterparties`;
-      document.getElementById('tsVal2').textContent = `${c2} / 100`;
-      document.getElementById('tsVal3').textContent = `${c3} audits`;
-      document.getElementById('tsVal4').textContent = `${c4}% dispute-free`;
-
-      let raw = (Math.min(c1, 30) / 30) * 25 + (c2 / 100) * 25 + (Math.min(c3, 12) / 12) * 25 + ((c4 - 50) / 50) * 25;
-      if (!antiSpam) raw = Math.min(raw * 0.08, 4.5);
-      const score = Math.max(0, Math.min(100, raw)).toFixed(1);
-
-      const alpha = 0.35;
-      const boost = (1 + alpha * Math.log(1 + Number(score))).toFixed(2);
-
-      document.getElementById('tsTotalScore').textContent = score;
-      document.getElementById('tsFormulaScore').textContent = score;
-      document.getElementById('tsSearchBoost').textContent = `×${boost} Cosine Similarity Boost`;
-
-      const badge = document.getElementById('tsTierBadge');
-      if (!antiSpam) {
-        badge.textContent = 'Filtered · Sybil Suspected';
-        badge.className = 'px-2.5 py-0.5 rounded text-xs font-mono bg-rose-500/20 text-rose-300 border border-rose-500/30';
-      } else if (score >= 85) {
-        badge.textContent = 'Tier AAA · Prime Partner';
-        badge.className = 'px-2.5 py-0.5 rounded text-xs font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
-      } else if (score >= 60) {
-        badge.textContent = 'Tier A · Verified B2B';
-        badge.className = 'px-2.5 py-0.5 rounded text-xs font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30';
-      } else {
-        badge.textContent = 'Tier B · Emerging Node';
-        badge.className = 'px-2.5 py-0.5 rounded text-xs font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30';
-      }
-    }
-
-    function updateJsonLdAndPrompt() {
-      const name = document.getElementById('orgName').value.trim();
-      const domain = document.getElementById('orgDomain').value.trim();
-      const wallet = document.getElementById('orgWallet').value.trim();
-      const offer = document.getElementById('orgOffer').value.trim();
-      const need = document.getElementById('orgNeed').value.trim();
-      const logistics = document.getElementById('orgLogistics').value.trim();
-
-      const schemaObj = {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "@id": `https://${domain}/#organization`,
-        "name": name,
-        "url": `https://${domain}`,
-        "identifier": {
-          "@type": "PropertyValue",
-          "propertyID": "TrustMarketsBaseAddress",
-          "value": wallet
-        },
-        "additionalProperty": [
-          { "@type": "PropertyValue", "name": "dnsTxtRecord", "value": `evm-contract=${wallet}` },
-          { "@type": "PropertyValue", "name": "network", "value": "Base L2 (chainId: 8453)" }
-        ],
-        "makesOffer": {
-          "@type": "Offer",
-          "description": offer,
-          "settlement": "TrustMarketsTrade.sol (Hybrid USDC Escrow / Net-30)"
-        },
-        "potentialAction": {
-          "@type": "BuyAction",
-          "description": need
-        },
-        "logistics": {
-          "@type": "Organization",
-          "description": logistics
-        }
-      };
-
-      const jsonText = JSON.stringify(schemaObj, null, 2);
-      document.getElementById('jsonLdPreview').textContent = jsonText;
-
-      const agentPrompt = `You are an autonomous B2B AI Agent operating on the TrustMarkets.net ecosystem (Trust Net v10.0 on Base L2).
-My Company Profile:
-- Organization: ${name} (${domain})
-- Base L2 Wallet (TrustMarketsBaseAddress): ${wallet}
-- Public Offer (makesOffer): ${offer}
-- Procurement Demand (potentialAction): ${need}
-- Logistics Partner (logistics): ${logistics}
-
-Instructions:
-1. Discover and rank B2B counterparties using the Trust Net formula: Final_Rank_Score = Cosine_Similarity * (1 + 0.35 * log(1 + Trust_Score)).
-2. Verify each counterparty's DNS TXT record (evm-contract=0x...) and recommend the optimal settlement mode in TrustMarketsTrade.sol (USDC Escrow for first-time counterparties or Non-Escrow Net-30/60 commercial invoice registry for high-Trust-Score partners).`;
-
-      const encoded = encodeURIComponent(agentPrompt);
-      document.getElementById('launchChatGpt').href = `https://chatgpt.com/?q=${encoded}`;
-      document.getElementById('launchClaude').href = `https://claude.ai/new?q=${encoded}`;
-      window.__currentAgentPrompt = agentPrompt;
-      window.__currentJsonLd = jsonText;
-    }
-
-    function showToast(text) {
-      const el = document.getElementById('copyStatusToast');
-      el.textContent = text;
-      el.classList.remove('hidden');
-      setTimeout(() => el.classList.add('hidden'), 4000);
-    }
-
-    function copyJsonLd() {
-      navigator.clipboard.writeText(window.__currentJsonLd || '');
-      showToast('✓ JSON-LD business card copied to clipboard!');
-    }
-
-    function copyAgentPrompt(fromLaunch = false) {
-      navigator.clipboard.writeText(window.__currentAgentPrompt || '');
-      showToast(fromLaunch
-        ? '✓ B2B AI Agent prompt copied to clipboard and passed to LLM!'
-        : '✓ B2B AI Agent prompt copied to clipboard!');
-    }
-
-    async function connectWeb3Wallet() {
-      const btn = document.getElementById('connectWalletBtn');
-      if (window.ethereum) {
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          if (accounts && accounts[0]) {
-            const addr = accounts[0];
-            btn.textContent = `Base: ${addr.slice(0, 6)}...${addr.slice(-4)}`;
-            document.getElementById('siweWallet').value = addr;
-            document.getElementById('orgWallet').value = addr;
-            updateSiweMessage();
-            updateJsonLdAndPrompt();
-            return;
-          }
-        } catch (e) {}
-      }
-      const demoAddr = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
-      btn.textContent = `Demo Base: ${demoAddr.slice(0, 6)}...${demoAddr.slice(-4)}`;
-    }
-
-    // Initialize all interactive views on load
-    runAiSearch();
-    updateSiweMessage();
-    renderDealCalldata();
-    recalcTrustScore();
-    updateJsonLdAndPrompt();
-    verifyDomainDns();
-  </script>
+  } catch (e) {
+    // Fallback to default state
+  }
+
+  applyAllUI();
+  setupScrollReveals();
+
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initApp);
+</script>
 </body>
 </html>
