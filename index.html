@@ -213,19 +213,45 @@ button, input, select, textarea {
   background-color: var(--surface-container);
 }
 
-/* Global search bar */
+/* Global search bar (sticky under the header) */
 .search-strip {
-  border-bottom: var(--hairline);
-  background: var(--surface-container-low);
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  border-bottom: var(--hairline-strong);
+  background: color-mix(in srgb, var(--surface-container-low) 96%, transparent);
+  backdrop-filter: blur(10px);
 }
 .search-strip-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md) var(--space-lg);
+}
+.strip-tagline {
+  flex: none;
+  font-family: var(--font-headline);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: var(--heading-tracking);
+  color: var(--on-surface);
+  white-space: nowrap;
+}
+.strip-tagline .tag-accent {
+  color: var(--primary);
 }
 .search-strip .topbar-search {
-  flex: 1 1 auto;
+  flex: 1 1 320px;
   max-width: 760px;
+}
+@media (max-width: 720px) {
+  .strip-tagline {
+    white-space: normal;
+    font-size: 0.875rem;
+  }
 }
 .topbar-search {
   position: relative;
@@ -1120,6 +1146,7 @@ input[type="range"] {
 <!-- Global search strip (below the header) -->
 <div class="search-strip">
   <div class="search-strip-inner">
+    <span class="strip-tagline">Autonomous trade node. <span class="tag-accent">No platforms, no commissions.</span></span>
     <div class="topbar-search" role="search">
       <div class="search-field">
         <i data-lucide="search" aria-hidden="true"></i>
