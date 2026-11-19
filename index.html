@@ -214,6 +214,19 @@ button, input, select, textarea {
 }
 
 /* Global search bar */
+.search-strip {
+  border-bottom: var(--hairline);
+  background: var(--surface-container-low);
+}
+.search-strip-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-lg);
+}
+.search-strip .topbar-search {
+  flex: 1 1 auto;
+  max-width: 760px;
+}
 .topbar-search {
   position: relative;
   flex: 1 1 280px;
@@ -1094,6 +1107,19 @@ input[type="range"] {
       <a href="#hero" class="brand-name">trustmarkets.net</a>
       <span class="net-tag">Base L2 · EVM</span>
     </div>
+    <nav class="nav-links" aria-label="Platform sections">
+      <a href="#roles" class="nav-link">For Buyers &amp; Sellers</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#mcp-toolkit" class="nav-link">MCP &amp; CLI</a>
+      <a href="#security" class="nav-link">Security</a>
+      <a href="#register-sandbox" class="nav-link">Register ($1)</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Global search strip (below the header) -->
+<div class="search-strip">
+  <div class="search-strip-inner">
     <div class="topbar-search" role="search">
       <div class="search-field">
         <i data-lucide="search" aria-hidden="true"></i>
@@ -1104,15 +1130,8 @@ input[type="range"] {
       </div>
       <div id="search-results" class="search-results" aria-live="polite"></div>
     </div>
-    <nav class="nav-links" aria-label="Platform sections">
-      <a href="#roles" class="nav-link">For Buyers &amp; Sellers</a>
-      <a href="#pricing" class="nav-link">Pricing</a>
-      <a href="#mcp-toolkit" class="nav-link">MCP &amp; CLI</a>
-      <a href="#security" class="nav-link">Security</a>
-      <a href="#register-sandbox" class="nav-link">Register ($1)</a>
-    </nav>
   </div>
-</header>
+</div>
 
 <main class="page-grid">
 
