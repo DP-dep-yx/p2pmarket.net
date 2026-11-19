@@ -370,6 +370,135 @@ button, input, select, textarea {
   100% { box-shadow: 0 0 0 0 transparent; }
 }
 
+/* Wallet connect button (multi-wallet via EIP-6963) */
+.connect-wallet {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex: none;
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--cyan-tint);
+  border: var(--cyan-border);
+  border-radius: var(--rounded-full);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+}
+.connect-wallet svg {
+  width: 15px;
+  height: 15px;
+}
+.connect-wallet:hover {
+  background: color-mix(in srgb, var(--primary) 24%, transparent);
+  border-color: var(--primary);
+}
+.connect-wallet.connected {
+  color: var(--tertiary);
+  background: var(--sage-tint);
+  border: var(--sage-border);
+}
+.wallet-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  background: rgba(4, 9, 11, 0.72);
+  backdrop-filter: blur(6px);
+}
+.wallet-modal.open {
+  display: flex;
+}
+.wallet-modal-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--panel-gradient);
+  border: var(--hairline-strong);
+  border-radius: var(--rounded-lg);
+  box-shadow: 0 28px 60px rgba(3, 8, 10, 0.6);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.wallet-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+.wallet-close {
+  background: none;
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  color: var(--on-surface-variant);
+  font-size: 1.125rem;
+  line-height: 1;
+  padding: var(--space-xs) var(--space-sm);
+  cursor: pointer;
+}
+.wallet-close:hover {
+  color: var(--on-surface);
+  border-color: var(--outline);
+}
+.wallet-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  text-align: left;
+  background: var(--surface-container);
+  border: var(--hairline);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+}
+.wallet-option:hover,
+.wallet-option:focus-visible {
+  border-color: var(--primary);
+  background: var(--cyan-tint);
+  outline: none;
+}
+.wallet-option img {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--rounded);
+  flex: none;
+}
+.wallet-option .wo-sub {
+  display: block;
+  color: var(--on-surface-variant);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+.wallet-modal-msg {
+  font-size: 0.875rem;
+  color: var(--on-surface-variant);
+  line-height: 1.5;
+}
+.wallet-modal-msg.error {
+  color: var(--error);
+}
+.wallet-modal-foot {
+  font-size: 0.8125rem;
+  color: var(--on-surface-variant);
+  border-top: var(--hairline);
+  padding-top: var(--space-md);
+}
+
 /* Typography helpers */
 .data-label {
   font-family: var(--font-label);
@@ -1140,6 +1269,10 @@ input[type="range"] {
       <a href="#security" class="nav-link">Security</a>
       <a href="#register-sandbox" class="nav-link">Register ($1)</a>
     </nav>
+    <button type="button" id="connect-wallet-btn" class="connect-wallet" onclick="handleConnectWalletClick()">
+      <i data-lucide="wallet" aria-hidden="true"></i>
+      <span class="cw-label">Connect Wallet</span>
+    </button>
   </div>
 </header>
 
@@ -1675,7 +1808,21 @@ input[type="range"] {
 
 </main>
 
-<api-shim></api-shim>
+<!-- Wallet connection modal (EIP-6963 multi-wallet) -->
+<div id="wallet-modal" class="wallet-modal" aria-hidden="true">
+  <div class="wallet-modal-card" role="dialog" aria-modal="true" aria-labelledby="wallet-modal-title">
+    <div class="wallet-modal-head">
+      <span class="data-label" id="wallet-modal-title">Connect a wallet</span>
+      <button type="button" class="wallet-close" onclick="closeWalletModal()" aria-label="Close">×</button>
+    </div>
+    <div id="wallet-options" style="display: flex; flex-direction: column; gap: var(--space-sm);"></div>
+    <div id="wallet-modal-msg" class="wallet-modal-msg"></div>
+    <div class="wallet-modal-foot">
+      Connect on Base L2 (Chain ID 8453). Your keys never leave the wallet — the site only receives your public address.
+    </div>
+  </div>
+</div>
+
 <script>
 const TOPOLOGY_DATA = {
   domain: {
@@ -2952,6 +3099,240 @@ function setupSiteSearch() {
 }
 
 setupSiteSearch();
+
+/* Multi-wallet connector (EIP-6963 discovery + legacy injected + mobile deep links) */
+const TM_BASE_CHAIN = {
+  chainId: '0x2105',
+  chainName: 'Base Mainnet',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: ['https://mainnet.base.org'],
+  blockExplorerUrls: ['https://basescan.org']
+};
+
+let tmDiscoveredWallets = [];
+let tmActiveWallet = null;
+
+window.addEventListener('eip6963:announceProvider', function (event) {
+  const detail = event.detail;
+  if (!detail || !detail.info || !detail.provider) return;
+  if (tmDiscoveredWallets.some(function (w) { return w.info.rdns === detail.info.rdns; })) return;
+  tmDiscoveredWallets.push(detail);
+});
+window.dispatchEvent(new Event('eip6963:requestProvider'));
+
+function legacyInjectedWallet() {
+  const eth = window.ethereum;
+  if (!eth) return null;
+  let name = 'Browser Wallet';
+  if (eth.isRabby) name = 'Rabby';
+  else if (eth.isCoinbaseWallet) name = 'Coinbase Wallet';
+  else if (eth.isTrust || eth.isTrustWallet) name = 'Trust Wallet';
+  else if (eth.isOkxWallet || eth.isOKExWallet) name = 'OKX Wallet';
+  else if (eth.isBraveWallet) name = 'Brave Wallet';
+  else if (eth.isPhantom) name = 'Phantom';
+  else if (eth.isMetaMask) name = 'MetaMask';
+  return { info: { uuid: 'legacy', name: name, icon: '', rdns: 'legacy.injected' }, provider: eth };
+}
+
+function getWalletOptions() {
+  const options = tmDiscoveredWallets.slice();
+  if (!options.length) {
+    const legacy = legacyInjectedWallet();
+    if (legacy) options.push(legacy);
+  }
+  return options;
+}
+
+function shortAddress(addr) {
+  return addr.slice(0, 6) + '…' + addr.slice(-4);
+}
+
+function updateWalletButton() {
+  const btn = document.getElementById('connect-wallet-btn');
+  if (!btn) return;
+  const label = btn.querySelector('.cw-label');
+  if (tmActiveWallet) {
+    btn.classList.add('connected');
+    if (label) label.textContent = shortAddress(tmActiveWallet.address) + ' · Base';
+  } else {
+    btn.classList.remove('connected');
+    if (label) label.textContent = 'Connect Wallet';
+  }
+}
+
+function setWalletModalMsg(text, isError) {
+  const msg = document.getElementById('wallet-modal-msg');
+  if (!msg) return;
+  msg.textContent = text || '';
+  msg.classList.toggle('error', Boolean(isError));
+}
+
+async function ensureBaseNetwork(provider) {
+  try {
+    const current = await provider.request({ method: 'eth_chainId' });
+    if (String(current).toLowerCase() === TM_BASE_CHAIN.chainId) return true;
+  } catch (e) { /* ignore */ }
+  try {
+    await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: TM_BASE_CHAIN.chainId }] });
+    return true;
+  } catch (err) {
+    const code = err && (err.code || (err.data && err.data.originalError && err.data.originalError.code));
+    if (code === 4902 || (err && /unrecognized chain/i.test(String(err.message)))) {
+      try {
+        await provider.request({ method: 'wallet_addEthereumChain', params: [TM_BASE_CHAIN] });
+        return true;
+      } catch (e2) { return false; }
+    }
+    return true;
+  }
+}
+
+async function connectWithWallet(option) {
+  setWalletModalMsg('Waiting for approval in ' + option.info.name + '…', false);
+  try {
+    const accounts = await option.provider.request({ method: 'eth_requestAccounts' });
+    if (!accounts || !accounts.length) throw new Error('No account authorized.');
+    await ensureBaseNetwork(option.provider);
+    let chainId = '';
+    try { chainId = await option.provider.request({ method: 'eth_chainId' }); } catch (e) {}
+    tmActiveWallet = { provider: option.provider, name: option.info.name, address: accounts[0], chainId: chainId };
+
+    if (option.provider.on) {
+      option.provider.on('accountsChanged', function (accs) {
+        if (!accs || !accs.length) { tmActiveWallet = null; updateWalletButton(); return; }
+        if (tmActiveWallet && tmActiveWallet.provider === option.provider) {
+          tmActiveWallet.address = accs[0];
+          syncSandboxWallet(accs[0]);
+        }
+        updateWalletButton();
+      });
+      option.provider.on('chainChanged', function (cid) {
+        if (tmActiveWallet) tmActiveWallet.chainId = cid;
+        updateWalletButton();
+      });
+    }
+
+    syncSandboxWallet(accounts[0]);
+    updateWalletButton();
+    setWalletModalMsg('Connected via ' + option.info.name + '. Your address is filled into the registration sandbox.', false);
+    window.setTimeout(closeWalletModal, 900);
+  } catch (err) {
+    const msg = (err && err.code === 4001)
+      ? 'Connection request declined in the wallet.'
+      : 'Connection failed: ' + ((err && err.message) || 'unknown error');
+    setWalletModalMsg(msg, true);
+  }
+}
+
+function syncSandboxWallet(address) {
+  const walEl = document.getElementById('sandbox-wallet');
+  if (walEl && /^0x[0-9a-fA-F]{40}$/.test(address)) {
+    walEl.value = address;
+    if (typeof onSandboxInput === 'function') onSandboxInput();
+  }
+}
+
+function walletIconSvg(color) {
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/></svg>';
+  return '<img src="data:image/svg+xml,' + encodeURIComponent(svg) + '" alt="" />';
+}
+
+function renderWalletOptions() {
+  const wrap = document.getElementById('wallet-options');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const options = getWalletOptions();
+  if (options.length) {
+    options.forEach(function (opt) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'wallet-option';
+      const iconHtml = opt.info.icon
+        ? '<img src="' + opt.info.icon + '" alt="" />'
+        : walletIconSvg('#63c7d6');
+      btn.innerHTML = iconHtml + '<span>' + opt.info.name + '<span class="wo-sub">Browser wallet · Base L2</span></span>';
+      btn.addEventListener('click', function () { connectWithWallet(opt); });
+      wrap.appendChild(btn);
+    });
+    setWalletModalMsg('', false);
+  } else if (/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)) {
+    const deepLinks = [
+      { name: 'MetaMask', href: 'https://metamask.app.link/dapp/trustmarkets.net' },
+      { name: 'Trust Wallet', href: 'https://link.trustwallet.com/open_url?coin_id=60&url=https%3A%2F%2Ftrustmarkets.net' },
+      { name: 'Coinbase Wallet', href: 'https://go.cb-w.com/dapp?cb_currency=ETH&cb_url=https%3A%2F%2Ftrustmarkets.net' }
+    ];
+    deepLinks.forEach(function (w) {
+      const a = document.createElement('a');
+      a.className = 'wallet-option';
+      a.href = w.href;
+      a.innerHTML = walletIconSvg('#87d69b') + '<span>' + w.name + '<span class="wo-sub">Open the site in the mobile app</span></span>';
+      wrap.appendChild(a);
+    });
+    setWalletModalMsg('No browser wallet detected on this device. Open trustmarkets.net inside your wallet app, or install a wallet extension on desktop.', false);
+  } else {
+    setWalletModalMsg('No browser wallet detected. Install MetaMask, Rabby, Coinbase Wallet, Trust, OKX, Brave, Phantom or any EIP-6963 compatible wallet, then reload this page.', false);
+  }
+}
+
+function openWalletModal() {
+  const modal = document.getElementById('wallet-modal');
+  if (!modal) return;
+  renderWalletOptions();
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeWalletModal() {
+  const modal = document.getElementById('wallet-modal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  setWalletModalMsg('', false);
+}
+
+function disconnectWallet() {
+  tmActiveWallet = null;
+  updateWalletButton();
+  closeWalletModal();
+}
+
+function handleConnectWalletClick() {
+  if (tmActiveWallet) {
+    const modal = document.getElementById('wallet-modal');
+    const wrap = document.getElementById('wallet-options');
+    if (modal && wrap) {
+      wrap.innerHTML = '';
+      const info = document.createElement('div');
+      info.className = 'wallet-option';
+      info.style.cursor = 'default';
+      info.innerHTML = '<span>' + tmActiveWallet.name + '<span class="wo-sub">' + tmActiveWallet.address + '</span></span>';
+      wrap.appendChild(info);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'wallet-option';
+      btn.innerHTML = '<span style="color: var(--error);">Disconnect<span class="wo-sub">Clear the connected address on this page</span></span>';
+      btn.addEventListener('click', disconnectWallet);
+      wrap.appendChild(btn);
+      setWalletModalMsg('Connected on Base L2 (Chain ID 8453).', false);
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    return;
+  }
+  openWalletModal();
+}
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') closeWalletModal();
+});
+(function () {
+  const modal = document.getElementById('wallet-modal');
+  if (modal) modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeWalletModal();
+  });
+})();
+
+updateWalletButton();
 
 document.addEventListener('DOMContentLoaded', initApp);
 </script>
