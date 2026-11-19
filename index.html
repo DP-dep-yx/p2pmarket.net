@@ -484,6 +484,38 @@ button, input, select, textarea {
   font-size: 0.8125rem;
   font-weight: 400;
 }
+.wo-badge {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--rounded);
+  background: color-mix(in srgb, var(--b, var(--primary)) 22%, transparent);
+  color: var(--b, var(--primary));
+  border: 1px solid color-mix(in srgb, var(--b, var(--primary)) 55%, transparent);
+  font-family: var(--font-label);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.wallet-list-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  color: var(--on-surface-variant);
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+}
+.wallet-list-divider::before,
+.wallet-list-divider::after {
+  content: '';
+  height: 1px;
+  background: var(--outline-variant);
+  flex: 1;
+}
 .wallet-modal-msg {
   font-size: 0.875rem;
   color: var(--on-surface-variant);
@@ -3237,40 +3269,92 @@ function walletIconSvg(color) {
   return '<img src="data:image/svg+xml,' + encodeURIComponent(svg) + '" alt="" />';
 }
 
+const CURATED_WALLETS = [
+  { name: 'MetaMask', letter: 'M', color: '#f58420', rdns: ['io.metamask', 'io.metamask.flask'], web: 'https://metamask.io/download/', mobile: 'https://metamask.app.link/dapp/trustmarkets.net' },
+  { name: 'Rabby', letter: 'R', color: '#7084ff', rdns: ['io.rabby'], web: 'https://rabby.io/' },
+  { name: 'Coinbase Wallet', letter: 'C', color: '#0052ff', rdns: ['com.coinbase.wallet'], web: 'https://www.coinbase.com/wallet/downloads', mobile: 'https://go.cb-w.com/dapp?cb_currency=ETH&cb_url=https%3A%2F%2Ftrustmarkets.net' },
+  { name: 'Trust Wallet', letter: 'T', color: '#3375bb', rdns: ['com.trustwallet.app', 'com.trustwallet'], web: 'https://wallet.trustwallet.com/', mobile: 'https://link.trustwallet.com/open_url?coin_id=60&url=https%3A%2F%2Ftrustmarkets.net' },
+  { name: 'OKX Wallet', letter: 'O', color: '#94a8b0', rdns: ['com.okex.wallet', 'com.okcoin.wallet'], web: 'https://www.okx.com/web3' },
+  { name: 'Brave Wallet', letter: 'B', color: '#fb542b', rdns: ['com.brave.wallet'], web: 'https://brave.com/wallet/' },
+  { name: 'Phantom', letter: 'P', color: '#ab9ff2', rdns: ['app.phantom'], web: 'https://phantom.app/download' },
+  { name: 'Zerion', letter: 'Z', color: '#2962ef', rdns: ['io.zerion.wallet'], web: 'https://wallet.zerion.io/' },
+  { name: 'Bitget Wallet', letter: 'G', color: '#00f0ff', rdns: ['com.bitkeep.wallet'], web: 'https://web3.bitget.com/' },
+  { name: 'Binance Wallet', letter: 'N', color: '#f0b90b', rdns: ['com.binance.wallet'], web: 'https://www.binance.com/en/web3wallet' }
+];
+
+function walletBadgeHtml(letter, color) {
+  return '<span class="wo-badge" style="--b: ' + color + '">' + letter + '</span>';
+}
+
 function renderWalletOptions() {
   const wrap = document.getElementById('wallet-options');
   if (!wrap) return;
   wrap.innerHTML = '';
-  const options = getWalletOptions();
-  if (options.length) {
-    options.forEach(function (opt) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'wallet-option';
+
+  const isMobile = /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);
+  const detected = getWalletOptions();
+
+  const detectedByName = {};
+  detected.forEach(function (o) {
+    if (o.info.rdns) detectedByName[o.info.rdns] = o;
+    if (o.info.name) detectedByName[o.info.name.toLowerCase()] = o;
+  });
+
+  function addDivider(text) {
+    const d = document.createElement('div');
+    d.className = 'wallet-list-divider';
+    d.textContent = text;
+    wrap.appendChild(d);
+  }
+
+  function addConnectRow(walletOption, name, iconHtml, subText) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'wallet-option';
+    btn.innerHTML = iconHtml + '<span>' + name + '<span class="wo-sub">' + subText + '</span></span>';
+    btn.addEventListener('click', function () { connectWithWallet(walletOption); });
+    wrap.appendChild(btn);
+  }
+
+  if (detected.length) {
+    addDivider('Detected in your browser');
+    detected.forEach(function (opt) {
       const iconHtml = opt.info.icon
         ? '<img src="' + opt.info.icon + '" alt="" />'
         : walletIconSvg('#63c7d6');
-      btn.innerHTML = iconHtml + '<span>' + opt.info.name + '<span class="wo-sub">Browser wallet · Base L2</span></span>';
-      btn.addEventListener('click', function () { connectWithWallet(opt); });
-      wrap.appendChild(btn);
+      addConnectRow(opt, opt.info.name, iconHtml, 'Installed · click to connect on Base');
     });
-    setWalletModalMsg('', false);
-  } else if (/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)) {
-    const deepLinks = [
-      { name: 'MetaMask', href: 'https://metamask.app.link/dapp/trustmarkets.net' },
-      { name: 'Trust Wallet', href: 'https://link.trustwallet.com/open_url?coin_id=60&url=https%3A%2F%2Ftrustmarkets.net' },
-      { name: 'Coinbase Wallet', href: 'https://go.cb-w.com/dapp?cb_currency=ETH&cb_url=https%3A%2F%2Ftrustmarkets.net' }
-    ];
-    deepLinks.forEach(function (w) {
+  }
+
+  addDivider(detected.length ? 'More wallets' : 'Popular wallets');
+  CURATED_WALLETS.forEach(function (c) {
+    const hit = c.rdns.map(function (r) { return detectedByName[r]; }).filter(Boolean)[0]
+      || detectedByName[c.name.toLowerCase()];
+    if (hit) return; // already listed above
+    const iconHtml = walletBadgeHtml(c.letter, c.color);
+    if (isMobile && c.mobile) {
       const a = document.createElement('a');
       a.className = 'wallet-option';
-      a.href = w.href;
-      a.innerHTML = walletIconSvg('#87d69b') + '<span>' + w.name + '<span class="wo-sub">Open the site in the mobile app</span></span>';
+      a.href = c.mobile;
+      a.innerHTML = iconHtml + '<span>' + c.name + '<span class="wo-sub">Open the site in the mobile app</span></span>';
       wrap.appendChild(a);
-    });
-    setWalletModalMsg('No browser wallet detected on this device. Open trustmarkets.net inside your wallet app, or install a wallet extension on desktop.', false);
+    } else {
+      const a = document.createElement('a');
+      a.className = 'wallet-option';
+      a.href = c.web;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML = iconHtml + '<span>' + c.name + '<span class="wo-sub">Install the browser extension, then reload this page</span></span>';
+      wrap.appendChild(a);
+    }
+  });
+
+  if (!detected.length) {
+    setWalletModalMsg(isMobile
+      ? 'No in-page wallet detected. Open trustmarkets.net inside your wallet app via the links above, or install a wallet extension on desktop.'
+      : 'No in-page wallet detected. Install any wallet above, reload the page, and it will appear in the "Detected" list automatically (EIP-6963).', false);
   } else {
-    setWalletModalMsg('No browser wallet detected. Install MetaMask, Rabby, Coinbase Wallet, Trust, OKX, Brave, Phantom or any EIP-6963 compatible wallet, then reload this page.', false);
+    setWalletModalMsg('', false);
   }
 }
 
