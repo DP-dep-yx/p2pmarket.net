@@ -3054,6 +3054,7 @@ function syncSandboxWallet(address) {
 }
 
 /* Sign-In with Ethereum (EIP-4361) */
+const TM_API_BASE = 'https://api.trustmarkets.net';
 function siweRandomNonce() {
   const bytes = new Uint8Array(16);
   (window.crypto || window.msCrypto).getRandomValues(bytes);
@@ -3082,7 +3083,7 @@ async function signInWithEthereum() {
   setWalletModalMsg('Preparing the EIP-4361 message…', false);
   let nonce = null;
   try {
-    const res = await fetch('/api/auth/nonce', { credentials: 'include' });
+    const res = await fetch(TM_API_BASE + '/api/auth/nonce', { credentials: 'include' });
     if (res.ok) {
       const data = await res.json();
       if (data && data.nonce) nonce = data.nonce;
@@ -3096,7 +3097,7 @@ async function signInWithEthereum() {
     const signature = await tmActiveWallet.provider.request({ method: 'personal_sign', params: [message, tmActiveWallet.address] });
     tmActiveWallet.siwe = { message: message, signature: signature, signedAt: new Date().toISOString(), verified: false };
     try {
-      const verifyRes = await fetch('/api/auth/verify', {
+      const verifyRes = await fetch(TM_API_BASE + '/api/auth/verify', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         credentials: 'include',
