@@ -2989,7 +2989,7 @@ function updateWalletButton() {
   const label = btn.querySelector('.cw-label');
   if (tmActiveWallet) {
     btn.classList.add('connected');
-    if (label) label.textContent = shortAddress(tmActiveWallet.address) + ' · Base';
+    if (label) label.textContent = shortAddress(tmActiveWallet.address) + ' · Base' + (tmActiveWallet.siwe ? ' ✓' : '');
   } else {
     btn.classList.remove('connected');
     if (label) label.textContent = 'Connect Wallet';
@@ -3068,6 +3068,79 @@ function syncSandboxWallet(address) {
   }
 }
 
+/* Coinbase Wallet SDK (works without an extension: Smart Wallet + mobile QR) */
+let coinbaseSdkProvider = null;
+
+async function connectViaCoinbaseSdk() {
+  setWalletModalMsg('Opening Coinbase Wallet…', false);
+  try {
+    if (!coinbaseSdkProvider) {
+      const mod = await import('https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@3.9.3/+esm');
+      const SdkClass = mod.CoinbaseWalletSDK;
+      const sdk = new SdkClass({
+        appName: 'TrustMarkets',
+        appLogoUrl: 'https://trustmarkets.net/favicon.svg',
+        darkMode: true
+      });
+      coinbaseSdkProvider = sdk.makeWeb3Provider('https://mainnet.base.org', 8453);
+    }
+    await connectWithWallet({ info: { uuid: 'coinbase-sdk', name: 'Coinbase Wallet', icon: '', rdns: 'com.coinbase.wallet.sdk' }, provider: coinbaseSdkProvider });
+  } catch (err) {
+    setWalletModalMsg('Coinbase Wallet: ' + ((err && err.message) || 'connection failed'), true);
+  }
+}
+
+/* Sign-In with Ethereum (EIP-4361) */
+function siweRandomNonce() {
+  const bytes = new Uint8Array(16);
+  (window.crypto || window.msCrypto).getRandomValues(bytes);
+  return Array.prototype.map.call(bytes, function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+}
+
+function buildSiweMessage(address, nonce, chainId) {
+  const domain = window.location.host;
+  const uri = window.location.origin;
+  const issuedAt = new Date().toISOString();
+  const expirationTime = new Date(Date.now() + 15 * 60 * 1000).toISOString();
+  const numericChain = (chainId && /^0x/.test(chainId)) ? parseInt(chainId, 16) : (chainId || 8453);
+  return domain + ' wants you to sign in with your Ethereum account:\n' +
+    address + '\n\n' +
+    'Sign in to the TrustMarkets decentralized marketplace on Base.\n\n' +
+    'URI: ' + uri + '\n' +
+    'Version: 1\n' +
+    'Chain ID: ' + numericChain + '\n' +
+    'Nonce: ' + nonce + '\n' +
+    'Issued At: ' + issuedAt + '\n' +
+    'Expiration Time: ' + expirationTime;
+}
+
+async function signInWithEthereum() {
+  if (!tmActiveWallet) return;
+  setWalletModalMsg('Preparing the EIP-4361 message…', false);
+  let nonce = null;
+  try {
+    const res = await fetch('/api/auth/nonce', { credentials: 'include' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.nonce) nonce = data.nonce;
+    }
+  } catch (e) { /* static hosting — fall back to a locally generated nonce */ }
+  if (!nonce) nonce = siweRandomNonce();
+
+  const message = buildSiweMessage(tmActiveWallet.address, nonce, tmActiveWallet.chainId);
+  setWalletModalMsg('Confirm the signature request in ' + tmActiveWallet.name + '…', false);
+  try {
+    const signature = await tmActiveWallet.provider.request({ method: 'personal_sign', params: [message, tmActiveWallet.address] });
+    tmActiveWallet.siwe = { message: message, signature: signature, signedAt: new Date().toISOString() };
+    updateWalletButton();
+    setWalletModalMsg('Signed in with Ethereum (EIP-4361). Signature: ' + signature.slice(0, 14) + '… On production the seller\'s backend verifies it and unlocks private prompts.', false);
+  } catch (err) {
+    setWalletModalMsg((err && err.code === 4001)
+      ? 'SIWE signature declined in the wallet.'
+      : 'SIWE failed: ' + ((err && err.message) || 'unknown error'), true);
+  }
+}
+
 function walletIconSvg(color) {
   const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/></svg>';
   return '<img src="data:image/svg+xml,' + encodeURIComponent(svg) + '" alt="" />';
@@ -3076,7 +3149,6 @@ function walletIconSvg(color) {
 const CURATED_WALLETS = [
   { name: 'MetaMask', letter: 'M', color: '#f58420', rdns: ['io.metamask', 'io.metamask.flask'], web: 'https://metamask.io/download/', mobile: 'https://metamask.app.link/dapp/trustmarkets.net' },
   { name: 'Rabby', letter: 'R', color: '#7084ff', rdns: ['io.rabby'], web: 'https://rabby.io/' },
-  { name: 'Coinbase Wallet', letter: 'C', color: '#0052ff', rdns: ['com.coinbase.wallet'], web: 'https://www.coinbase.com/wallet/downloads', mobile: 'https://go.cb-w.com/dapp?cb_currency=ETH&cb_url=https%3A%2F%2Ftrustmarkets.net' },
   { name: 'Trust Wallet', letter: 'T', color: '#3375bb', rdns: ['com.trustwallet.app', 'com.trustwallet'], web: 'https://wallet.trustwallet.com/', mobile: 'https://link.trustwallet.com/open_url?coin_id=60&url=https%3A%2F%2Ftrustmarkets.net' },
   { name: 'OKX Wallet', letter: 'O', color: '#94a8b0', rdns: ['com.okex.wallet', 'com.okcoin.wallet'], web: 'https://www.okx.com/web3' },
   { name: 'Brave Wallet', letter: 'B', color: '#fb542b', rdns: ['com.brave.wallet'], web: 'https://brave.com/wallet/' },
@@ -3131,6 +3203,14 @@ function renderWalletOptions() {
   }
 
   addDivider(detected.length ? 'More wallets' : 'Popular wallets');
+
+  const cbRow = document.createElement('button');
+  cbRow.type = 'button';
+  cbRow.className = 'wallet-option';
+  cbRow.innerHTML = walletBadgeHtml('C', '#0052ff') + '<span>Coinbase Wallet · Smart Wallet &amp; QR<span class="wo-sub">No extension needed — connects via the Coinbase SDK</span></span>';
+  cbRow.addEventListener('click', function () { connectViaCoinbaseSdk(); });
+  wrap.appendChild(cbRow);
+
   CURATED_WALLETS.forEach(function (c) {
     const hit = c.rdns.map(function (r) { return detectedByName[r]; }).filter(Boolean)[0]
       || detectedByName[c.name.toLowerCase()];
@@ -3195,6 +3275,12 @@ function handleConnectWalletClick() {
       info.style.cursor = 'default';
       info.innerHTML = '<span>' + tmActiveWallet.name + '<span class="wo-sub">' + tmActiveWallet.address + '</span></span>';
       wrap.appendChild(info);
+      const siweBtn = document.createElement('button');
+      siweBtn.type = 'button';
+      siweBtn.className = 'wallet-option';
+      siweBtn.innerHTML = '<span style="color: var(--primary);">' + (tmActiveWallet.siwe ? 'Re-sign SIWE (EIP-4361)' : 'Sign in with Ethereum (SIWE)') + '<span class="wo-sub">' + (tmActiveWallet.siwe ? 'Signed at ' + tmActiveWallet.siwe.signedAt : 'Sign a canonical EIP-4361 message in your wallet') + '</span></span>';
+      siweBtn.addEventListener('click', function () { signInWithEthereum(); });
+      wrap.appendChild(siweBtn);
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'wallet-option';
