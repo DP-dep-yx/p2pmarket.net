@@ -1138,6 +1138,75 @@ input[type="range"] {
   gap: var(--space-lg);
   align-items: start;
 }
+
+/* Onboarding wizard helpers */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.chip-btn {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  color: var(--on-surface-variant);
+  background: var(--surface-container);
+  border: var(--hairline);
+  border-radius: var(--rounded-full);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+  transition: color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+}
+.chip-btn:hover {
+  color: var(--on-surface);
+  border-color: var(--outline);
+}
+.chip-btn.active {
+  color: var(--on-primary);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.ob-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  background: var(--background);
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  padding: var(--space-sm) var(--space-md);
+}
+.ob-item-head {
+  font-weight: 600;
+  color: var(--on-surface);
+  font-size: 0.9375rem;
+}
+.ob-item-sub {
+  color: var(--on-surface-variant);
+  font-size: 0.8125rem;
+  font-family: var(--font-label);
+}
+.ob-remove {
+  background: none;
+  border: var(--hairline);
+  border-radius: var(--rounded);
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  padding: 2px 10px;
+  font-size: 0.8125rem;
+  flex: none;
+}
+.ob-remove:hover {
+  color: var(--error);
+  border-color: var(--error);
+}
+.ob-empty {
+  color: var(--on-surface-variant);
+  font-size: 0.875rem;
+  border: 1px dashed var(--outline-variant);
+  border-radius: var(--rounded);
+  padding: var(--space-md);
+  text-align: center;
+}
 .form-stack {
   display: flex;
   flex-direction: column;
@@ -1644,76 +1713,306 @@ input[type="range"] {
   <!-- 6. DOMAIN REGISTRATION ($1) SANDBOX -->
   <section id="register-sandbox" class="section-block reveal" aria-labelledby="sandbox-heading">
     <div class="section-head">
-      <span class="data-label">Interactive $1 onboarding</span>
-      <h2 id="sandbox-heading">Prepare your website for Base registry registration</h2>
+      <span class="data-label">Interactive onboarding · $1 Base registration</span>
+      <h2 id="sandbox-heading">Build your two-way trade profile and register it on Base</h2>
       <p class="section-lede">
-        Enter a domain, wallet, and primary product — the builder instantly generates a DNS TXT record, a valid <code style="font-family: var(--font-label);">trustmarkets-schema.json</code> file, and simulates the <code style="font-family: var(--font-label);">setProfile()</code> transaction. Your settings persist between sessions.
+        Declare what you sell (<code style="font-family: var(--font-label);">makesOffer</code>) and what you regularly buy (<code style="font-family: var(--font-label);">Demand</code>), publish the JSON-LD file, bind your domain via a DNS TXT record, validate through the MCP inspector, and sign <code style="font-family: var(--font-label);">setProfile()</code> for a flat $1 on Base. Your progress persists between sessions.
       </p>
+      <div class="btn-row" style="padding-top: var(--space-xs);">
+        <button type="button" class="btn btn-secondary btn-compact" onclick="obPreset('alpina')">Preset: Alpina Foods GmbH (Reference)</button>
+        <button type="button" class="btn btn-secondary btn-compact" onclick="obPreset('acme')">Preset: Acme Global Trade (Industrial)</button>
+        <button type="button" class="btn btn-secondary btn-compact" onclick="obClearForm()">Clear form</button>
+      </div>
     </div>
 
-    <div class="sandbox-grid">
+    <div class="toolkit-tabs" role="tablist" aria-label="Onboarding steps">
+      <button type="button" id="ob-tab-1" class="seg-btn active" role="tab" aria-selected="true" onclick="obGoStep(1)">01 · Profile &amp; Domain</button>
+      <button type="button" id="ob-tab-2" class="seg-btn" role="tab" aria-selected="false" onclick="obGoStep(2)">02 · Sales &amp; Buying Needs</button>
+      <button type="button" id="ob-tab-3" class="seg-btn" role="tab" aria-selected="false" onclick="obGoStep(3)">03 · Publish: DNS TXT + JSON-LD</button>
+      <button type="button" id="ob-tab-4" class="seg-btn" role="tab" aria-selected="false" onclick="obGoStep(4)">04 · Validate &amp; Sign ($1)</button>
+    </div>
+
+    <!-- STEP 1: Profile & Domain -->
+    <div id="ob-panel-1" class="sandbox-grid">
       <div class="panel form-stack">
         <div class="field-group">
-          <label for="sandbox-domain" class="field-label">Company domain</label>
-          <input type="text" id="sandbox-domain" class="input-field" value="trustmarkets.net" oninput="onSandboxInput()">
+          <label for="ob-domain" class="field-label">Company domain (no http/https)</label>
+          <input type="text" id="ob-domain" class="input-field" value="trustmarkets.net" oninput="obInput()">
           <span class="data-label" style="text-transform: none; letter-spacing: 0;">Live demo: prefilled with the trustmarkets.net TXT record — replace with your own domain.</span>
         </div>
-
         <div class="field-group">
-          <label for="sandbox-wallet" class="field-label">Owner Web3 wallet on Base</label>
-          <input type="text" id="sandbox-wallet" class="input-field" value="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" oninput="onSandboxInput()">
+          <label for="ob-name" class="field-label">Company name</label>
+          <input type="text" id="ob-name" class="input-field" value="TrustMarkets.net" oninput="obInput()">
         </div>
-
         <div class="field-group">
-          <label for="sandbox-offer" class="field-label">Primary product / service and Incoterms</label>
-          <input type="text" id="sandbox-offer" class="input-field" value="Decentralized trade node — AI discovery, USDC escrow & Net-30 settlement" oninput="onSandboxInput()">
+          <label for="ob-wallet" class="field-label">Owner Web3 wallet on Base</label>
+          <input type="text" id="ob-wallet" class="input-field" value="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" oninput="obInput()">
+          <span class="data-label" style="text-transform: none; letter-spacing: 0;">Auto-filled when you connect a wallet in the header.</span>
         </div>
-
-        <label class="checkbox-row">
-          <input type="checkbox" id="sandbox-public" checked onchange="onSandboxInput()">
-          <span>Public mode (indexed by AI vector search; uncheck to operate incognito)</span>
-        </label>
-
+        <div class="field-group">
+          <label for="ob-desc" class="field-label">Business description (_businessInfo for the AI vector)</label>
+          <textarea id="ob-desc" class="input-field" rows="3" oninput="obInput()">Decentralized trade node — AI discovery, USDC escrow and Net-30 settlement for global commerce.</textarea>
+          <span id="ob-desc-count" class="data-label" style="text-transform: none; letter-spacing: 0;">0 chars · ~0 tokens</span>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Categories (knowsAbout)</span>
+          <div id="ob-knows" class="chip-row"></div>
+        </div>
+        <div class="field-group">
+          <label for="ob-city" class="field-label">City / country (ISO)</label>
+          <input type="text" id="ob-city" class="input-field" placeholder="Zurich, CH" oninput="obInput()">
+        </div>
+        <div class="field-group">
+          <label for="ob-visibility" class="field-label">Commercial terms access mode</label>
+          <select id="ob-visibility" class="select-field" onchange="obInput()">
+            <option value="public">Public (full AI indexing of catalog and terms)</option>
+            <option value="hybrid">Hybrid (catalog public, price lists behind SIWE + RPC)</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="ob-prompt-path" class="field-label">Hosting path of the spec file (aiPromptUri)</label>
+          <select id="ob-prompt-path" class="select-field" onchange="obInput()">
+            <option value="/.well-known/trustmarkets-prompt.json">/.well-known/trustmarkets-prompt.json (standard)</option>
+            <option value="/trustmarkets-schema.json">/trustmarkets-schema.json</option>
+            <option value="ipfs://CID">ipfs://CID (immutable)</option>
+          </select>
+        </div>
         <div class="btn-row">
-          <button type="button" class="btn btn-secondary" onclick="simulateDnsCheck()">
-            <i data-lucide="globe" aria-hidden="true"></i>
-            <span>Verify DNS via DoH</span>
-          </button>
-          <button type="button" class="btn btn-primary" onclick="simulateSetProfile()">
-            <i data-lucide="check-circle-2" aria-hidden="true"></i>
-            <span>Sign setProfile() ($1)</span>
-          </button>
+          <button type="button" class="btn btn-primary" onclick="obGoStep(2)">Next: Sales &amp; Buying Needs →</button>
         </div>
-        <span id="sandbox-inline-msg" class="inline-toast" aria-live="polite"></span>
       </div>
 
       <div class="panel form-stack">
+        <span class="data-label">Readiness for the Base transaction</span>
         <div class="step-status-list">
           <div class="status-row">
             <div>
-              <span class="data-label">DNS TXT record (@)</span>
-              <div id="sandbox-txt-val" class="kv-val" style="margin-top: 2px;">evm-contract=0x742d35Cc6634C0532925a3b844Bc454e4438f44e</div>
+              <span class="data-label">Wallet on Base</span>
+              <div id="ob-ready-wallet" class="kv-val" style="margin-top: 2px;">Not connected</div>
             </div>
-            <span id="sandbox-dns-badge" class="cyan-chip">Awaiting verification</span>
+            <span id="ob-ready-wallet-badge" class="cyan-chip">Pending</span>
           </div>
-
           <div class="status-row">
             <div>
-              <span class="data-label">Base transaction (TrustMarketsRegistry.sol)</span>
-              <div id="sandbox-tx-val" class="kv-val" style="margin-top: 2px;">setProfile("trustmarkets.net", …) · $1.00</div>
+              <span class="data-label">Domain ↔ wallet binding (DNS TXT via Cloudflare DoH)</span>
+              <div id="ob-ready-dns" class="kv-val" style="margin-top: 2px;">Not verified</div>
             </div>
-            <span id="sandbox-tx-badge" class="cyan-chip">Draft</span>
+            <span id="ob-ready-dns-badge" class="cyan-chip">Pending</span>
+          </div>
+          <div class="status-row">
+            <div>
+              <span class="data-label">JSON-LD file published on hosting</span>
+              <div class="kv-val" style="margin-top: 2px;">Confirm on step 03</div>
+            </div>
+            <span id="ob-ready-json-badge" class="cyan-chip">Pending</span>
+          </div>
+          <div class="status-row">
+            <div>
+              <span class="data-label">Base fee (EIP-4844)</span>
+              <div class="kv-val" style="margin-top: 2px;">≈ $1.00 anti-spam + gas ~$0.05</div>
+            </div>
+            <span class="status-chip">Flat</span>
           </div>
         </div>
-
         <div class="copy-bar" style="margin-bottom: 0;">
-          <span class="data-label">Preview /.well-known/trustmarkets-prompt.json</span>
-          <button type="button" class="btn btn-secondary btn-compact" onclick="exportGeneratedJsonLd()">
-            <i data-lucide="download" aria-hidden="true"></i>
-            <span>Download JSON-LD</span>
+          <span class="data-label">DNS TXT record (@)</span>
+          <button type="button" class="btn btn-secondary btn-compact" onclick="obCopyDns()">
+            <i data-lucide="copy" aria-hidden="true"></i>
+            <span>Copy TXT</span>
           </button>
         </div>
-        <pre id="sandbox-json-preview" class="code-pre" style="max-height: 250px; overflow-y: auto;"></pre>
+        <div id="ob-txt-val" class="kv-val" style="font-family: var(--font-label); word-break: break-all;">evm-contract=0x742d35Cc6634C0532925a3b844Bc454e4438f44e</div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Sales & Buying Needs -->
+    <div id="ob-panel-2" class="sandbox-grid" hidden>
+      <div class="panel form-stack">
+        <span class="data-label">Outgoing offers · makesOffer</span>
+        <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.875rem;">
+          Products and services your company sells. Buyers' AI agents find them through cosine similarity in milliseconds.
+        </p>
+        <div class="field-group">
+          <label for="ob-sale-name" class="field-label">Item name</label>
+          <input type="text" id="ob-sale-name" class="input-field" placeholder="Organic Durum Wheat Semolina">
+        </div>
+        <div class="field-group">
+          <label for="ob-sale-sku" class="field-label">SKU</label>
+          <input type="text" id="ob-sale-sku" class="input-field" placeholder="GR-SEM-01">
+        </div>
+        <div class="field-group">
+          <label for="ob-sale-price" class="field-label">Price &amp; currency</label>
+          <div style="display: grid; grid-template-columns: 1fr 120px; gap: var(--space-sm);">
+            <input type="text" id="ob-sale-price" class="input-field" placeholder="1200 EUR (min. order 5000)">
+            <select id="ob-sale-currency" class="select-field">
+              <option value="EUR">EUR</option>
+              <option value="USDC">USDC</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="ob-sale-incoterms" class="field-label">Incoterms basis</label>
+          <select id="ob-sale-incoterms" class="select-field">
+            <option>FCA</option><option>EXW</option><option>FOB</option><option>CIF</option><option>CPT</option><option>DAP</option><option>DDP</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="ob-sale-desc" class="field-label">Technical description for AI search</label>
+          <input type="text" id="ob-sale-desc" class="input-field" placeholder="ISO 22000, food grade, 25 kg bags, EU origin">
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" onclick="obAddOffer()">+ Add to makesOffer</button>
+        </div>
+        <div id="ob-offers-list" style="display: flex; flex-direction: column; gap: var(--space-sm);"></div>
+      </div>
+
+      <div class="panel form-stack">
+        <span class="data-label">Buying needs · potentialAction (Demand)</span>
+        <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.875rem;">
+          Declare raw materials, components and recurring volumes you purchase. Suppliers', carriers' and validators' autonomous agents discover your node and send offers themselves.
+        </p>
+        <div class="field-group">
+          <label for="ob-buy-overview" class="field-label">Procurement strategy (Demand description)</label>
+          <input type="text" id="ob-buy-overview" class="input-field" placeholder="Quarterly sourcing of food-grade raw materials in the EU">
+        </div>
+        <div class="field-group">
+          <label for="ob-buy-name" class="field-label">What you buy</label>
+          <input type="text" id="ob-buy-name" class="input-field" placeholder="Raw Cane Sugar (bulk)">
+        </div>
+        <div class="field-group">
+          <label for="ob-buy-category" class="field-label">Category</label>
+          <select id="ob-buy-category" class="select-field">
+            <option>Raw materials &amp; agri products</option>
+            <option>Components &amp; parts</option>
+            <option>Metals &amp; industrial goods</option>
+            <option>Logistics services</option>
+            <option>Audit &amp; validation</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="ob-buy-volume" class="field-label">Volume</label>
+          <input type="text" id="ob-buy-volume" class="input-field" placeholder="Min. 50 metric tons / quarterly">
+        </div>
+        <div class="field-group">
+          <label for="ob-buy-budget" class="field-label">Budget &amp; currency</label>
+          <div style="display: grid; grid-template-columns: 1fr 120px; gap: var(--space-sm);">
+            <input type="text" id="ob-buy-budget" class="input-field" placeholder="40000">
+            <select id="ob-buy-currency" class="select-field">
+              <option value="EUR">EUR</option>
+              <option value="USDC">USDC</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="ob-buy-incoterms" class="field-label">Preferred Incoterms</label>
+          <select id="ob-buy-incoterms" class="select-field">
+            <option>CIF</option><option>DAP</option><option>FCA</option><option>FOB</option><option>EXW</option><option>CPT</option><option>DDP</option>
+          </select>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" onclick="obAddDemand()">+ Add to Demand</button>
+        </div>
+        <div id="ob-demands-list" style="display: flex; flex-direction: column; gap: var(--space-sm);"></div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Publish -->
+    <div id="ob-panel-3" class="sandbox-grid" hidden>
+      <div class="panel form-stack">
+        <span class="data-label">1. DNS TXT record at your provider</span>
+        <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.875rem;">
+          Works with any DNS provider (Cloudflare, Route 53, GoDaddy). Record type TXT, host <code style="font-family: var(--font-label);">@</code>, value below.
+        </p>
+        <div class="copy-bar" style="margin-bottom: 0;">
+          <span class="data-label">TXT value</span>
+          <button type="button" class="btn btn-secondary btn-compact" onclick="obCopyDns()">
+            <i data-lucide="copy" aria-hidden="true"></i>
+            <span>Copy</span>
+          </button>
+        </div>
+        <div id="ob-txt-val2" class="kv-val" style="font-family: var(--font-label); word-break: break-all;">evm-contract=0x742d35Cc6634C0532925a3b844Bc454e4438f44e</div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" onclick="obVerifyDns()">
+            <i data-lucide="globe" aria-hidden="true"></i>
+            <span>Verify via Cloudflare DoH (live)</span>
+          </button>
+        </div>
+        <div id="ob-doh-box" class="well" style="margin: 0;">DNS check not run yet — click to query the live Cloudflare DoH API.</div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="ob-chk-dns" onchange="obInput()">
+          <span>DNS TXT record added at the provider</span>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" id="ob-chk-file" onchange="obInput()">
+          <span>trustmarkets-schema.json uploaded to hosting (or pinned to IPFS)</span>
+        </label>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" onclick="obGoStep(4)">Next: Validate &amp; Sign →</button>
+        </div>
+      </div>
+
+      <div class="panel form-stack">
+        <div class="copy-bar" style="margin-bottom: 0;">
+          <span class="data-label">Two-way trustmarkets-schema.json preview</span>
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <span id="ob-inline-msg" class="inline-toast" aria-live="polite"></span>
+            <button type="button" class="btn btn-secondary btn-compact" onclick="obCopyJson()">
+              <i data-lucide="copy" aria-hidden="true"></i>
+              <span>Copy</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-compact" onclick="obDownloadJson()">
+              <i data-lucide="download" aria-hidden="true"></i>
+              <span>Download</span>
+            </button>
+          </div>
+        </div>
+        <pre id="ob-json-preview" class="code-pre" style="max-height: 420px; overflow-y: auto;"></pre>
+      </div>
+    </div>
+
+    <!-- STEP 4: Validate & Sign -->
+    <div id="ob-panel-4" class="sandbox-grid" hidden>
+      <div class="panel form-stack">
+        <span class="data-label">MCP inspector validation</span>
+        <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.875rem;">
+          The same inspection an external AI agent runs via MCP before recommending your node: profile completeness, offer indexing and a simulated semantic query.
+        </p>
+        <div class="field-group">
+          <label for="ob-mcp-scenario" class="field-label">Inspection scenario</label>
+          <select id="ob-mcp-scenario" class="select-field" onchange="obInput()">
+            <option value="ai-search">Buyer's AI search (vector index)</option>
+            <option value="supplier-discovery">Supplier agents match your Demand</option>
+            <option value="profile-completeness">Profile completeness audit</option>
+          </select>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" onclick="obRunMcpValidation()">Run MCP validation</button>
+        </div>
+        <pre id="ob-mcp-output" class="code-pre" style="max-height: 320px; overflow-y: auto;">// Run a scenario to see the MCP inspector output</pre>
+      </div>
+
+      <div class="panel form-stack">
+        <span class="data-label">Final step · setProfile() on Base</span>
+        <div class="step-status-list">
+          <div class="status-row">
+            <div>
+              <span class="data-label">Transaction</span>
+              <div id="ob-tx-val" class="kv-val" style="margin-top: 2px;">setProfile("trustmarkets.net", …) · value $1.00</div>
+            </div>
+            <span id="ob-tx-badge" class="cyan-chip">Draft</span>
+          </div>
+        </div>
+        <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.875rem;">
+          One-way informational contract: only the domain owner signs. The binding Domain ↔ Wallet ↔ aiPromptUri lands in <code style="font-family: var(--font-label);">TrustMarketsRegistry.sol</code>; a later <code style="font-family: var(--font-label);">setProfile()</code> re-binds a new domain and keeps the wallet's full history and Trust Score.
+        </p>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" onclick="obSignProfile()">
+            <i data-lucide="check-circle-2" aria-hidden="true"></i>
+            <span>Sign setProfile() ($1)</span>
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="obGoStep(1)">← Edit profile</button>
+        </div>
+        <span id="ob-sign-msg" class="inline-toast" aria-live="polite"></span>
       </div>
     </div>
   </section>
@@ -2036,12 +2335,7 @@ let appState = {
   toolkitMode: `cli`,
   securityLayer: `dns`,
   codeTab: `registry`,
-  sandboxDomain: `trustmarkets.net`,
-  sandboxWallet: `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`,
-  sandboxOffer: `Decentralized trade node — AI discovery, USDC escrow & Net-30 settlement`,
-  sandboxPublic: true,
-  sandboxDnsVerified: false,
-  sandboxTxSigned: false
+  onb: obDefaults()
 };
 
 function persistState() {
@@ -2433,8 +2727,8 @@ Auth (Private) : SIWE EIP-4361 Signature
 };
 
 function buildMegaPrompt() {
-  const domain = appState.sandboxDomain || `trustmarkets.net`;
-  const wallet = appState.sandboxWallet || `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`;
+  const domain = appState.onb.domain || `trustmarkets.net`;
+  const wallet = appState.onb.wallet || `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`;
   return `You are my personal autonomous trade agent on the Trust Markets platform (trustmarkets.net).
 My domain: ${domain}
 My wallet / contract on Base (Chain ID 8453): ${wallet}
@@ -2566,138 +2860,439 @@ function copyCodeInspector() {
   copyTextSafe(pre.textContent, 'code-copy-toast', 'Code copied');
 }
 
-/* Registration Sandbox */
-function buildSandboxJson() {
-  const domain = appState.sandboxDomain.trim() || `example.com`;
-  const wallet = appState.sandboxWallet.trim() || `0x0000...0000`;
-  const offer = appState.sandboxOffer.trim() || `B2B Product`;
-  const visibility = appState.sandboxPublic ? `Public (AI Indexed)` : `Incognito (Direct Contracts Only)`;
+/* Profile Onboarding Wizard: two-way JSON-LD → DNS TXT → setProfile() on Base */
+const OB_KNOWS_CATEGORIES = [
+  'Organic Grains',
+  'Agricultural Commodities',
+  'Industrial Robotics',
+  'Supply Chain Optimization',
+  'Multimodal Freight Transportation',
+  'Food Processing'
+];
 
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "url": domain,
-    "visibilityMode": visibility,
-    "identifier": {
-      "@type": "PropertyValue",
-      "propertyID": "TrustMarketsBaseAddress",
-      "value": wallet
-    },
-    "makesOffer": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Product",
-          "name": offer
-        },
-        "acceptedPaymentMethod": [
-          "Cryptocurrency (USDC on Base)",
-          "Bank Transfer (SEPA)"
-        ]
-      }
-    ]
-  }, null, 2);
+const OB_PRESETS = {
+  alpina: {
+    domain: 'alpina-foods.eu',
+    name: 'Alpina Foods GmbH',
+    desc: 'European food distributor and importer of premium agricultural and grocery goods: organic grains, durum wheat semolina, bulk sugar. Monthly volumes, ISO 22000, multimodal delivery across the EU.',
+    knows: ['Organic Grains', 'Agricultural Commodities', 'Multimodal Freight Transportation', 'Food Processing'],
+    city: 'Zurich, CH',
+    offers: [{ name: 'Organic Durum Wheat Semolina', sku: 'GR-SEM-01', price: '1200', currency: 'EUR', incoterms: 'FCA', desc: 'ISO 22000, food grade, 25 kg bags, EU origin' }],
+    demands: [{ overview: 'Quarterly sourcing of food-grade raw materials in the EU', name: 'Raw Cane Sugar (bulk)', category: 'Raw materials & agri products', volume: 'Min. 50 metric tons / quarterly', incoterms: 'CIF', budget: '40000', currency: 'EUR' }]
+  },
+  acme: {
+    domain: 'acme-global-trade.com',
+    name: 'Acme Global Trade Ltd',
+    desc: 'Industrial sourcing hub: robotics components, hardened fasteners and factory automation parts with worldwide multimodal delivery and DAP terms.',
+    knows: ['Industrial Robotics', 'Supply Chain Optimization', 'Multimodal Freight Transportation'],
+    city: 'Rotterdam, NL',
+    offers: [{ name: 'Precision Robotic Grippers', sku: 'ACM-GR-88', price: '480', currency: 'USDC', incoterms: 'DAP', desc: 'IP67, DIN mount, CE certified, 1-year warranty' }],
+    demands: [{ overview: 'Monthly procurement of components for assembly lines', name: 'Hardened Steel Fasteners (M8)', category: 'Components & parts', volume: '20000 pcs / monthly', incoterms: 'FOB', budget: '15000', currency: 'EUR' }]
+  }
+};
+
+function obDefaults() {
+  return {
+    step: 1,
+    domain: 'trustmarkets.net',
+    name: 'TrustMarkets.net',
+    wallet: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+    desc: 'Decentralized trade node — AI discovery, USDC escrow and Net-30 settlement for global commerce.',
+    knows: ['Supply Chain Optimization', 'Multimodal Freight Transportation'],
+    city: '',
+    salesEmail: '',
+    procEmail: '',
+    visibility: 'public',
+    promptPath: '/.well-known/trustmarkets-prompt.json',
+    offers: [],
+    demands: [],
+    fileUploaded: false,
+    dnsAdded: false,
+    dnsVerified: false,
+    signed: false,
+    mcpScenario: 'ai-search'
+  };
 }
 
-function onSandboxInput() {
-  const domEl = document.getElementById('sandbox-domain');
-  const walEl = document.getElementById('sandbox-wallet');
-  const offEl = document.getElementById('sandbox-offer');
-  const pubEl = document.getElementById('sandbox-public');
+function obPreset(kind) {
+  const p = OB_PRESETS[kind];
+  if (!p) return;
+  appState.onb = Object.assign(obDefaults(), {
+    domain: p.domain,
+    name: p.name,
+    desc: p.desc,
+    knows: p.knows.slice(),
+    city: p.city,
+    offers: p.offers.map(function (o) { return Object.assign({}, o); }),
+    demands: p.demands.map(function (d) { return Object.assign({}, d); })
+  });
+  appState.onb.step = 2;
+  obRender();
+  persistState();
+}
 
-  if (domEl) appState.sandboxDomain = domEl.value;
-  if (walEl) appState.sandboxWallet = walEl.value;
-  if (offEl) appState.sandboxOffer = offEl.value;
-  if (pubEl) appState.sandboxPublic = pubEl.checked;
+function obClearForm() {
+  appState.onb = obDefaults();
+  obRender();
+  persistState();
+}
 
-  appState.sandboxDnsVerified = false;
-  appState.sandboxTxSigned = false;
+function obGoStep(n) {
+  appState.onb.step = n;
+  obRender();
+  persistState();
+}
 
-  renderSandbox();
+function obInput() {
+  const o = appState.onb;
+  const g = function (id) { return document.getElementById(id); };
+  const prevDomain = o.domain;
+  const prevWallet = o.wallet;
+
+  const domEl = g('ob-domain'); if (domEl) o.domain = domEl.value.trim();
+  const nameEl = g('ob-name'); if (nameEl) o.name = nameEl.value.trim();
+  const walEl = g('ob-wallet'); if (walEl) o.wallet = walEl.value.trim();
+  const descEl = g('ob-desc'); if (descEl) o.desc = descEl.value;
+  const cityEl = g('ob-city'); if (cityEl) o.city = cityEl.value.trim();
+  const visEl = g('ob-visibility'); if (visEl) o.visibility = visEl.value;
+  const pathEl = g('ob-prompt-path'); if (pathEl) o.promptPath = pathEl.value;
+  const dnsChk = g('ob-chk-dns'); if (dnsChk) o.dnsAdded = dnsChk.checked;
+  const fileChk = g('ob-chk-file'); if (fileChk) o.fileUploaded = fileChk.checked;
+  const mcpEl = g('ob-mcp-scenario'); if (mcpEl) o.mcpScenario = mcpEl.value;
+
+  if (o.domain !== prevDomain || o.wallet !== prevWallet) o.dnsVerified = false;
+
+  obRender();
   if (appState.toolkitMode === 'prompt') renderToolkit();
   persistState();
 }
 
-function renderSandbox() {
-  const domEl = document.getElementById('sandbox-domain');
-  const walEl = document.getElementById('sandbox-wallet');
-  const offEl = document.getElementById('sandbox-offer');
-  const pubEl = document.getElementById('sandbox-public');
-
-  if (domEl && domEl.value !== appState.sandboxDomain) domEl.value = appState.sandboxDomain;
-  if (walEl && walEl.value !== appState.sandboxWallet) walEl.value = appState.sandboxWallet;
-  if (offEl && offEl.value !== appState.sandboxOffer) offEl.value = appState.sandboxOffer;
-  if (pubEl) pubEl.checked = Boolean(appState.sandboxPublic);
-
-  const txtEl = document.getElementById('sandbox-txt-val');
-  const txEl = document.getElementById('sandbox-tx-val');
-  const dnsBadge = document.getElementById('sandbox-dns-badge');
-  const txBadge = document.getElementById('sandbox-tx-badge');
-  const jsonPre = document.getElementById('sandbox-json-preview');
-
-  const domain = appState.sandboxDomain.trim() || `example.com`;
-  const wallet = appState.sandboxWallet.trim() || `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`;
-
-  if (txtEl) txtEl.textContent = `evm-contract=${wallet}`;
-  if (txEl) txEl.textContent = `setProfile("${domain}", …) · $1.00`;
-  if (jsonPre) jsonPre.textContent = buildSandboxJson();
-
-  if (dnsBadge) {
-    dnsBadge.className = appState.sandboxDnsVerified ? 'status-chip' : 'cyan-chip';
-    dnsBadge.textContent = appState.sandboxDnsVerified ? 'DoH: Verified' : 'Awaiting verification';
-  }
-  if (txBadge) {
-    txBadge.className = appState.sandboxTxSigned ? 'status-chip' : 'cyan-chip';
-    txBadge.textContent = appState.sandboxTxSigned ? 'In Base registry' : 'Draft';
-  }
+function obToggleKnow(cat) {
+  const o = appState.onb;
+  const i = o.knows.indexOf(cat);
+  if (i === -1) o.knows.push(cat); else o.knows.splice(i, 1);
+  obRender();
+  persistState();
 }
 
-async function simulateDnsCheck() {
-  const msg = document.getElementById('sandbox-inline-msg');
-  const domain = appState.sandboxDomain.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
-  const wallet = appState.sandboxWallet.trim();
-  if (!domain || !wallet) {
-    if (msg) msg.textContent = 'Enter a domain and a Base wallet address before verifying.';
+function obRenderList(id, items, kind) {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  if (!items.length) {
+    const d = document.createElement('div');
+    d.className = 'ob-empty';
+    d.textContent = kind === 'offer'
+      ? 'No offers yet — add the products or services you sell.'
+      : 'No demands yet — declare the raw materials and services you regularly buy.';
+    wrap.appendChild(d);
     return;
   }
-  appState.sandboxDnsVerified = false;
-  renderSandbox();
-  if (msg) msg.textContent = `Querying Cloudflare DoH for ${domain}…`;
-  try {
-    const res = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=TXT`, { headers: { 'accept': 'application/dns-json' } });
-    const data = await res.json();
-    const answers = (data.Answer || []).map(a => a.data.replace(/^"|"$/g, ''));
-    const expected = `evm-contract=${wallet}`;
-    const found = answers.find(r => r.toLowerCase() === expected.toLowerCase());
-    if (found) {
-      appState.sandboxDnsVerified = true;
-      renderSandbox();
-      if (msg) msg.textContent = `Cloudflare DoH confirmed the TXT record for ${domain}. You can sign setProfile().`;
+  items.forEach(function (it, i) {
+    const row = document.createElement('div');
+    row.className = 'ob-item';
+    const head = document.createElement('div');
+    const h = document.createElement('div');
+    h.className = 'ob-item-head';
+    h.textContent = it.name || 'Untitled';
+    const s = document.createElement('div');
+    s.className = 'ob-item-sub';
+    if (kind === 'offer') {
+      s.textContent = [it.sku, it.price ? it.price + ' ' + it.currency : '', it.incoterms ? 'Incoterms: ' + it.incoterms : ''].filter(Boolean).join(' · ');
     } else {
-      renderSandbox();
-      if (msg) msg.textContent = `No matching evm-contract TXT record found for ${domain} (DNS status: ${data.Status}). Publish "${expected}" and retry.`;
+      s.textContent = [it.category, it.volume, it.budget ? 'Budget: ' + it.budget + ' ' + it.currency : '', it.incoterms ? 'Incoterms: ' + it.incoterms : ''].filter(Boolean).join(' · ');
+    }
+    head.appendChild(h);
+    head.appendChild(s);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ob-remove';
+    btn.textContent = 'Remove';
+    btn.onclick = function () { obRemoveItem(kind, i); };
+    row.appendChild(head);
+    row.appendChild(btn);
+    wrap.appendChild(row);
+  });
+}
+
+function obRemoveItem(kind, i) {
+  const arr = kind === 'offer' ? appState.onb.offers : appState.onb.demands;
+  arr.splice(i, 1);
+  obRender();
+  persistState();
+}
+
+function obAddOffer() {
+  const g = function (id) { return document.getElementById(id); };
+  const name = ((g('ob-sale-name') || {}).value || '').trim();
+  if (!name) { const el = g('ob-sale-name'); if (el) el.focus(); return; }
+  appState.onb.offers.push({
+    name: name,
+    sku: ((g('ob-sale-sku') || {}).value || '').trim(),
+    price: ((g('ob-sale-price') || {}).value || '').trim(),
+    currency: (g('ob-sale-currency') || {}).value || 'EUR',
+    incoterms: (g('ob-sale-incoterms') || {}).value || '',
+    desc: ((g('ob-sale-desc') || {}).value || '').trim()
+  });
+  ['ob-sale-name', 'ob-sale-sku', 'ob-sale-price', 'ob-sale-desc'].forEach(function (id) {
+    const el = g(id); if (el) el.value = '';
+  });
+  obRender();
+  persistState();
+}
+
+function obAddDemand() {
+  const g = function (id) { return document.getElementById(id); };
+  const name = ((g('ob-buy-name') || {}).value || '').trim();
+  if (!name) { const el = g('ob-buy-name'); if (el) el.focus(); return; }
+  appState.onb.demands.push({
+    overview: ((g('ob-buy-overview') || {}).value || '').trim(),
+    name: name,
+    category: (g('ob-buy-category') || {}).value || '',
+    volume: ((g('ob-buy-volume') || {}).value || '').trim(),
+    budget: ((g('ob-buy-budget') || {}).value || '').trim(),
+    currency: (g('ob-buy-currency') || {}).value || 'EUR',
+    incoterms: (g('ob-buy-incoterms') || {}).value || ''
+  });
+  const el = g('ob-buy-name'); if (el) el.value = '';
+  obRender();
+  persistState();
+}
+
+function obBuildJson() {
+  const o = appState.onb;
+  const domain = (o.domain || 'example.com').replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  const obj = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    'name': o.name || domain,
+    'url': 'https://' + domain,
+    'description': o.desc || '',
+    'identifier': { '@type': 'PropertyValue', 'propertyID': 'TrustMarketsBaseAddress', 'value': o.wallet },
+    'additionalProperty': [
+      { '@type': 'PropertyValue', 'name': 'dnsTxtRecord', 'value': 'evm-contract=' + o.wallet },
+      { '@type': 'PropertyValue', 'name': 'accessMode', 'value': o.visibility === 'public' ? 'Public (AI indexed)' : 'Hybrid (price lists via SIWE + Base RPC)' },
+      { '@type': 'PropertyValue', 'name': 'network', 'value': 'Base L2 (chainId: 8453)' }
+    ]
+  };
+  if (o.city) obj.address = { '@type': 'PostalAddress', 'addressLocality': o.city };
+  if (o.knows.length) obj.knowsAbout = o.knows.slice();
+  const contacts = [];
+  if (o.salesEmail) contacts.push({ '@type': 'ContactPoint', 'contactType': 'Sales', 'email': 'mailto:' + o.salesEmail });
+  if (o.procEmail) contacts.push({ '@type': 'ContactPoint', 'contactType': 'Procurement', 'email': 'mailto:' + o.procEmail });
+  if (contacts.length) obj.contactPoint = contacts;
+  if (o.offers.length) {
+    obj.makesOffer = o.offers.map(function (it) {
+      const offer = { '@type': 'Offer', 'itemOffered': { '@type': 'Product', 'name': it.name } };
+      if (it.sku) offer.itemOffered.sku = it.sku;
+      if (it.desc) offer.itemOffered.description = it.desc;
+      if (it.price) { offer.price = it.price; offer.priceCurrency = it.currency; }
+      if (it.incoterms) offer.incotermsDetails = it.incoterms;
+      offer.acceptedPaymentMethod = it.currency === 'USDC'
+        ? ['Cryptocurrency (USDC on Base)']
+        : ['Bank Transfer (SEPA)', 'Cryptocurrency (USDC on Base)'];
+      return offer;
+    });
+  }
+  if (o.demands.length) {
+    obj.potentialAction = {
+      '@type': 'Demand',
+      'description': o.demands[0].overview || 'Regular procurement needs of ' + (o.name || domain),
+      'itemOffered': o.demands.map(function (d) {
+        const p = { '@type': 'Product', 'name': d.name };
+        if (d.category) p.category = d.category;
+        if (d.volume) p.targetVolume = d.volume;
+        if (d.incoterms) p.preferredIncoterms = d.incoterms;
+        if (d.budget) { p.maxBudget = d.budget; p.priceCurrency = d.currency; }
+        return p;
+      })
+    };
+  }
+  return JSON.stringify(obj, null, 2);
+}
+
+function obRender() {
+  const o = appState.onb;
+  const g = function (id) { return document.getElementById(id); };
+  const setVal = function (id, v) { const el = g(id); if (el && el.value !== v) el.value = v; };
+
+  setVal('ob-domain', o.domain);
+  setVal('ob-name', o.name);
+  setVal('ob-wallet', o.wallet);
+  setVal('ob-desc', o.desc);
+  setVal('ob-city', o.city);
+  const visEl = g('ob-visibility'); if (visEl) visEl.value = o.visibility;
+  const pathEl = g('ob-prompt-path'); if (pathEl) pathEl.value = o.promptPath;
+  const dnsChk = g('ob-chk-dns'); if (dnsChk) dnsChk.checked = Boolean(o.dnsAdded);
+  const fileChk = g('ob-chk-file'); if (fileChk) fileChk.checked = Boolean(o.fileUploaded);
+  const mcpEl = g('ob-mcp-scenario'); if (mcpEl) mcpEl.value = o.mcpScenario;
+
+  const cnt = g('ob-desc-count');
+  if (cnt) cnt.textContent = (o.desc || '').length + ' chars · ~' + Math.max(1, Math.round((o.desc || '').length / 4)) + ' tokens';
+
+  const chips = g('ob-knows');
+  if (chips) {
+    chips.innerHTML = '';
+    OB_KNOWS_CATEGORIES.forEach(function (cat) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip-btn' + (o.knows.indexOf(cat) !== -1 ? ' active' : '');
+      b.textContent = cat;
+      b.onclick = function () { obToggleKnow(cat); };
+      chips.appendChild(b);
+    });
+  }
+
+  for (let n = 1; n <= 4; n++) {
+    const tab = g('ob-tab-' + n);
+    if (tab) {
+      tab.classList.toggle('active', o.step === n);
+      tab.setAttribute('aria-selected', o.step === n ? 'true' : 'false');
+    }
+    const panel = g('ob-panel-' + n);
+    if (panel) panel.hidden = (o.step !== n);
+  }
+
+  obRenderList('ob-offers-list', o.offers, 'offer');
+  obRenderList('ob-demands-list', o.demands, 'demand');
+
+  const wallet = (o.wallet || '').trim() || '0x…';
+  const domain = (o.domain || '').trim() || 'example.com';
+  const txt = 'evm-contract=' + wallet;
+  const t1 = g('ob-txt-val'); if (t1) t1.textContent = txt;
+  const t2 = g('ob-txt-val2'); if (t2) t2.textContent = txt;
+  const tx = g('ob-tx-val'); if (tx) tx.textContent = 'setProfile("' + domain + '", …) · value $1.00';
+
+  const walletReady = Boolean(tmActiveWallet) && /^0x[0-9a-fA-F]{40}$/.test(wallet);
+  const rw = g('ob-ready-wallet');
+  if (rw) rw.textContent = walletReady
+    ? 'Connected: ' + shortAddress(o.wallet)
+    : (tmActiveWallet ? 'Connected wallet differs from the profile wallet' : 'Not connected');
+  const rwBadge = g('ob-ready-wallet-badge');
+  if (rwBadge) { rwBadge.className = walletReady ? 'status-chip' : 'cyan-chip'; rwBadge.textContent = walletReady ? 'Ready' : 'Pending'; }
+
+  const rd = g('ob-ready-dns');
+  if (rd) rd.textContent = o.dnsVerified ? 'DoH: TXT matches ' + domain : 'Not verified';
+  const rdBadge = g('ob-ready-dns-badge');
+  if (rdBadge) { rdBadge.className = o.dnsVerified ? 'status-chip' : 'cyan-chip'; rdBadge.textContent = o.dnsVerified ? 'Verified' : 'Pending'; }
+
+  const rjBadge = g('ob-ready-json-badge');
+  if (rjBadge) { rjBadge.className = o.fileUploaded ? 'status-chip' : 'cyan-chip'; rjBadge.textContent = o.fileUploaded ? 'Published' : 'Pending'; }
+
+  const txBadge = g('ob-tx-badge');
+  if (txBadge) { txBadge.className = o.signed ? 'status-chip' : 'cyan-chip'; txBadge.textContent = o.signed ? 'In Base registry (simulated)' : 'Draft'; }
+
+  const pre = g('ob-json-preview');
+  if (pre) pre.textContent = obBuildJson();
+}
+
+async function obVerifyDns() {
+  const box = document.getElementById('ob-doh-box');
+  const domain = appState.onb.domain.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  const wallet = appState.onb.wallet.trim();
+  if (!domain || !wallet) {
+    if (box) box.textContent = 'Enter a domain and a Base wallet address before verifying.';
+    return;
+  }
+  appState.onb.dnsVerified = false;
+  if (box) box.textContent = 'Querying Cloudflare DoH for ' + domain + '…';
+  try {
+    const res = await fetch('https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=TXT', { headers: { 'accept': 'application/dns-json' } });
+    const data = await res.json();
+    const answers = (data.Answer || []).map(function (a) { return a.data.replace(/^"|"$/g, ''); });
+    const expected = 'evm-contract=' + wallet;
+    const found = answers.find(function (r) { return r.toLowerCase() === expected.toLowerCase(); });
+    if (found) {
+      appState.onb.dnsVerified = true;
+      if (box) box.textContent = '✓ Cloudflare DoH confirmed: ' + domain + ' → ' + expected + '. The domain ↔ wallet binding is ready for setProfile().';
+    } else {
+      if (box) box.textContent = 'No matching TXT record on ' + domain + ' (DNS status ' + data.Status + '). Publish "' + expected + '" at your DNS provider and retry. Found: ' + (answers.length ? answers.join(' | ') : 'no TXT records');
     }
   } catch (err) {
-    if (msg) msg.textContent = `DoH query failed: ${err.message}. Check the domain and try again.`;
+    if (box) box.textContent = 'DoH query failed: ' + err.message + ' — check the domain and retry.';
   }
+  obRender();
   persistState();
 }
 
-function simulateSetProfile() {
-  const msg = document.getElementById('sandbox-inline-msg');
-  if (!appState.sandboxDnsVerified) {
-    if (msg) msg.textContent = 'Verify the DNS TXT record via DoH before signing setProfile().';
+function obRunMcpValidation() {
+  const o = appState.onb;
+  const out = document.getElementById('ob-mcp-output');
+  if (!out) return;
+  const warnings = [];
+  if (!o.name) warnings.push('Organization name is empty — AI ranking suffers.');
+  if (!o.desc || o.desc.length < 60) warnings.push('Business description is short — add specialization, volumes and Incoterms.');
+  if (!o.knows.length) warnings.push('No knowsAbout categories selected.');
+  if (!o.offers.length) warnings.push('makesOffer is empty — buyer agents cannot find your products.');
+  if (!o.demands.length) warnings.push('Demand list is empty — supplier agents will skip your node.');
+  if (!o.dnsVerified) warnings.push('DNS TXT not verified via DoH — setProfile() would be rejected on-chain.');
+
+  let result;
+  if (o.mcpScenario === 'supplier-discovery') {
+    result = {
+      tool: 'match_demand_suppliers',
+      query: o.demands[0] ? o.demands[0].name : '—',
+      yourDemandItems: o.demands.length,
+      indexedNodesScanned: o.demands.length ? 128 : 0,
+      topCandidates: o.demands.length ? [
+        { domain: 'nordic-agro.eu', cosineSimilarity: 0.93, trustScore: 98.4 },
+        { domain: 'baltic-polymers.pl', cosineSimilarity: 0.87, trustScore: 89.6 }
+      ] : [],
+      warnings: warnings
+    };
+  } else if (o.mcpScenario === 'profile-completeness') {
+    result = {
+      tool: 'validate_jsonld',
+      profile: { domain: o.domain, wallet: o.wallet, accessMode: o.visibility },
+      fields: {
+        name: Boolean(o.name),
+        description: Boolean(o.desc),
+        knowsAbout: o.knows.length,
+        makesOffer: o.offers.length,
+        demand: o.demands.length,
+        contactPoints: Boolean(o.salesEmail || o.procEmail)
+      },
+      readiness: warnings.length ? 'incomplete' : 'ready',
+      warnings: warnings
+    };
+  } else {
+    result = {
+      tool: 'search_b2b_partners',
+      query: 'Find ' + (o.offers[0] ? o.offers[0].name : 'your products') + (o.offers[0] && o.offers[0].incoterms ? ' · ' + o.offers[0].incoterms : ''),
+      embeddingModel: 'openai/text-embedding-3-small',
+      topMatch: o.offers.length
+        ? { domain: o.domain, offer: o.offers[0].name, cosineSimilarity: 0.94, trustScore: 'not yet onchain' }
+        : null,
+      warnings: warnings
+    };
+  }
+  out.textContent = JSON.stringify(result, null, 2);
+}
+
+function obSignProfile() {
+  const o = appState.onb;
+  const msg = document.getElementById('ob-sign-msg');
+  const missing = [];
+  if (!/^0x[0-9a-fA-F]{40}$/.test(o.wallet)) missing.push('a valid Base wallet address (step 01)');
+  if (!o.dnsVerified) missing.push('DNS TXT verification via DoH (step 03)');
+  if (!o.fileUploaded) missing.push('confirmation that trustmarkets-schema.json is published (step 03)');
+  if (missing.length) {
+    if (msg) msg.textContent = 'Not ready yet — complete: ' + missing.join(', ') + '.';
     return;
   }
-  appState.sandboxTxSigned = true;
-  renderSandbox();
-  if (msg) msg.textContent = `Simulation of setProfile() on Base complete ($1 anti-spam fee). The profile ${appState.sandboxDomain} is ready for indexing.`;
+  o.signed = true;
+  obRender();
+  if (msg) msg.textContent = 'Simulation complete: setProfile("' + o.domain + '", …) with a $1 anti-spam fee. TrustMarketsRegistry.sol is not deployed to Base mainnet yet — once deployed, this button sends the real transaction from your connected wallet.';
   persistState();
 }
 
-function exportGeneratedJsonLd() {
-  const jsonText = buildSandboxJson();
-  const msg = document.getElementById('sandbox-inline-msg');
+function obCopyJson() {
+  copyTextSafe(obBuildJson(), 'ob-inline-msg', 'JSON-LD copied to clipboard');
+}
+
+function obDownloadJson() {
+  const jsonText = obBuildJson();
+  const msg = document.getElementById('ob-inline-msg');
   try {
     const blob = new Blob([jsonText], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -2707,11 +3302,15 @@ function exportGeneratedJsonLd() {
     document.body.appendChild(a);
     a.click();
     a.remove();
-    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
     if (msg) msg.textContent = 'File trustmarkets-schema.json exported.';
   } catch (e) {
-    copyTextSafe(jsonText, 'sandbox-inline-msg', 'JSON-LD copied to clipboard');
+    copyTextSafe(jsonText, 'ob-inline-msg', 'JSON-LD copied to clipboard');
   }
+}
+
+function obCopyDns() {
+  copyTextSafe('evm-contract=' + (appState.onb.wallet || '0x…'), 'ob-inline-msg', 'TXT record copied to clipboard');
 }
 
 function resetAppState(btn) {
@@ -2731,12 +3330,7 @@ function resetAppState(btn) {
     toolkitMode: `cli`,
     securityLayer: `dns`,
     codeTab: `registry`,
-    sandboxDomain: `alpina-foods.eu`,
-    sandboxWallet: `0x4B2a91c8e3D0f7aB2190E4c8B52a9f1`,
-    sandboxOffer: `Organic Durum Wheat Semolina — 1200 EUR/t, FCA Zurich`,
-    sandboxPublic: true,
-    sandboxDnsVerified: false,
-    sandboxTxSigned: false
+    onb: obDefaults()
   };
 
   applyAllUI();
@@ -2750,7 +3344,7 @@ function applyAllUI() {
   renderToolkit();
   selectSecurityLayer(appState.securityLayer);
   selectCodeTab(appState.codeTab);
-  renderSandbox();
+  obRender();
 }
 
 function setupScrollReveals() {
@@ -2867,10 +3461,10 @@ function performSiteSearch(rawQuery) {
 function applySearchResult(res) {
   if (!res) return;
   if (res.type === 'wallet' && res.wallet) {
-    const walEl = document.getElementById('sandbox-wallet');
+    const walEl = document.getElementById('ob-wallet');
     if (walEl) {
       walEl.value = res.wallet;
-      onSandboxInput();
+      obInput();
     }
   }
   closeSearchResults();
@@ -3046,10 +3640,10 @@ async function connectWithWallet(option) {
 }
 
 function syncSandboxWallet(address) {
-  const walEl = document.getElementById('sandbox-wallet');
+  const walEl = document.getElementById('ob-wallet');
   if (walEl && /^0x[0-9a-fA-F]{40}$/.test(address)) {
     walEl.value = address;
-    if (typeof onSandboxInput === 'function') onSandboxInput();
+    if (typeof obInput === 'function') obInput();
   }
 }
 
