@@ -1265,6 +1265,116 @@ input[type="range"] {
   transform: translateY(0);
 }
 
+
+/* Plain-language "How it works" + glossary + demo search */
+.hiw-entry {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+.hiw-card { display: flex; flex-direction: column; gap: var(--space-md); }
+.hiw-card h3 {
+  margin: 0;
+  font-family: var(--font-headline);
+  font-size: var(--subhead-size);
+  font-weight: 600;
+  color: var(--on-surface);
+  letter-spacing: var(--heading-tracking);
+}
+.hiw-steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  color: var(--on-surface-variant);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.hiw-steps strong { color: var(--on-surface); }
+.hiw-glossary { display: flex; flex-direction: column; gap: var(--space-md); align-items: flex-start; }
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+  width: 100%;
+}
+.glossary-item { display: flex; flex-direction: column; gap: 2px; }
+.glossary-term {
+  font-family: var(--font-label);
+  font-size: var(--label-size);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--primary);
+}
+.glossary-def { color: var(--on-surface-variant); font-size: 0.875rem; line-height: 1.45; }
+.term { border-bottom: 1px dotted var(--primary); cursor: help; }
+#glossary-tip {
+  position: fixed;
+  z-index: 200;
+  max-width: 280px;
+  background: var(--surface-container-high);
+  border: var(--hairline-strong);
+  border-radius: var(--rounded);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--on-surface);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  box-shadow: 0 12px 30px rgba(3, 8, 10, 0.5);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s var(--ease-out);
+}
+#glossary-tip.show { opacity: 1; }
+.demo-badge {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--warning);
+  background: var(--amber-tint);
+  border: 1px solid color-mix(in srgb, var(--warning) 45%, transparent);
+  border-radius: var(--rounded-full);
+  padding: 1px 8px;
+  margin-left: var(--space-sm);
+  vertical-align: middle;
+}
+.supplier-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: var(--hairline);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+}
+.supplier-card:last-child { border-bottom: none; }
+.supplier-card:hover, .supplier-card:focus-visible { background: var(--cyan-tint); outline: none; }
+.sc-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); }
+.sc-company { font-weight: 600; color: var(--on-surface); font-size: 0.9375rem; }
+.sc-trust { font-family: var(--font-label); font-size: 0.75rem; color: var(--tertiary); white-space: nowrap; }
+.sc-product { color: var(--on-surface-variant); font-size: 0.875rem; }
+.sc-meta { font-family: var(--font-label); font-size: 0.75rem; color: var(--on-surface-variant); }
+.sc-verified { color: var(--tertiary); }
+.search-group-label {
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  background: var(--surface-container);
+  border-bottom: var(--hairline);
+}
+@media (max-width: 900px) {
+  .hiw-entry, .glossary-grid { grid-template-columns: 1fr; }
+}
+
 /* Responsive breakpoints */
 @media (max-width: 900px) {
   .hero-grid,
@@ -1314,6 +1424,7 @@ input[type="range"] {
       <span class="net-tag">Base L2 · EVM</span>
     </div>
     <nav class="nav-links" aria-label="Platform sections">
+      <a href="#how-it-works" class="nav-link">How it works</a>
       <a href="#roles" class="nav-link">For Buyers &amp; Sellers</a>
       <a href="#pricing" class="nav-link">Pricing</a>
       <a href="#mcp-toolkit" class="nav-link">MCP &amp; CLI</a>
@@ -1457,9 +1568,78 @@ input[type="range"] {
   </section>
 
   <!-- 2. INTERACTIVE TWO-COLUMN BLOCK: FOR BUYERS / FOR SELLERS -->
+
+  <!-- HOW IT WORKS (plain language) -->
+  <section id="how-it-works" class="section-block reveal" aria-labelledby="hiw-heading">
+    <div class="section-head">
+      <span class="data-label">New here? Start with the basics</span>
+      <h2 id="hiw-heading">How it works — in plain English</h2>
+      <p class="section-lede">
+        TrustMarkets is a marketplace where <span class="term" data-tip="A program like ChatGPT or Claude that can search and act on your behalf.">AI agents</span> do the searching for you. Sellers publish what they offer once; buyers' AI assistants find them and arrange a safe deal. No ads, no listing fees, no middlemen taking a cut.
+      </p>
+    </div>
+
+    <div class="hiw-entry">
+      <div class="panel hiw-card">
+        <span class="data-label">I want to buy</span>
+        <h3>Find a supplier without browsing endless listings</h3>
+        <ol class="hiw-steps">
+          <li><strong>Tell your AI what you need.</strong> For example: "20 tons of organic wheat, delivered to Zurich, pay in USDC."</li>
+          <li><strong>It finds verified suppliers.</strong> Your assistant searches the network and shows matches with a trust rating.</li>
+          <li><strong>Pay safely.</strong> Money is held by a <span class="term" data-tip="A small program on the blockchain that holds money and releases it only when agreed conditions are met. No human can change the rules.">smart contract</span> until you confirm delivery — or use a normal invoice.</li>
+        </ol>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" onclick="hiwDemoSearch()">Try a supplier search</button>
+          <button type="button" class="btn btn-secondary" onclick="jumpToSection('mcp-toolkit', 'mcp-copy-btn')">Connect my AI</button>
+        </div>
+      </div>
+
+      <div class="panel hiw-card">
+        <span class="data-label">I want to sell</span>
+        <h3>Get found by buyers' AI agents — no ad budget</h3>
+        <ol class="hiw-steps">
+          <li><strong>Prove you own your domain.</strong> Add one <span class="term" data-tip="A short text line you add to your domain's DNS settings to prove you own it. Here it links your domain to your crypto wallet.">DNS record</span> — a short text line, takes a minute.</li>
+          <li><strong>Publish your catalog.</strong> Fill a simple form; we generate the machine-readable file for you.</li>
+          <li><strong>Register for $1.</strong> One small fee keeps bots out. Buyers' agents start finding you.</li>
+        </ol>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" onclick="jumpToSection('register-sandbox', 'ob-domain')">Register my company ($1)</button>
+          <button type="button" class="btn btn-secondary" onclick="obPreset('alpina'); jumpToSection('register-sandbox', 'ob-domain')">See a filled example</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hiw-glossary">
+      <button type="button" class="btn btn-secondary btn-compact" id="glossary-toggle" onclick="toggleGlossary()" aria-expanded="false">
+        <i data-lucide="book-open" aria-hidden="true"></i>
+        <span>New to these words? Open the plain-English glossary</span>
+      </button>
+      <div id="glossary-panel" class="panel" hidden>
+        <div class="glossary-grid">
+          <div class="glossary-item"><span class="glossary-term">AI agent</span><span class="glossary-def">A program (like ChatGPT or Claude) that can search and act on your behalf.</span></div>
+          <div class="glossary-item"><span class="glossary-term">Smart contract</span><span class="glossary-def">A small program on the blockchain that holds money and releases it only when agreed conditions are met. No human can change the rules.</span></div>
+          <div class="glossary-item"><span class="glossary-term">Base L2</span><span class="glossary-def">A fast, low-cost blockchain network (built by Coinbase) where these contracts run.</span></div>
+          <div class="glossary-item"><span class="glossary-term">Wallet</span><span class="glossary-def">Your crypto account (MetaMask, Phantom, Rabby…). It holds your keys and signs transactions.</span></div>
+          <div class="glossary-item"><span class="glossary-term">USDC</span><span class="glossary-def">A digital dollar: 1 USDC is worth about $1, used for payments here.</span></div>
+          <div class="glossary-item"><span class="glossary-term">Escrow</span><span class="glossary-def">Money held by the smart contract until the buyer confirms delivery. Protects both sides.</span></div>
+          <div class="glossary-item"><span class="glossary-term">Net-30 / Net-60</span><span class="glossary-def">A normal invoice: pay 30 or 60 days after delivery, with no money locked up front.</span></div>
+          <div class="glossary-item"><span class="glossary-term">DNS TXT record</span><span class="glossary-def">A short text line you add to your domain's settings to prove you own it.</span></div>
+          <div class="glossary-item"><span class="glossary-term">SIWE</span><span class="glossary-def">"Sign-In with Ethereum" — logging in by signing a message with your wallet instead of a password.</span></div>
+          <div class="glossary-item"><span class="glossary-term">JSON-LD</span><span class="glossary-def">A standard format for describing a business so machines and AI can read it.</span></div>
+          <div class="glossary-item"><span class="glossary-term">MCP</span><span class="glossary-def">A plug that lets AI assistants (ChatGPT, Claude, Cursor) connect to this network.</span></div>
+          <div class="glossary-item"><span class="glossary-term">Trust Score</span><span class="glossary-def">A reputation number built from real completed deals — not reviews you can fake.</span></div>
+          <div class="glossary-item"><span class="glossary-term">Incoterms</span><span class="glossary-def">Standard shipping terms (FOB, CIF, DAP…) that say who pays for transport and where risk transfers.</span></div>
+          <div class="glossary-item"><span class="glossary-term">DoH</span><span class="glossary-def">"DNS over HTTPS" — a secure way to look up DNS records; we use it to verify your domain.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="roles" class="section-block reveal" aria-labelledby="roles-heading">
     <div class="section-head">
-      <h2 id="roles-heading">Key Advantages</h2>
+      <span class="data-label">The detailed walkthrough</span>
+      <h2 id="roles-heading">See the full flow, step by step</h2>
+      <p class="section-lede">Pick a role and click each step — the panel on the right shows what actually happens: the AI search request, the wallet signature, and the payment contract.</p>
     </div>
 
     <div class="role-controls">
@@ -2003,12 +2183,17 @@ input[type="range"] {
           </div>
         </div>
         <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.875rem;">
-          One-way informational contract: only the domain owner signs. The binding Domain ↔ Wallet ↔ aiPromptUri lands in <code style="font-family: var(--font-label);">TrustMarketsRegistry.sol</code>; a later <code style="font-family: var(--font-label);">setProfile()</code> re-binds a new domain and keeps the wallet's full history and Trust Score.
+          This is a one-way registration: only you, the domain owner, sign it. It links your domain to your wallet on the blockchain. If you ever change domains, your history and reputation stay with your wallet.
+        </p>
+        <p style="margin: 0; color: var(--warning); font-size: 0.8125rem;">
+          <span class="demo-badge" style="margin-left: 0;">Demo</span>
+          The registry contract is not live on Base yet, so this step is a simulation — no real money moves. Once deployed, it will send a real $1 transaction from your connected wallet.
         </p>
         <div class="btn-row">
           <button type="button" class="btn btn-primary" onclick="obSignProfile()">
             <i data-lucide="check-circle-2" aria-hidden="true"></i>
             <span>Sign setProfile() ($1)</span>
+            <span class="demo-badge">Demo</span>
           </button>
           <button type="button" class="btn btn-secondary" onclick="obGoStep(1)">← Edit profile</button>
         </div>
@@ -3383,8 +3568,9 @@ function initApp() {
 }
 
 /* Global site search (products, companies, crypto wallets, smart contracts) */
-const SITE_SEARCH_SECTIONS = ['hero', 'roles', 'pricing', 'mcp-toolkit', 'security', 'register-sandbox'];
+const SITE_SEARCH_SECTIONS = ['how-it-works', 'hero', 'roles', 'pricing', 'mcp-toolkit', 'security', 'register-sandbox'];
 const SEARCH_SECTION_LABELS = {
+  'how-it-works': 'How it works',
   'hero': 'Overview',
   'roles': 'Buyers & Sellers',
   'pricing': 'Pricing & Contracts',
@@ -3392,6 +3578,28 @@ const SEARCH_SECTION_LABELS = {
   'security': 'Security & Smart Contracts',
   'register-sandbox': '$1 Registration Sandbox'
 };
+
+/* Demo supplier catalog (sample data — international companies) */
+const DEMO_SUPPLIERS = [
+  { company: 'Alpina Foods GmbH', domain: 'alpina-foods.eu', product: 'Organic Durum Wheat Semolina', price: '1200 EUR/t', incoterms: 'FCA Zurich', trust: 98.4, tags: 'wheat semolina grain food organic flour pasta durum' },
+  { company: 'Nordic Agro Commodities', domain: 'nordic-agro.eu', product: 'Refined Sunflower Oil', price: '920 USDC/t', incoterms: 'CIF Rotterdam', trust: 96.1, tags: 'sunflower oil cooking edible oil fat liquid bulk' },
+  { company: 'Baltic Polymers & Packaging', domain: 'baltic-polymers.pl', product: 'Food-grade PET Preforms / HDPE', price: '1140 EUR/t', incoterms: 'DAP Central Europe', trust: 89.6, tags: 'pet preforms hdpe polymer plastic packaging bottles granules' },
+  { company: 'Anatolia Steel Trade', domain: 'anatolia-steel.example', product: 'Hot-rolled Steel Coils', price: '610 USDC/t', incoterms: 'FOB Istanbul', trust: 84.2, tags: 'steel coils metal hot rolled industrial sheet' },
+  { company: 'EuroTransit Logistics', domain: 'eurotransit-freight.example', product: '40HC Container Rail & Sea Freight', price: 'quote per lane', incoterms: 'China ↔ Europe', trust: 95.1, tags: 'freight logistics container 40hc shipping rail sea transport cargo' },
+  { company: 'Veritas Independent Audit', domain: 'veritas-audit.example', product: 'Pre-shipment Quality Inspection', price: 'from 450 USDC', incoterms: 'any port', trust: 99.1, tags: 'audit inspection quality sgs validator certificate survey' }
+];
+
+function matchSuppliers(q) {
+  const words = q.split(/\s+/).filter(Boolean);
+  return DEMO_SUPPLIERS.map(function (s) {
+    const hay = (s.company + ' ' + s.domain + ' ' + s.product + ' ' + s.tags + ' ' + s.incoterms).toLowerCase();
+    let hits = 0;
+    words.forEach(function (w) { if (hay.indexOf(w) !== -1) hits++; });
+    return { s: s, score: hits };
+  }).filter(function (r) { return r.score > 0; })
+    .sort(function (a, b) { return b.score - a.score || b.s.trust - a.s.trust; })
+    .map(function (r) { return r.s; });
+}
 
 function escapeSearchHtml(str) {
   return String(str).replace(/[&<>"']/g, function(c) {
@@ -3430,28 +3638,52 @@ function performSiteSearch(rawQuery) {
       type: 'wallet',
       target: 'register-sandbox',
       kicker: 'Crypto wallet detected',
-      snippet: 'Open this address in the $1 registration sandbox and bind it to a domain via a DNS TXT record.',
+      snippet: 'Open this address in the $1 registration wizard and bind it to a domain via a DNS TXT record.',
       wallet: q
     });
   }
-  collectSearchTargets().forEach(function(t) {
+
+  const suppliers = matchSuppliers(q);
+  suppliers.forEach(function (s) {
+    results.push({ type: 'supplier', target: 'roles', supplier: s });
+  });
+
+  collectSearchTargets().forEach(function (t) {
     const idx = t.lower.indexOf(q);
     if (idx === -1) return;
     const start = Math.max(0, idx - 42);
     const snippet = (start > 0 ? '…' : '') + t.text.slice(start, idx + q.length + 72) + '…';
     results.push({ type: 'section', target: t.id, kicker: t.label, snippet: snippet });
   });
-  box.innerHTML = results.length
-    ? results.map(function(r, i) {
-        return '<button type="button" class="search-result" data-idx="' + i + '">' +
-          '<span class="sr-kicker">' + escapeSearchHtml(r.kicker) + '</span>' +
-          '<span class="sr-snippet">' + escapeSearchHtml(r.snippet) + '</span>' +
-        '</button>';
-      }).join('')
-    : '<div class="search-empty">No matches on this page. Try a product, company, crypto wallet, or smart contract name.</div>';
+
+  let html = '';
+  if (suppliers.length) {
+    html += '<div class="search-group-label">Suppliers · demo catalog</div>';
+  }
+  html += results.map(function (r, i) {
+    if (r.type === 'supplier') {
+      const s = r.supplier;
+      return '<button type="button" class="supplier-card" data-idx="' + i + '">' +
+        '<span class="sc-top"><span class="sc-company">' + escapeSearchHtml(s.company) + '</span>' +
+        '<span class="sc-trust">Trust ' + s.trust.toFixed(1) + '</span></span>' +
+        '<span class="sc-product">' + escapeSearchHtml(s.product) + '</span>' +
+        '<span class="sc-meta">' + escapeSearchHtml(s.price) + ' · ' + escapeSearchHtml(s.incoterms) +
+        ' · <span class="sc-verified">✓ verified</span> · ' + escapeSearchHtml(s.domain) + '</span>' +
+      '</button>';
+    }
+    return '<button type="button" class="search-result" data-idx="' + i + '">' +
+      '<span class="sr-kicker">' + escapeSearchHtml(r.kicker) + '</span>' +
+      '<span class="sr-snippet">' + escapeSearchHtml(r.snippet) + '</span>' +
+    '</button>';
+  }).join('');
+
+  if (!results.length) {
+    html = '<div class="search-empty">No matches. Try a product (e.g. "sunflower oil", "steel coils", "PET preforms"), a company, a crypto wallet (0x…), or a smart contract name.</div>';
+  }
+  box.innerHTML = html;
   box.classList.add('open');
-  Array.prototype.forEach.call(box.querySelectorAll('.search-result'), function(btn) {
-    btn.addEventListener('click', function() {
+  Array.prototype.forEach.call(box.querySelectorAll('[data-idx]'), function (btn) {
+    btn.addEventListener('click', function () {
       applySearchResult(results[Number(btn.dataset.idx)]);
     });
   });
@@ -3466,6 +3698,10 @@ function applySearchResult(res) {
       walEl.value = res.wallet;
       obInput();
     }
+  }
+  if (res.type === 'supplier') {
+    setRoleMode('buyers');
+    selectRoleStep(0);
   }
   closeSearchResults();
   const sec = document.getElementById(res.target);
@@ -3489,6 +3725,69 @@ function runSiteSearchFromInput() {
   const input = document.getElementById('site-search-input');
   performSiteSearch(input ? input.value : '');
 }
+
+function hiwDemoSearch() {
+  const input = document.getElementById('site-search-input');
+  if (input) {
+    input.value = 'sunflower oil';
+    input.focus();
+  }
+  performSiteSearch('sunflower oil');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleGlossary() {
+  const panel = document.getElementById('glossary-panel');
+  const btn = document.getElementById('glossary-toggle');
+  if (!panel) return;
+  const open = panel.hidden;
+  panel.hidden = !open;
+  if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+/* Floating plain-English tooltips for jargon terms */
+function setupGlossaryTooltips() {
+  const tip = document.createElement('div');
+  tip.id = 'glossary-tip';
+  tip.setAttribute('role', 'tooltip');
+  document.body.appendChild(tip);
+
+  function show(el) {
+    const text = el.getAttribute('data-tip');
+    if (!text) return;
+    tip.textContent = text;
+    tip.classList.add('show');
+    const r = el.getBoundingClientRect();
+    const tw = tip.offsetWidth;
+    const th = tip.offsetHeight;
+    let left = Math.min(Math.max(8, r.left + r.width / 2 - tw / 2), window.innerWidth - tw - 8);
+    let top = r.top - th - 8;
+    if (top < 8) top = r.bottom + 8;
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+  }
+  function hide() { tip.classList.remove('show'); }
+
+  document.addEventListener('mouseover', function (e) {
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (el) show(el);
+  });
+  document.addEventListener('mouseout', function (e) {
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (el) hide();
+  });
+  document.addEventListener('focusin', function (e) {
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (el) show(el);
+  });
+  document.addEventListener('focusout', hide);
+  document.addEventListener('click', function (e) {
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (el) { show(el); } else { hide(); }
+  });
+  window.addEventListener('scroll', hide, { passive: true });
+}
+setupGlossaryTooltips();
 
 function setupSiteSearch() {
   const input = document.getElementById('site-search-input');
