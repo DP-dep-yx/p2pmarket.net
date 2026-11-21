@@ -1446,7 +1446,7 @@ input[type="range"] {
       <div class="search-field">
         <i data-lucide="search" aria-hidden="true"></i>
         <input id="site-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false"
-               placeholder="Type a product, company, crypto wallet, or smart contract…"
+               placeholder="Type what you need — e.g. “20t organic wheat to Zurich” — or a company, wallet, contract…"
                aria-label="Search the platform: products, companies, crypto wallets, smart contracts" />
         <button type="button" class="search-go" onclick="runSiteSearchFromInput()">Search</button>
       </div>
@@ -1584,7 +1584,7 @@ input[type="range"] {
         <span class="data-label">I want to buy</span>
         <h3>Find a supplier without browsing endless listings</h3>
         <ol class="hiw-steps">
-          <li><strong>Tell your AI what you need.</strong> For example: "20 tons of organic wheat, delivered to Zurich, pay in USDC."</li>
+          <li><strong>Type what you need in the search bar above.</strong> For example: "20 tons of organic wheat, delivered to Zurich, pay in USDC." Matching suppliers appear instantly — or let your AI agent do it for you.</li>
           <li><strong>It finds verified suppliers.</strong> Your assistant searches the network and shows matches with a trust rating.</li>
           <li><strong>Pay safely.</strong> Money is held by a <span class="term" data-tip="A small program on the blockchain that holds money and releases it only when agreed conditions are met. No human can change the rules.">smart contract</span> until you confirm delivery — or use a normal invoice.</li>
         </ol>
@@ -3590,14 +3590,26 @@ const DEMO_SUPPLIERS = [
 ];
 
 function matchSuppliers(q) {
-  const words = q.split(/\s+/).filter(Boolean);
-  return DEMO_SUPPLIERS.map(function (s) {
-    const hay = (s.company + ' ' + s.domain + ' ' + s.product + ' ' + s.tags + ' ' + s.incoterms).toLowerCase();
-    let hits = 0;
-    words.forEach(function (w) { if (hay.indexOf(w) !== -1) hits++; });
-    return { s: s, score: hits };
-  }).filter(function (r) { return r.score > 0; })
-    .sort(function (a, b) { return b.score - a.score || b.s.trust - a.s.trust; })
+  const STOP = ['a','an','the','of','to','in','on','for','with','and','or','need','needs','want','find','looking','supplier','suppliers','buy','purchase','procure','delivered','deliver','delivery','ship','shipping','pay','payment','paid','tons','ton','tonnes','mt','metric','kg','pcs','pieces','please','i','we','our','us','me','my','some','any','per','from','at','by','via','using','use','quote','price','cost','budget','min','minimum','max','maximum','about','around','approx','who','that','can','sell','sells','offer','offers'];
+  const tokens = q.toLowerCase().split(/[^a-z0-9]+/).filter(function (w) {
+    return w && w.length > 1 && STOP.indexOf(w) === -1;
+  });
+  if (!tokens.length) return [];
+  const scored = DEMO_SUPPLIERS.map(function (s) {
+    const hay = (s.company + ' ' + s.domain + ' ' + s.product + ' ' + s.tags + ' ' + s.incoterms + ' ' + s.price).toLowerCase();
+    const tagWords = s.tags.toLowerCase().split(/\s+/);
+    let score = 0;
+    tokens.forEach(function (w) {
+      const re = new RegExp('\\b' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      if (re.test(hay)) {
+        score += (tagWords.indexOf(w) !== -1 || s.product.toLowerCase().indexOf(w) !== -1) ? 2 : 1;
+      }
+    });
+    return { s: s, score: score };
+  }).filter(function (r) { return r.score > 0; });
+  const strong = scored.filter(function (r) { return r.score >= 2; });
+  const picked = strong.length ? strong : scored;
+  return picked.sort(function (a, b) { return b.score - a.score || b.s.trust - a.s.trust; })
     .map(function (r) { return r.s; });
 }
 
@@ -3728,11 +3740,12 @@ function runSiteSearchFromInput() {
 
 function hiwDemoSearch() {
   const input = document.getElementById('site-search-input');
+  const example = '20 tons of organic wheat, delivered to Zurich, pay in USDC';
   if (input) {
-    input.value = 'sunflower oil';
+    input.value = example;
     input.focus();
   }
-  performSiteSearch('sunflower oil');
+  performSiteSearch(example);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
