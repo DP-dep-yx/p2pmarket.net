@@ -121,16 +121,20 @@ Instead of storing bulky product catalogs on-chain, `P2PMarketRegistry.sol` stor
 
 ## 7. Deployed Contract Addresses
 
+### Base Mainnet (`Chain ID 8453` — Live Production)
+| Contract | Address | Notes |
+| :--- | :--- | :--- |
+| **`P2PMarketRegistry`** | [`0xc53782ba14b06CD195A9125C6abf27CB25e5F5e5`](https://basescan.org/address/0xc53782ba14b06CD195A9125C6abf27CB25e5F5e5) | Multi-domain identity registry (`$1` fee via Chainlink ETH/USD) |
+| **`P2PMarketTrade`** | [`0xc2ae0f6AD5d71dD1Fa2470811b1F2A81226E08E0`](https://basescan.org/address/0xc2ae0f6AD5d71dD1Fa2470811b1F2A81226E08E0) | Hybrid USDC Escrow & Net-30/60 engine (`0.1%` fee via Chainlink ETH/USD) |
+| **Chainlink ETH/USD Feed** | [`0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70`](https://basescan.org/address/0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70) | Official Chainlink oracle (8 decimals) |
+| **Circle Native USDC** | [`0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`](https://basescan.org/address/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) | Official Circle USDC on Base (6 decimals) |
+
 ### Base Sepolia Testnet (`Chain ID 84532` — Verified Live Rehearsal)
 | Contract | Address | Notes |
 | :--- | :--- | :--- |
 | **`MockEthUsdFeed`** | `0x8768A8A0F1d9eed9d9154d22149a8B7D460b99f4` | Testnet Chainlink ETH/USD stand-in (8 decimals) |
 | **`P2PMarketRegistry`** | `0x5BAe147f7Fa6dF905e642C6a2247AdBA8f054A63` | Live `p2pmarket.net` profile registered & indexed |
 | **`P2PMarketTrade`** | `0x90879b5d29Cb641b30fB123229d9E6B0641517B3` | Connected to Circle Base Sepolia USDC (`0x036CbD53842c5426634e7929541eC2318f3dCF7e`) |
-
-### Base Mainnet (`Chain ID 8453` — Reference Feeds)
-* **Chainlink ETH/USD Price Feed:** `0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70`
-* **Circle Native USDC:** `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`
 
 ---
 

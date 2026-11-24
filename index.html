@@ -2235,7 +2235,7 @@ input[type="range"] {
           This is a one-way registration: only you, the domain owner, sign it. It links your domain to your wallet on the blockchain. If you ever change domains, your history and reputation stay with your wallet.
         </p>
         <p style="margin: 0; color: var(--primary); font-size: 0.8125rem;">
-          Live on Base Sepolia: <code style="font-family: var(--font-label);">P2PMarketRegistry (0x5BAe…4A63)</code> &amp; <code style="font-family: var(--font-label);">P2PMarketTrade (0x9087…17B3)</code>. Clicking below reads the live $1 fee from the oracle and sends the real <code style="font-family: var(--font-label);">setProfile()</code> transaction from your wallet.
+          Live on Base Mainnet: <code style="font-family: var(--font-label);">P2PMarketRegistry (0xc537…F5e5)</code> &amp; <code style="font-family: var(--font-label);">P2PMarketTrade (0xc2ae…08E0)</code>. Clicking below reads the live $1 fee from the Chainlink ETH/USD oracle and sends the real <code style="font-family: var(--font-label);">setProfile()</code> transaction from your wallet.
         </p>
         <div class="btn-row">
           <button type="button" class="btn btn-primary" onclick="obSignProfile()">
@@ -3533,6 +3533,8 @@ function obRunMcpValidation() {
   out.textContent = JSON.stringify(result, null, 2);
 }
 
+const P2P_REGISTRY_MAINNET = '0xc53782ba14b06CD195A9125C6abf27CB25e5F5e5';
+const P2P_TRADE_MAINNET = '0xc2ae0f6AD5d71dD1Fa2470811b1F2A81226E08E0';
 const P2P_REGISTRY_SEPOLIA = '0x5BAe147f7Fa6dF905e642C6a2247AdBA8f054A63';
 const P2P_TRADE_SEPOLIA = '0x90879b5d29Cb641b30fB123229d9E6B0641517B3';
 
@@ -3572,7 +3574,7 @@ async function obSignProfile() {
   }
 
   try {
-    if (msg) msg.textContent = 'Connecting wallet & checking Base Sepolia network…';
+    if (msg) msg.textContent = 'Connecting wallet & checking Base Mainnet network…';
     const accounts = await provider.request({ method: 'eth_requestAccounts' });
     const sender = accounts && accounts[0];
     if (!sender) {
@@ -3581,29 +3583,29 @@ async function obSignProfile() {
     }
 
     const chainHex = await provider.request({ method: 'eth_chainId' });
-    if (parseInt(chainHex, 16) !== 84532) {
+    if (parseInt(chainHex, 16) !== 8453) {
       try {
-        await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x14a34' }] });
+        await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x2105' }] });
       } catch (swErr) {
         await provider.request({
           method: 'wallet_addEthereumChain',
           params: [{
-            chainId: '0x14a34',
-            chainName: 'Base Sepolia Testnet',
+            chainId: '0x2105',
+            chainName: 'Base Mainnet',
             nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-            rpcUrls: ['https://sepolia.base.org'],
-            blockExplorerUrls: ['https://sepolia.basescan.org']
+            rpcUrls: ['https://mainnet.base.org'],
+            blockExplorerUrls: ['https://basescan.org']
           }]
         });
       }
     }
 
-    // Читаем актуальную комиссию $1 из оракула через registrationFeeWei() (0x5b9d2b61) + 2% запас
-    let feeWei = 600000000000000n;
+    // Читаем актуальную комиссию $1 из Chainlink через registrationFeeWei() (0x5b9d2b61) + 2% запас
+    let feeWei = 610000000000000n;
     try {
       const feeHex = await provider.request({
         method: 'eth_call',
-        params: [{ to: P2P_REGISTRY_SEPOLIA, data: '0x5b9d2b61' }, 'latest']
+        params: [{ to: P2P_REGISTRY_MAINNET, data: '0x5b9d2b61' }, 'latest']
       });
       if (feeHex && feeHex !== '0x') {
         feeWei = (BigInt(feeHex) * 102n) / 100n;
@@ -3613,12 +3615,12 @@ async function obSignProfile() {
     const calldata = encodeSetProfileCalldata(domain, info, uri);
     const valueHex = '0x' + feeWei.toString(16);
 
-    if (msg) msg.textContent = 'Confirm setProfile("' + domain + '") in MetaMask…';
+    if (msg) msg.textContent = 'Confirm setProfile("' + domain + '") on Base Mainnet in MetaMask…';
     const txHash = await provider.request({
       method: 'eth_sendTransaction',
       params: [{
         from: sender,
-        to: P2P_REGISTRY_SEPOLIA,
+        to: P2P_REGISTRY_MAINNET,
         value: valueHex,
         data: calldata
       }]
@@ -3629,7 +3631,7 @@ async function obSignProfile() {
     o.fileUploaded = true;
     obRender();
     persistState();
-    if (msg) msg.textContent = '✓ setProfile("' + domain + '") submitted on Base Sepolia! Tx: ' + txHash;
+    if (msg) msg.textContent = '✓ setProfile("' + domain + '") submitted on Base Mainnet! Tx: ' + txHash;
   } catch (err) {
     if (msg) msg.textContent = 'Transaction error: ' + (err && err.message ? err.message : String(err));
   }

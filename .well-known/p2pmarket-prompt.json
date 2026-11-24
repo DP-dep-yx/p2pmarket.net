@@ -97,6 +97,13 @@
   },
   "x-agent-instructions": {
     "publicCard": true,
+    "baseMainnetContracts": {
+      "chainId": 8453,
+      "P2PMarketRegistry": "0xc53782ba14b06CD195A9125C6abf27CB25e5F5e5",
+      "P2PMarketTrade": "0xc2ae0f6AD5d71dD1Fa2470811b1F2A81226E08E0",
+      "chainlinkEthUsdFeed": "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70",
+      "usdc": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+    },
     "privateData": "Confidential price lists and exclusive commercial terms are NOT published in this file. They are served per-partner over HTTPS only after the on-chain mutual handshake (Contract Type 2) and a SIWE (EIP-4361) authenticated session.",
     "searchHint": "Use the MCP toolkit (mcp.p2pmarket.net/sse) or /api/ai-search to discover other registered nodes before contacting them.",
     "rfqForm": "https://p2pmarket.net/#register-sandbox"

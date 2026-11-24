@@ -36,8 +36,8 @@ const FN = Object.fromEntries(ABI.filter(a => a.type === 'function').map(f => [f
 
 const CFG = {
   rpc: process.env.BASE_RPC_URL || 'https://mainnet.base.org',
-  registry: process.env.REGISTRY_ADDRESS || null,
-  trade: process.env.TRADE_ADDRESS || null,
+  registry: process.env.REGISTRY_ADDRESS || '0xc53782ba14b06CD195A9125C6abf27CB25e5F5e5',
+  trade: process.env.TRADE_ADDRESS || '0xc2ae0f6AD5d71dD1Fa2470811b1F2A81226E08E0',
   startBlock: process.env.START_BLOCK ? BigInt(process.env.START_BLOCK) : null,
   pollMs: parseInt(process.env.POLL_INTERVAL_MS || '12000', 10),
   ipfsGateway: process.env.IPFS_GATEWAY || 'https://ipfs.io/ipfs/',
