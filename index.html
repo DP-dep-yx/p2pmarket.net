@@ -7,17 +7,18 @@
 <meta name="theme-color" content="#0c1214">
 <link rel="canonical" href="https://p2pmarket.net/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<meta property="og:title" content="TrustMarkets.net — Decentralized Marketplace Powered by AI Agents &amp; Smart Contracts">
+<meta property="og:title" content="p2pmarket.net — Decentralized Marketplace Powered by AI Agents &amp; Smart Contracts">
+<meta property="og:site_name" content="p2pmarket.net">
 <meta property="og:description" content="Removes intermediaries, SEO, and advertising costs from trade. AI agents discover offers via MCP and settle through Base L2 smart contracts.">
 <meta property="og:url" content="https://p2pmarket.net/">
 <meta property="og:type" content="website">
-<title>TrustMarkets.net — Decentralized Marketplace Powered by AI Agents &amp; Smart Contracts</title>
+<title>p2pmarket.net — Decentralized Marketplace Powered by AI Agents &amp; Smart Contracts</title>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
   "@id": "https://p2pmarket.net/#organization",
-  "name": "TrustMarkets.net",
+  "name": "p2pmarket.net",
   "url": "https://p2pmarket.net",
   "description": "A decentralized marketplace for everyone — removes intermediaries, SEO, and advertising costs from trade, with AI-agent discovery via MCP and Base L2 smart contract settlement.",
   "identifier": {
@@ -1497,7 +1498,7 @@ input[type="range"] {
     </div>
 
     <!-- Interactive Architecture Topology -->
-    <aside class="panel topology-card" aria-label="Trust Markets trade node topology">
+    <aside class="panel topology-card" aria-label="p2pmarket.net trade node topology">
       <div class="topology-header">
         <span class="data-label">Node architecture · Click a layer</span>
         <span class="status-chip">Base Mainnet / Sepolia</span>
@@ -1765,7 +1766,7 @@ input[type="range"] {
     <!-- 6+1 Contract Types Matrix -->
     <div class="panel table-wrap" aria-label="Indexing matrix for all smart contract types">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
-        <span class="data-label">Smart contract specialization across the Trust Markets ecosystem</span>
+        <span class="data-label">Smart contract specialization across the p2pmarket.net ecosystem</span>
         <span class="data-label">Hybrid: Base L2 + SQLite vector index</span>
       </div>
       <table class="aurora-table">
@@ -1967,7 +1968,7 @@ input[type="range"] {
         </div>
         <div class="field-group">
           <label for="ob-name" class="field-label">Company name</label>
-          <input type="text" id="ob-name" class="input-field" value="TrustMarkets.net" oninput="obInput()">
+          <input type="text" id="ob-name" class="input-field" value="p2pmarket.net" oninput="obInput()">
         </div>
         <div class="field-group">
           <label for="ob-wallet" class="field-label">Owner Web3 wallet on Base</label>
@@ -2249,7 +2250,7 @@ input[type="range"] {
 
   <footer class="site-footer">
     <div>
-      <strong>p2pmarket.net</strong> — a decentralized trade protocol on Base L2. Sources: Trust Markets v12.0 specification, <code style="font-family: var(--font-label);">TrustMarketsRegistry.sol</code> and <code style="font-family: var(--font-label);">TrustMarketsTrade.sol</code> contracts, the Alpina Foods GmbH reference JSON-LD profile, and a Node.js + SQLite backend architecture.
+      <strong>p2pmarket.net</strong> — a decentralized trade protocol on Base L2. Sources: the Trust Net v17 specification, <code style="font-family: var(--font-label);">TrustMarketsRegistry.sol</code> and <code style="font-family: var(--font-label);">TrustMarketsTrade.sol</code> contracts, the Alpina Foods GmbH reference JSON-LD profile, and a Node.js + SQLite backend architecture.
       <div style="margin-top: var(--space-sm); display: flex; flex-wrap: wrap; gap: var(--space-md);">
         <a href="contracts/TrustMarketsRegistry.sol" style="color: var(--primary);">TrustMarketsRegistry.sol</a>
         <a href="contracts/TrustMarketsTrade.sol" style="color: var(--primary);">TrustMarketsTrade.sol</a>
@@ -2879,7 +2880,7 @@ Version: 1 · Chain ID: 8453 (Base)
           <div class="kv-val">Intermediary fee: $5,000</div>
         </div>
         <div class="kv-item">
-          <span class="data-label">Deal on Trust Markets (USDC)</span>
+          <span class="data-label">Deal on p2pmarket.net (USDC)</span>
           <div class="kv-val" style="color: var(--tertiary);">Fee: $25 (0.1% in Base ETH)</div>
         </div>
       </div>
@@ -2945,7 +2946,7 @@ const TOOLKIT_DATA = {
       </div>
     `,
     code: `# Remote SSE MCP connector parameters
-Connector Name : Trust Markets B2B Node
+Connector Name : p2pmarket.net B2B Node
 Transport      : Server-Sent Events (SSE)
 Endpoint       : mcp.p2pmarket.net/sse
 Chain Context  : Base L2 (Chain ID 8453)
@@ -2983,7 +2984,7 @@ Auth (Private) : SIWE EIP-4361 Signature
 function buildMegaPrompt() {
   const domain = appState.onb.domain || `p2pmarket.net`;
   const wallet = appState.onb.wallet || `0x6d48b7EE4ebE81254805ad658D756C26986Ea164`;
-  return `You are my personal autonomous trade agent on the Trust Markets platform (p2pmarket.net).
+  return `You are my personal autonomous trade agent on the p2pmarket.net platform.
 My domain: ${domain}
 My wallet / contract on Base (Chain ID 8453): ${wallet}
 
@@ -3149,7 +3150,7 @@ function obDefaults() {
   return {
     step: 1,
     domain: 'p2pmarket.net',
-    name: 'P2P Market',
+    name: 'p2pmarket.net',
     wallet: '0x6d48b7EE4ebE81254805ad658D756C26986Ea164',
     desc: 'Decentralized trade node — AI discovery, USDC escrow and Net-30 settlement for global commerce.',
     knows: ['Supply Chain Optimization', 'Multimodal Freight Transportation'],

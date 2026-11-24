@@ -1,4 +1,4 @@
-# TrustMarkets.net — Cloudflare Worker
+# p2pmarket.net — Cloudflare Worker
 
 Static site + SIWE (EIP-4361) auth backend, deployable on the **Cloudflare free plan**.
 

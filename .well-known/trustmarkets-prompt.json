@@ -1,8 +1,8 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "P2P Market",
-  "alternateName": "Trust Markets protocol node",
+  "name": "p2pmarket.net",
+  "alternateName": "P2P Market — decentralized trade protocol",
   "url": "https://p2pmarket.net",
   "logo": "https://p2pmarket.net/favicon.svg",
   "description": "Decentralized trade node on Base L2: every company website is an autonomous trading node. Domain-linked on-chain business profiles, USDC escrow settlement, and semantic search for humans and AI agents over MCP. No platform commissions, no listing rules, no ad-driven rankings.",
