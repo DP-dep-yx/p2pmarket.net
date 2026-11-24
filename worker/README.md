@@ -36,13 +36,13 @@ node scripts/siwe-test.mjs   # end-to-end SIWE verify + replay test
 Needs **Workers Custom Domains: Edit** (or zone-level **Workers Routes: Edit**):
 
 ```bash
-npx wrangler domains attach trustmarkets.net        # Wrangler v4
+npx wrangler domains attach p2pmarket.net        # Wrangler v4
 # or REST: PUT /accounts/{account_id}/workers/domains
-#   { "zone_id": "5938aa629d99da090b05203124f4646d", "hostname": "trustmarkets.net",
+#   { "zone_id": "5938aa629d99da090b05203124f4646d", "hostname": "p2pmarket.net",
 #     "service": "trustmarkets", "environment": "production" }
 ```
 
-Cloudflare will replace the DNS records for `trustmarkets.net` with a proxied record pointing at the Worker (remove the four GitHub Pages `A` records first if they conflict). The `www` CNAME can stay pointed at `dp-dep-yx.github.io` or be added as a second custom domain.
+Cloudflare will replace the DNS records for `p2pmarket.net` with a proxied record pointing at the Worker (remove the four GitHub Pages `A` records first if they conflict). The `www` CNAME can stay pointed at `dp-dep-yx.github.io` or be added as a second custom domain.
 
 ## Rollback to GitHub Pages
 

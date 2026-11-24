@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://trustmarkets.net/sitemap.xml
+Sitemap: https://p2pmarket.net/sitemap.xml

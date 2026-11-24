@@ -9,3 +9,4 @@ trust_net_system_v10.docx
 worker/node_modules/
 worker/public/
 worker/.wrangler/
+*.Zone.Identifier

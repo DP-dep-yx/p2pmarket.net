@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="A decentralized marketplace for everyone: removes intermediaries, SEO, and advertising costs from trade. AI agents and Base L2 smart contracts handle discovery, private pricing, and settlement.">
 <meta name="theme-color" content="#0c1214">
-<link rel="canonical" href="https://trustmarkets.net/">
+<link rel="canonical" href="https://p2pmarket.net/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:title" content="TrustMarkets.net — Decentralized Marketplace Powered by AI Agents &amp; Smart Contracts">
 <meta property="og:description" content="Removes intermediaries, SEO, and advertising costs from trade. AI agents discover offers via MCP and settle through Base L2 smart contracts.">
-<meta property="og:url" content="https://trustmarkets.net/">
+<meta property="og:url" content="https://p2pmarket.net/">
 <meta property="og:type" content="website">
 <title>TrustMarkets.net — Decentralized Marketplace Powered by AI Agents &amp; Smart Contracts</title>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://trustmarkets.net/#organization",
+  "@id": "https://p2pmarket.net/#organization",
   "name": "TrustMarkets.net",
-  "url": "https://trustmarkets.net",
+  "url": "https://p2pmarket.net",
   "description": "A decentralized marketplace for everyone — removes intermediaries, SEO, and advertising costs from trade, with AI-agent discovery via MCP and Base L2 smart contract settlement.",
   "identifier": {
     "@type": "PropertyValue",
@@ -1419,7 +1419,7 @@ input[type="range"] {
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand-group">
-      <a href="#hero" class="brand-name">trustmarkets.net</a>
+      <a href="#hero" class="brand-name">p2pmarket.net</a>
       <span class="net-tag">Base L2 · EVM</span>
     </div>
     <nav class="nav-links" aria-label="Platform sections">
@@ -1564,6 +1564,52 @@ input[type="range"] {
         </p>
       </div>
     </aside>
+  </section>
+
+  <!-- 1b. VALUE PROPS: FOR SELLERS / FOR BUYERS -->
+  <section id="benefits" class="section-block reveal" aria-labelledby="benefits-heading">
+    <div class="section-head">
+      <span class="data-label">Built for both sides of the deal</span>
+      <h2 id="benefits-heading">What sellers and buyers actually gain here</h2>
+      <p class="section-lede">The same open network pays out differently to each side — flip the switch to see your benefits.</p>
+    </div>
+
+    <div class="role-controls">
+      <div class="segmented" role="tablist" aria-label="Select benefits view">
+        <button type="button" id="ben-tab-sellers" class="seg-btn active" role="tab" aria-selected="true" onclick="setBenefitsMode('sellers')">
+          For Sellers
+        </button>
+        <button type="button" id="ben-tab-buyers" class="seg-btn" role="tab" aria-selected="false" onclick="setBenefitsMode('buyers')">
+          For Buyers
+        </button>
+      </div>
+      <span id="ben-chip" class="cyan-chip">Seller mode: ownership, freedom, global reach</span>
+    </div>
+
+    <div id="ben-panel-sellers" role="tabpanel" aria-labelledby="ben-tab-sellers">
+      <div class="panel hiw-card">
+        <span class="data-label">For sellers</span>
+        <h3>Vendors &amp; service providers</h3>
+        <ol class="hiw-steps">
+          <li><strong>True data ownership &amp; immutable identity.</strong> Your product catalogs and service listings live directly on your own website, completely under your control. Your site domain is permanently linked to your Web3 wallet on the blockchain — no centralized platform can edit, block, or delete your identity.</li>
+          <li><strong>Unlimited freedom &amp; zero censorship.</strong> Publish as many products, services, and commercial offers as you want. There are no marketplace gatekeepers, no arbitrary listing bans, no hidden commission fees, and no restrictive platform rules.</li>
+          <li><strong>Global open access for AI &amp; humans.</strong> All your products and services are instantly discoverable worldwide. Every user and every AI agent (ChatGPT, Claude, Cursor) can index your offerings in real time without paid ads or paywalls.</li>
+          <li><strong>Seamless domain migration &amp; loss protection.</strong> Your corporate identity and Trust Score are bound to your Web3 wallet, not a single Web2 domain. If you lose access to your site or migrate to a new web address, you can instantly rebind a new domain to the same wallet — preserving 100% of your completed smart contracts and on-chain reputation.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div id="ben-panel-buyers" role="tabpanel" aria-labelledby="ben-tab-buyers" hidden>
+      <div class="panel hiw-card">
+        <span class="data-label">For buyers</span>
+        <h3><i data-lucide="shopping-cart" aria-hidden="true" style="width: 1em; height: 1em; vertical-align: -0.125em;"></i> Clients &amp; procurement teams</h3>
+        <ol class="hiw-steps">
+          <li><strong>Verifiable sales history.</strong> Say goodbye to fake reviews and manipulated star ratings. You can independently audit a seller's real on-chain transaction volume and order history on the blockchain.</li>
+          <li><strong>Authentic trust score.</strong> Seller credibility ratings are mathematically generated from actual completed smart contracts and successfully settled escrows — making reputation 100% transparent and uncheatable.</li>
+          <li><strong>Unbiased &amp; direct sourcing.</strong> Search through all available products and services across the global network with complete transparency — no ad-sponsored top listings or hidden marketplace markups.</li>
+        </ol>
+      </div>
+    </div>
   </section>
 
   <!-- 2. INTERACTIVE TWO-COLUMN BLOCK: FOR BUYERS / FOR SELLERS -->
@@ -1916,8 +1962,8 @@ input[type="range"] {
       <div class="panel form-stack">
         <div class="field-group">
           <label for="ob-domain" class="field-label">Company domain (no http/https)</label>
-          <input type="text" id="ob-domain" class="input-field" value="trustmarkets.net" oninput="obInput()">
-          <span class="data-label" style="text-transform: none; letter-spacing: 0;">Live demo: prefilled with the trustmarkets.net TXT record — replace with your own domain.</span>
+          <input type="text" id="ob-domain" class="input-field" value="p2pmarket.net" oninput="obInput()">
+          <span class="data-label" style="text-transform: none; letter-spacing: 0;">Live demo: prefilled with the p2pmarket.net TXT record — replace with your own domain.</span>
         </div>
         <div class="field-group">
           <label for="ob-name" class="field-label">Company name</label>
@@ -2176,7 +2222,7 @@ input[type="range"] {
           <div class="status-row">
             <div>
               <span class="data-label">Transaction</span>
-              <div id="ob-tx-val" class="kv-val" style="margin-top: 2px;">setProfile("trustmarkets.net", …) · value $1.00</div>
+              <div id="ob-tx-val" class="kv-val" style="margin-top: 2px;">setProfile("p2pmarket.net", …) · value $1.00</div>
             </div>
             <span id="ob-tx-badge" class="cyan-chip">Draft</span>
           </div>
@@ -2203,7 +2249,7 @@ input[type="range"] {
 
   <footer class="site-footer">
     <div>
-      <strong>trustmarkets.net</strong> — a decentralized trade protocol on Base L2. Sources: Trust Markets v12.0 specification, <code style="font-family: var(--font-label);">TrustMarketsRegistry.sol</code> and <code style="font-family: var(--font-label);">TrustMarketsTrade.sol</code> contracts, the Alpina Foods GmbH reference JSON-LD profile, and a Node.js + SQLite backend architecture.
+      <strong>p2pmarket.net</strong> — a decentralized trade protocol on Base L2. Sources: Trust Markets v12.0 specification, <code style="font-family: var(--font-label);">TrustMarketsRegistry.sol</code> and <code style="font-family: var(--font-label);">TrustMarketsTrade.sol</code> contracts, the Alpina Foods GmbH reference JSON-LD profile, and a Node.js + SQLite backend architecture.
       <div style="margin-top: var(--space-sm); display: flex; flex-wrap: wrap; gap: var(--space-md);">
         <a href="contracts/TrustMarketsRegistry.sol" style="color: var(--primary);">TrustMarketsRegistry.sol</a>
         <a href="contracts/TrustMarketsTrade.sol" style="color: var(--primary);">TrustMarketsTrade.sol</a>
@@ -2260,7 +2306,7 @@ const ROLE_CONFIG = {
       {
         num: `01`,
         title: `Discover through any AI agent (ChatGPT / Claude / Cursor / CLI)`,
-        desc: `The agent queries the trustmarkets.net vector index via MCP or CLI. Semantic search powered by openai/text-embedding-3-small matches suppliers by meaning, Incoterms, and volume in milliseconds.`,
+        desc: `The agent queries the p2pmarket.net vector index via MCP or CLI. Semantic search powered by openai/text-embedding-3-small matches suppliers by meaning, Incoterms, and volume in milliseconds.`,
         tags: [`MCP Connector`, `Cosine Similarity`, `$0 LLM cost`]
       },
       {
@@ -2575,6 +2621,30 @@ function setRoleMode(mode) {
   persistState();
 }
 
+function setBenefitsMode(mode) {
+  const isSellers = mode === 'sellers';
+  const tabSellers = document.getElementById('ben-tab-sellers');
+  const tabBuyers = document.getElementById('ben-tab-buyers');
+  if (tabSellers) {
+    tabSellers.classList.toggle('active', isSellers);
+    tabSellers.setAttribute('aria-selected', isSellers ? 'true' : 'false');
+  }
+  if (tabBuyers) {
+    tabBuyers.classList.toggle('active', !isSellers);
+    tabBuyers.setAttribute('aria-selected', !isSellers ? 'true' : 'false');
+  }
+  const sellersPanel = document.getElementById('ben-panel-sellers');
+  const buyersPanel = document.getElementById('ben-panel-buyers');
+  if (sellersPanel) sellersPanel.hidden = !isSellers;
+  if (buyersPanel) buyersPanel.hidden = isSellers;
+  const chip = document.getElementById('ben-chip');
+  if (chip) {
+    chip.textContent = isSellers
+      ? 'Seller mode: ownership, freedom, global reach'
+      : 'Buyer mode: verifiable history, real trust score';
+  }
+}
+
 function selectRoleStep(idx) {
   appState.roleStep = idx;
   renderRolesSection();
@@ -2783,7 +2853,7 @@ Version: 1 · Chain ID: 8453 (Base)
     body.innerHTML = `
       <div class="well">
         <span class="data-label">No server or API of your own?</span>
-        <div class="kv-val">Fill in the builder form on trustmarkets.net — the platform packages your profile into JSON-LD and indexes it for all external AI agents.</div>
+        <div class="kv-val">Fill in the builder form on p2pmarket.net — the platform packages your profile into JSON-LD and indexes it for all external AI agents.</div>
       </div>
       <pre class="code-pre">{
   "@context": "https://schema.org",
@@ -2849,7 +2919,7 @@ const TOOLKIT_DATA = {
       "args": ["-y", "@trustmarkets/cli", "mcp"],
       "env": {
         "BASE_NETWORK": "base-mainnet",
-        "TRUSTMARKETS_DOMAIN": "trustmarkets.net"
+        "TRUSTMARKETS_DOMAIN": "p2pmarket.net"
       }
     }
   }
@@ -2869,7 +2939,7 @@ const TOOLKIT_DATA = {
         <div class="kv-val" style="line-height: 1.7;">
           1. Open Settings → Connectors (or Integrations).<br>
           2. Click Add Custom MCP Connector.<br>
-          3. Paste the SSE endpoint: mcp.trustmarkets.net/sse.<br>
+          3. Paste the SSE endpoint: mcp.p2pmarket.net/sse.<br>
           4. Optionally sign SIWE to access private price lists.
         </div>
       </div>
@@ -2877,7 +2947,7 @@ const TOOLKIT_DATA = {
     code: `# Remote SSE MCP connector parameters
 Connector Name : Trust Markets B2B Node
 Transport      : Server-Sent Events (SSE)
-Endpoint       : mcp.trustmarkets.net/sse
+Endpoint       : mcp.p2pmarket.net/sse
 Chain Context  : Base L2 (Chain ID 8453)
 Auth (Private) : SIWE EIP-4361 Signature
 
@@ -2911,13 +2981,13 @@ Auth (Private) : SIWE EIP-4361 Signature
 };
 
 function buildMegaPrompt() {
-  const domain = appState.onb.domain || `trustmarkets.net`;
+  const domain = appState.onb.domain || `p2pmarket.net`;
   const wallet = appState.onb.wallet || `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`;
-  return `You are my personal autonomous trade agent on the Trust Markets platform (trustmarkets.net).
+  return `You are my personal autonomous trade agent on the Trust Markets platform (p2pmarket.net).
 My domain: ${domain}
 My wallet / contract on Base (Chain ID 8453): ${wallet}
 
-Your task is to help me find reliable suppliers and buyers through the semantic registry at trustmarkets.net, analyze public JSON-LD business cards (makesOffer / potentialAction), check Trust Scores, and prepare smart contract parameters for TrustMarketsTrade.sol (USDC escrow or Net-30 invoice).
+Your task is to help me find reliable suppliers and buyers through the semantic registry at p2pmarket.net, analyze public JSON-LD business cards (makesOffer / potentialAction), check Trust Scores, and prepare smart contract parameters for TrustMarketsTrade.sol (USDC escrow or Net-30 invoice).
 
 Safety rules:
 1. Never give financial guarantees without my explicit confirmation of the transaction in my wallet.
@@ -3078,7 +3148,7 @@ const OB_PRESETS = {
 function obDefaults() {
   return {
     step: 1,
-    domain: 'trustmarkets.net',
+    domain: 'p2pmarket.net',
     name: 'TrustMarkets.net',
     wallet: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
     desc: 'Decentralized trade node — AI discovery, USDC escrow and Net-30 settlement for global commerce.',
@@ -3959,7 +4029,8 @@ function syncSandboxWallet(address) {
 }
 
 /* Sign-In with Ethereum (EIP-4361) */
-const TM_API_BASE = 'https://api.trustmarkets.net';
+// API живёт на том же домене, что и сайт: cookie остаётся first-party, CORS не нужен
+const TM_API_BASE = '';
 function siweRandomNonce() {
   const bytes = new Uint8Array(16);
   (window.crypto || window.msCrypto).getRandomValues(bytes);
@@ -4012,7 +4083,7 @@ async function signInWithEthereum() {
       if (verifyRes.ok && verifyData && verifyData.ok) {
         tmActiveWallet.siwe.verified = true;
         updateWalletButton();
-        setWalletModalMsg('Signed in with Ethereum (EIP-4361) — verified by the trustmarkets.net backend. Session cookie issued.', false);
+        setWalletModalMsg('Signed in with Ethereum (EIP-4361) — verified by the p2pmarket.net backend. Session cookie issued.', false);
       } else {
         updateWalletButton();
         setWalletModalMsg('EIP-4361 message signed locally. Backend verification is unavailable here (static hosting) — on the full deployment the backend verifies the signature.', false);
@@ -4060,7 +4131,7 @@ function renderWalletOptions() {
     setWalletModalMsg('', false);
   } else {
     setWalletModalMsg(isMobile
-      ? 'No wallet detected on this device. Open trustmarkets.net inside your wallet app (MetaMask, Trust, Coinbase Wallet) and try again from there.'
+      ? 'No wallet detected on this device. Open p2pmarket.net inside your wallet app (MetaMask, Trust, Coinbase Wallet) and try again from there.'
       : 'No wallet detected in this browser. Install MetaMask, Rabby, Phantom, OKX, Coinbase Wallet or another EVM extension, then reload this page — it will appear here automatically (EIP-6963).', false);
   }
 }

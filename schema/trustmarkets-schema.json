@@ -3,14 +3,14 @@
   "@type": "Dataset",
   "name": "TrustMarkets B2B Semantic Standard v10.0",
   "description": "Decentralized B2B Business Card & Smart Contract Schema on Base L2",
-  "url": "https://trustmarkets.net/schema/trustmarkets-schema.json",
+  "url": "https://p2pmarket.net/schema/trustmarkets-schema.json",
   "version": "10.0",
   "license": "https://opensource.org/licenses/MIT",
   "mainEntity": {
     "@type": "Organization",
-    "@id": "https://trustmarkets.net/#organization",
+    "@id": "https://p2pmarket.net/#organization",
     "name": "TrustMarkets Protocol",
-    "url": "https://trustmarkets.net",
+    "url": "https://p2pmarket.net",
     "description": "Decentralized B2B Trade Ecosystem powered by Base L2 Smart Contracts, DNS TXT Verification, SIWE, and Zero-Cost Client AI Agents.",
     "identifier": {
       "@type": "PropertyValue",
@@ -58,7 +58,7 @@
       {
         "@type": "BuyAction",
         "name": "Procurement: Food-Grade PET Preforms & Packaging",
-        "target": "https://trustmarkets.net/api/siwe-rfq",
+        "target": "https://p2pmarket.net/api/siwe-rfq",
         "description": "Monthly volume 120 MT, delivery DAP Central Europe, settlement via TrustMarketsTrade.sol Escrow"
       }
     ],

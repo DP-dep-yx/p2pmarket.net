@@ -121,7 +121,14 @@ function b64url(bytes) {
   return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-const CORS_ORIGINS = new Set(['https://trustmarkets.net', 'http://trustmarkets.net']);
+// основной домен и его старые имена: по ним же проверяется SIWE-сообщение
+const PRIMARY_DOMAIN = 'p2pmarket.net';
+const SITE_DOMAINS = [PRIMARY_DOMAIN, 'trustmarkets.net'];
+
+// эти хосты 301-ят на основной домен (api.trustmarkets.net остаётся жить для старых клиентов)
+const REDIRECT_HOSTS = new Set([`www.${PRIMARY_DOMAIN}`, 'trustmarkets.net', 'www.trustmarkets.net']);
+
+const CORS_ORIGINS = new Set(SITE_DOMAINS.flatMap((d) => [`https://${d}`, `http://${d}`, `https://www.${d}`]));
 
 function corsHeaders(request) {
   const origin = request.headers.get('origin') || '';
@@ -174,6 +181,16 @@ export default {
     const cors = corsHeaders(request);
     const j = (obj, status, headers) => json(obj, status, Object.assign({}, cors, headers || {}));
 
+    // старые домены уводим на новый основной, путь и query сохраняем
+    if (REDIRECT_HOSTS.has(url.hostname.toLowerCase())) {
+      const target = new URL(request.url);
+      target.protocol = 'https:';
+      target.hostname = PRIMARY_DOMAIN;
+      target.port = '';
+      const status = request.method === 'GET' || request.method === 'HEAD' ? 301 : 308;
+      return Response.redirect(target.toString(), status);
+    }
+
     if (path.startsWith('/api/') && request.method === 'OPTIONS') {
       return new Response(null, {
         status: 204,
@@ -217,7 +234,7 @@ export default {
       const host = (request.headers.get('host') || '').split(':')[0].toLowerCase();
       const msgDomain = parsed.domain.toLowerCase();
       const hostOk = msgDomain === host ||
-        (msgDomain === 'trustmarkets.net' && (host === 'api.trustmarkets.net' || host.endsWith('.trustmarkets.net'))) ||
+        SITE_DOMAINS.some((d) => msgDomain === d && (host === d || host.endsWith(`.${d}`))) ||
         host.endsWith('workers.dev') || host.endsWith('localhost') || host.startsWith('127.');
       if (!hostOk) {
         return j({ ok: false, error: `Domain mismatch: ${parsed.domain}` }, 400, corsHeaders(request));
