@@ -35,10 +35,10 @@ const EV = Object.fromEntries(ABI.filter(a => a.type === 'event').map(e => [e.na
 const FN = Object.fromEntries(ABI.filter(a => a.type === 'function').map(f => [f.name, f]));
 
 const CFG = {
-  rpc: process.env.BASE_RPC_URL || 'https://mainnet.base.org',
+  rpc: process.env.BASE_RPC_URL || 'https://base-rpc.publicnode.com',
   registry: process.env.REGISTRY_ADDRESS || '0xc53782ba14b06CD195A9125C6abf27CB25e5F5e5',
   trade: process.env.TRADE_ADDRESS || '0xc2ae0f6AD5d71dD1Fa2470811b1F2A81226E08E0',
-  startBlock: process.env.START_BLOCK ? BigInt(process.env.START_BLOCK) : null,
+  startBlock: process.env.START_BLOCK ? BigInt(process.env.START_BLOCK) : 61809800n,
   pollMs: parseInt(process.env.POLL_INTERVAL_MS || '12000', 10),
   ipfsGateway: process.env.IPFS_GATEWAY || 'https://ipfs.io/ipfs/',
   embed: process.env.EMBEDDING_API_BASE
@@ -293,10 +293,10 @@ async function pollLoop() {
   while (true) {
     try {
       const head = await baseClient.getBlockNumber();
+      const chunk = CFG.rpc.includes('base.org') ? 190n : 2000n;
       while (head > cursor) {
         const from = cursor + 1n;
-        // Публичный RPC Base ограничивает eth_getLogs диапазоном в 200 блоков
-        const to = head - from > 190n ? from + 190n : head;
+        const to = head - from > chunk ? from + chunk : head;
         const logs = await baseClient.getLogs({
           address: CFG.registry,
           events: [EV.ProfileUpdated, EV.ProfileDeactivated],
