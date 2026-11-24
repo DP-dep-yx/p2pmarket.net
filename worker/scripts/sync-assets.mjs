@@ -10,7 +10,7 @@ const outDir = join(here, '..', 'public');
 rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
 
-const EXCLUDE = new Set(['.git', '.gitignore', 'node_modules', 'worker', 'opencode.json', 'CNAME',
+const EXCLUDE = new Set(['.git', '.gitignore', 'node_modules', 'worker', 'opencode.json', 'CNAME', 'README.md',
   'trust_net_system_v10.docx', 'trust_net_system_v12.docx']);
 
 function isExcluded(name) {
