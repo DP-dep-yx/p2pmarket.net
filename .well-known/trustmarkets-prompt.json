@@ -11,7 +11,7 @@
       "@type": "ContactPoint",
       "contactType": "customer support",
       "url": "https://p2pmarket.net/#hero",
-      "availableLanguage": ["English", "Russian"]
+      "availableLanguage": ["English"]
     },
     {
       "@type": "ContactPoint",
@@ -51,10 +51,10 @@
       "@type": "Offer",
       "itemOffered": {
         "@type": "Service",
-        "name": "USDC escrow settlement for trade deals"
+        "name": "Trade deal registration (USDC escrow & Net-30/60 invoices)"
       },
-      "description": "0.1% of the deal amount, taken at escrow funding on Base. Net-30/60 post-paid invoices carry no percentage.",
-      "acceptedPaymentMethod": ["Cryptocurrency (USDC on Base)"]
+      "description": "0.1% of the deal amount, charged on every registered deal — USDC escrow and post-paid Net-30/60 invoices alike — paid in Base ETH at the live Chainlink ETH/USD rate at deal creation; any overpay is automatically refunded. The escrowed USDC itself is never deducted: the full deal amount reaches the seller.",
+      "acceptedPaymentMethod": ["Cryptocurrency (USDC on Base)", "Cryptocurrency (Base ETH)"]
     },
     {
       "@type": "Offer",

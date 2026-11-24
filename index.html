@@ -1484,7 +1484,7 @@ input[type="range"] {
           <span class="metric-delta">Bot-free anti-spam filter</span>
         </div>
         <div class="metric-tile">
-          <span class="data-label">USDC crypto settlement</span>
+          <span class="data-label">Protocol fee on every deal</span>
           <span class="metric-value">0.1%</span>
           <span class="metric-delta">Instead of 15–30% on marketplaces</span>
         </div>
@@ -1553,7 +1553,7 @@ input[type="range"] {
             <rect x="296" y="166" width="208" height="78" rx="10" fill="#152024" stroke="#38515c" stroke-width="1.4"/>
             <text x="310" y="190" fill="#63c7d6" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">04 · SETTLEMENT &amp; ESCROW</text>
             <text x="310" y="210" fill="#edf3f5" font-family="Inter, sans-serif" font-size="12.5" font-weight="600">TrustMarketsTrade.sol</text>
-            <text x="310" y="228" fill="#94a8b0" font-family="JetBrains Mono, monospace" font-size="9.5">USDC Escrow (0.1%) · Net-30</text>
+            <text x="310" y="228" fill="#94a8b0" font-family="JetBrains Mono, monospace" font-size="9.5">Escrow / Net-30 · 0.1% in Base ETH</text>
           </g>
         </svg>
       </div>
@@ -1721,7 +1721,7 @@ input[type="range"] {
   <section id="pricing" class="section-block reveal" aria-labelledby="pricing-heading">
     <div class="section-head">
       <span class="data-label">Pricing &amp; economics</span>
-      <h2 id="pricing-heading">A flat $1 per contract and 0.1% on crypto settlement</h2>
+      <h2 id="pricing-heading">A flat $1 per contract and 0.1% on every registered deal</h2>
       <p class="section-lede">
         No listing subscriptions and no hidden 15–30% marketplace fees. The micro-fee on Base keeps the vector registry spam-free and funds the indexing infrastructure.
       </p>
@@ -1742,11 +1742,11 @@ input[type="range"] {
 
         <div class="panel tier-card">
           <div class="tier-top">
-            <span class="data-label">Price fixing &amp; crypto settlement</span>
+            <span class="data-label">Deal registration &amp; settlement</span>
             <span class="tier-price sage">+ 0.1%</span>
           </div>
           <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.9375rem;">
-            Charged only when a deal amount is set and settled in native USDC on Base through the <code style="font-family: var(--font-label);">TrustMarketsTrade.sol</code> escrow contract. Post-paid invoices (SEPA / Net-30) carry no extra percentage.
+            Charged on every registered deal with an amount — USDC escrow and post-paid Net-30/60 invoices alike — paid in Base ETH at the live Chainlink ETH/USD rate inside <code style="font-family: var(--font-label);">TrustMarketsTrade.sol</code> at deal creation, with any overpay automatically refunded. The escrowed USDC itself is never deducted.
           </p>
         </div>
 
@@ -2295,7 +2295,7 @@ const TOPOLOGY_DATA = {
   },
   trade: {
     title: `Deal execution: USDC escrow or Net-30 invoices`,
-    desc: `TrustMarketsTrade.sol supports a USDC-locking mode (0.1%) and a non-escrow mode for bank invoices (SEPA/Net-30), with independent validators attached.`
+    desc: `TrustMarketsTrade.sol supports a USDC-locking escrow mode and a non-escrow mode for bank invoices (SEPA/Net-30) — both carry the same 0.1% protocol fee paid in Base ETH at the Chainlink rate, with independent validators attached.`
   }
 };
 
@@ -2342,7 +2342,7 @@ const ROLE_CONFIG = {
         num: `03`,
         title: `Sell directly without 15–30% platform fees`,
         desc: `Buyers' autonomous AI agents discover your node, check availability, and send ready-to-sign smart contract drafts straight to your wallet — with no ad budget, SEO, or marketplace listings.`,
-        tags: [`Inbound trade leads`, `Direct wallet`, `0.1% only in USDC`]
+        tags: [`Inbound trade leads`, `Direct wallet`, `0.1% flat, in Base ETH`]
       }
     ]
   }
@@ -2776,7 +2776,7 @@ Version: 1 · Chain ID: 8453 (Base)
     const isEscrow = appState.dealPreviewMode === 'escrow';
     kicker.textContent = `Step 03 · TrustMarketsTrade.sol`;
     title.textContent = `Switch the settlement mode`;
-    badge.textContent = isEscrow ? `USDC Escrow (0.1%)` : `Net-30 Invoice ($1)`;
+    badge.textContent = isEscrow ? `USDC Escrow · 0.1% in ETH` : `Net-30 Invoice · 0.1% in ETH`;
     const escrowSample = [
       'createDeal(',
       '  seller: 0x4B2...9f1,',
@@ -2880,7 +2880,7 @@ Version: 1 · Chain ID: 8453 (Base)
         </div>
         <div class="kv-item">
           <span class="data-label">Deal on Trust Markets (USDC)</span>
-          <div class="kv-val" style="color: var(--tertiary);">Fee: $1 + $25 (0.1%) = $26</div>
+          <div class="kv-val" style="color: var(--tertiary);">Fee: $25 (0.1% in Base ETH)</div>
         </div>
       </div>
       <pre class="code-pre">[Inbound notification to the seller's wallet]

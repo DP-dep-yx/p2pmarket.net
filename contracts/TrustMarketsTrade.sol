@@ -7,16 +7,28 @@ interface IERC20 {
 }
 
 /**
+ * @notice Minimal Chainlink Data Feed interface (latestRoundData only).
+ * @dev ETH/USD on Base mainnet: 0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70 (answer = USD per 1 ETH, 8 dp).
+ */
+interface AggregatorV3Interface {
+    function latestRoundData()
+        external
+        view
+        returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);
+}
+
+/**
  * @title TrustMarketsTrade
- * @notice Hybrid B2B Trade, Audit, Credit Pool & Cargo Insurance Contract on Base L2 (Trust Net v17.0)
+ * @notice Hybrid B2B Trade, Audit, Credit Pool & Cargo Insurance Contract on Base L2 (Trust Net v17.2)
  * @dev Covers Smart Contract Types 3, 4, 5, and 6:
  *      - Type 3: Hybrid Sale (With USDC Escrow OR Non-Escrow Net-30/60 Commercial Invoice Registry)
  *      - Type 4: Independent Auditor Validation & Quality Attestation
  *      - Type 5: Deal-Collateralized Credit Pool (USDC working capital into Escrow)
  *      - Type 6: Parametric Cargo & Logistics Insurance in USDC
- *      v17.0: 0.1% transaction fee (SETTLEMENT_FEE_BPS) is taken in USDC at escrow funding time
- *      (direct createDeal escrow or credit funding) and forwarded to the immutable treasury.
- *      Non-escrow Net-30/60 invoices carry no percentage (no USDC moves through the contract).
+ *      v17.2: 0.1% protocol fee (DEAL_FEE_BPS) is charged on EVERY registered deal with an
+ *      amount — USDC escrow and Net-30/60 invoices alike — paid in native Base ETH at the live
+ *      Chainlink ETH/USD rate inside createDeal(), with any overpay refunded to the sender.
+ *      The escrowed USDC itself is never deducted: the full deal amount reaches the seller.
  */
 contract TrustMarketsTrade {
     enum DealStatus {
@@ -37,7 +49,6 @@ contract TrustMarketsTrade {
         address lender;             // Type 5: Credit provider (optional)
         address insurer;            // Type 6: Insurance provider (optional)
         uint256 amountUsdc;         // 6 decimals (Base USDC) — deal face value
-        uint256 escrowedUsdc;       // USDC actually locked after the 0.1% fee (v17.0)
         uint256 creditPrincipalUsdc;
         uint256 insuranceCoverageUsdc;
         uint256 dueTimestamp;       // Net-30 / Net-60 maturity for non-escrow invoices
@@ -50,7 +61,9 @@ contract TrustMarketsTrade {
 
     IERC20 public immutable usdc;
     address public immutable treasury;                  // fee recipient (platform, wallet B)
-    uint16 public constant SETTLEMENT_FEE_BPS = 10;     // 0.1% (spec v17.0: $1 + 0.1% tariff grid)
+    AggregatorV3Interface public immutable ethUsdFeed;   // Chainlink ETH/USD (8 dp), network-specific
+    uint16 public constant DEAL_FEE_BPS = 10;           // 0.1% of the deal amount (USD)
+    uint256 public constant MAX_PRICE_AGE = 24 hours;   // staleness guard for the oracle
     uint256 public nextDealId;
 
     mapping(uint256 => TradeDeal) internal deals; // explicit getDeal() accessor: 15 полей не влезают в авто-геттер
@@ -72,29 +85,35 @@ contract TrustMarketsTrade {
     event ShipmentConfirmed(uint256 indexed dealId, bytes32 billOfLadingHash);
     event AuditorVerified(uint256 indexed dealId, address indexed auditor, bytes32 reportHash);
     event DealSettled(uint256 indexed dealId, bool isEscrow, bool onTime);
-    event SettlementFeeTaken(uint256 indexed dealId, address indexed treasury, uint256 feeUsdc);
+    event DealFeePaid(uint256 indexed dealId, address indexed payer, uint256 feeWei);
     event InsuranceClaimPaid(uint256 indexed dealId, address indexed beneficiary, uint256 payoutUsdc);
 
-    constructor(address _usdc, address _treasury) {
+    constructor(address _usdc, address _treasury, address _ethUsdFeed) {
+        require(_ethUsdFeed != address(0), "Oracle feed required");
         usdc = IERC20(_usdc);
         treasury = _treasury == address(0) ? msg.sender : _treasury;
+        ethUsdFeed = AggregatorV3Interface(_ethUsdFeed);
     }
 
     /**
-     * @dev Takes the 0.1% settlement fee (in BPS) from a funded escrow amount and forwards
-     *      it to the treasury. Returns the net USDC that stays locked for the seller.
+     * @notice 0.1% of the deal amount, converted from USD to wei at the live Chainlink ETH/USD rate.
+     * @dev amountUsdc is USDC (6 dp = micro-USD): feeWei = amountUsdc * 1e20 * BPS / (price * 10_000),
+     *      where price is USD per 1 ETH with 8 decimals
+     *      (e.g. $25,000 deal at ETH $1,689.19 → ≈ 0.0148 ETH).
+     *      A stale or broken feed reverts deal creation instead of charging a wrong amount.
      */
-    function _takeSettlementFee(uint256 dealId, uint256 amountUsdc) internal returns (uint256 netUsdc) {
-        uint256 feeUsdc = (amountUsdc * SETTLEMENT_FEE_BPS) / 10_000;
-        if (feeUsdc > 0) {
-            require(usdc.transfer(treasury, feeUsdc), "Fee transfer to treasury failed");
-            emit SettlementFeeTaken(dealId, treasury, feeUsdc);
-        }
-        return amountUsdc - feeUsdc;
+    function dealFeeWei(uint256 amountUsdc) public view returns (uint256) {
+        (, int256 price,, uint256 updatedAt,) = ethUsdFeed.latestRoundData();
+        require(price > 0, "Bad oracle price");
+        require(updatedAt + MAX_PRICE_AGE >= block.timestamp, "Oracle price stale");
+        return (amountUsdc * 1e20 * DEAL_FEE_BPS) / (uint256(price) * 10_000);
     }
 
     /**
      * @notice Type 3: Create Hybrid B2B Trade Deal (Escrow or Net-30/60 Invoice)
+     * @dev v17.2: payable — the 0.1% protocol fee is paid in Base ETH here, at the live
+     *      Chainlink rate, for BOTH escrow and non-escrow deals. The fee goes to the treasury,
+     *      any overpay is refunded to the sender (frontend may add a +1-2% buffer).
      */
     function createDeal(
         address seller,
@@ -103,9 +122,12 @@ contract TrustMarketsTrade {
         uint256 netDays,
         bytes32 termsHash,
         bool isEscrowEnabled
-    ) external returns (uint256 dealId) {
+    ) external payable returns (uint256 dealId) {
         require(seller != address(0) && seller != msg.sender, "Invalid seller");
         require(amountUsdc > 0, "Invalid amount");
+
+        uint256 feeWei = dealFeeWei(amountUsdc);
+        require(msg.value >= feeWei, "Deal fee required (0.1% in Base ETH)");
 
         dealId = ++nextDealId;
         uint256 due = block.timestamp + (netDays * 1 days);
@@ -119,7 +141,6 @@ contract TrustMarketsTrade {
         d.lender = address(0);
         d.insurer = address(0);
         d.amountUsdc = amountUsdc;
-        d.escrowedUsdc = 0;
         d.creditPrincipalUsdc = 0;
         d.insuranceCoverageUsdc = 0;
         d.dueTimestamp = due;
@@ -131,9 +152,19 @@ contract TrustMarketsTrade {
 
         if (isEscrowEnabled) {
             require(usdc.transferFrom(msg.sender, address(this), amountUsdc), "USDC escrow lock failed");
-            d.escrowedUsdc = _takeSettlementFee(dealId, amountUsdc);
             d.status = DealStatus.FundedOrActive;
             emit EscrowFunded(dealId, msg.sender, amountUsdc);
+        }
+
+        // fee — в казначейство, затем сдача — отправителю; порядок важен для реентрант-безопасности
+        if (feeWei > 0) {
+            (bool ok, ) = treasury.call{value: feeWei}("");
+            require(ok, "Fee transfer failed");
+            emit DealFeePaid(dealId, msg.sender, feeWei);
+        }
+        if (msg.value > feeWei) {
+            (bool refunded, ) = msg.sender.call{value: msg.value - feeWei}("");
+            require(refunded, "Fee refund failed");
         }
 
         emit DealCreated(dealId, msg.sender, seller, amountUsdc, isEscrowEnabled, due);
@@ -148,7 +179,6 @@ contract TrustMarketsTrade {
         require(d.isEscrowEnabled && d.status == DealStatus.Created, "Not eligible for credit funding");
 
         require(usdc.transferFrom(msg.sender, address(this), d.amountUsdc), "Credit transfer failed");
-        d.escrowedUsdc = _takeSettlementFee(dealId, d.amountUsdc);
         d.lender = msg.sender;
         d.creditPrincipalUsdc = d.amountUsdc;
         d.status = DealStatus.FundedOrActive;
@@ -201,7 +231,7 @@ contract TrustMarketsTrade {
 
         if (d.isEscrowEnabled) {
             require(msg.sender == d.buyer || msg.sender == d.auditor, "Only buyer or auditor can release escrow");
-            require(usdc.transfer(d.seller, d.escrowedUsdc), "Escrow release failed");
+            require(usdc.transfer(d.seller, d.amountUsdc), "Escrow release failed");
             if (d.insuranceCoverageUsdc > 0 && d.insurer != address(0)) {
                 require(usdc.transfer(d.insurer, d.insuranceCoverageUsdc), "Insurance reserve return failed");
             }
