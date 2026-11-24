@@ -8,9 +8,6 @@
     "binding": "ASSETS",
     "run_worker_first": true
   },
-  "vars": {
-    "WORKER_SECRET": "dev-secret-change-me"
-  },
   "routes": [
     { "pattern": "p2pmarket.net", "custom_domain": true },
     { "pattern": "www.p2pmarket.net", "custom_domain": true },
