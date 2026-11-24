@@ -293,9 +293,10 @@ async function pollLoop() {
   while (true) {
     try {
       const head = await baseClient.getBlockNumber();
-      if (head > cursor) {
+      while (head > cursor) {
         const from = cursor + 1n;
-        const to = head;
+        // Публичный RPC Base ограничивает eth_getLogs диапазоном в 200 блоков
+        const to = head - from > 190n ? from + 190n : head;
         const logs = await baseClient.getLogs({
           address: CFG.registry,
           events: [EV.ProfileUpdated, EV.ProfileDeactivated],
@@ -312,8 +313,8 @@ async function pollLoop() {
             await deactivateCard(args.owner, args.domain);
           }
         }
-        setState('last_block', head);
-        cursor = head;
+        setState('last_block', to);
+        cursor = to;
       }
     } catch (err) {
       console.error('[indexer] poll error:', err.message);

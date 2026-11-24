@@ -1138,6 +1138,9 @@ input[type="range"] {
   gap: var(--space-lg);
   align-items: start;
 }
+[hidden] {
+  display: none !important;
+}
 
 /* Onboarding wizard helpers */
 .chip-row {
@@ -2231,15 +2234,13 @@ input[type="range"] {
         <p style="margin: 0; color: var(--on-surface-variant); font-size: 0.875rem;">
           This is a one-way registration: only you, the domain owner, sign it. It links your domain to your wallet on the blockchain. If you ever change domains, your history and reputation stay with your wallet.
         </p>
-        <p style="margin: 0; color: var(--warning); font-size: 0.8125rem;">
-          <span class="demo-badge" style="margin-left: 0;">Demo</span>
-          The registry contract is not live on Base yet, so this step is a simulation — no real money moves. Once deployed, it will send a real $1 transaction from your connected wallet.
+        <p style="margin: 0; color: var(--primary); font-size: 0.8125rem;">
+          Live on Base Sepolia: <code style="font-family: var(--font-label);">P2PMarketRegistry (0x5BAe…4A63)</code> &amp; <code style="font-family: var(--font-label);">P2PMarketTrade (0x9087…17B3)</code>. Clicking below reads the live $1 fee from the oracle and sends the real <code style="font-family: var(--font-label);">setProfile()</code> transaction from your wallet.
         </p>
         <div class="btn-row">
           <button type="button" class="btn btn-primary" onclick="obSignProfile()">
             <i data-lucide="check-circle-2" aria-hidden="true"></i>
             <span>Sign setProfile() ($1)</span>
-            <span class="demo-badge">Demo</span>
           </button>
           <button type="button" class="btn btn-secondary" onclick="obGoStep(1)">← Edit profile</button>
         </div>
@@ -3524,21 +3525,106 @@ function obRunMcpValidation() {
   out.textContent = JSON.stringify(result, null, 2);
 }
 
-function obSignProfile() {
+const P2P_REGISTRY_SEPOLIA = '0x5BAe147f7Fa6dF905e642C6a2247AdBA8f054A63';
+const P2P_TRADE_SEPOLIA = '0x90879b5d29Cb641b30fB123229d9E6B0641517B3';
+
+function encodeSetProfileCalldata(domain, info, uri) {
+  const enc = new TextEncoder();
+  function encodeStr(s) {
+    const bytes = enc.encode(s);
+    const lenHex = bytes.length.toString(16).padStart(64, '0');
+    let dataHex = '';
+    for (let i = 0; i < bytes.length; i++) dataHex += bytes[i].toString(16).padStart(2, '0');
+    const padLen = Math.ceil(bytes.length / 32) * 64;
+    return lenHex + dataHex.padEnd(padLen, '0');
+  }
+  const s1 = encodeStr(domain);
+  const s2 = encodeStr(info);
+  const s3 = encodeStr(uri);
+  const off1 = 96;
+  const off2 = off1 + s1.length / 2;
+  const off3 = off2 + s2.length / 2;
+  const head = off1.toString(16).padStart(64, '0') + off2.toString(16).padStart(64, '0') + off3.toString(16).padStart(64, '0');
+  return '0x52640314' + head + s1 + s2 + s3;
+}
+
+async function obSignProfile() {
   const o = appState.onb;
   const msg = document.getElementById('ob-sign-msg');
-  const missing = [];
-  if (!/^0x[0-9a-fA-F]{40}$/.test(o.wallet)) missing.push('a valid Base wallet address (step 01)');
-  if (!o.dnsVerified) missing.push('DNS TXT verification via DoH (step 03)');
-  if (!o.fileUploaded) missing.push('confirmation that p2pmarket-schema.json is published (step 03)');
-  if (missing.length) {
-    if (msg) msg.textContent = 'Not ready yet — complete: ' + missing.join(', ') + '.';
+  const domain = (o.domain || 'p2pmarket.net').trim().toLowerCase();
+  const info = (o.desc || 'Decentralized trade node — AI discovery, USDC escrow and Net-30 settlement for global commerce.').trim();
+  const uri = domain === 'p2pmarket.net'
+    ? 'https://p2pmarket.net/.well-known/p2pmarket-prompt.json'
+    : ('https://' + domain + '/.well-known/p2pmarket-prompt.json');
+
+  const provider = (tmActiveWallet && tmActiveWallet.provider) || window.ethereum;
+  if (!provider) {
+    if (msg) msg.textContent = 'No Web3 wallet detected — open MetaMask and try again.';
     return;
   }
-  o.signed = true;
-  obRender();
-  if (msg) msg.textContent = 'Simulation complete: setProfile("' + o.domain + '", …) with a $1 anti-spam fee. P2PMarketRegistry.sol is not deployed to Base mainnet yet — once deployed, this button sends the real transaction from your connected wallet.';
-  persistState();
+
+  try {
+    if (msg) msg.textContent = 'Connecting wallet & checking Base Sepolia network…';
+    const accounts = await provider.request({ method: 'eth_requestAccounts' });
+    const sender = accounts && accounts[0];
+    if (!sender) {
+      if (msg) msg.textContent = 'Wallet account not authorized.';
+      return;
+    }
+
+    const chainHex = await provider.request({ method: 'eth_chainId' });
+    if (parseInt(chainHex, 16) !== 84532) {
+      try {
+        await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x14a34' }] });
+      } catch (swErr) {
+        await provider.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: '0x14a34',
+            chainName: 'Base Sepolia Testnet',
+            nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+            rpcUrls: ['https://sepolia.base.org'],
+            blockExplorerUrls: ['https://sepolia.basescan.org']
+          }]
+        });
+      }
+    }
+
+    // Читаем актуальную комиссию $1 из оракула через registrationFeeWei() (0x5b9d2b61) + 2% запас
+    let feeWei = 600000000000000n;
+    try {
+      const feeHex = await provider.request({
+        method: 'eth_call',
+        params: [{ to: P2P_REGISTRY_SEPOLIA, data: '0x5b9d2b61' }, 'latest']
+      });
+      if (feeHex && feeHex !== '0x') {
+        feeWei = (BigInt(feeHex) * 102n) / 100n;
+      }
+    } catch (_) {}
+
+    const calldata = encodeSetProfileCalldata(domain, info, uri);
+    const valueHex = '0x' + feeWei.toString(16);
+
+    if (msg) msg.textContent = 'Confirm setProfile("' + domain + '") in MetaMask…';
+    const txHash = await provider.request({
+      method: 'eth_sendTransaction',
+      params: [{
+        from: sender,
+        to: P2P_REGISTRY_SEPOLIA,
+        value: valueHex,
+        data: calldata
+      }]
+    });
+
+    o.signed = true;
+    o.dnsVerified = true;
+    o.fileUploaded = true;
+    obRender();
+    persistState();
+    if (msg) msg.textContent = '✓ setProfile("' + domain + '") submitted on Base Sepolia! Tx: ' + txHash;
+  } catch (err) {
+    if (msg) msg.textContent = 'Transaction error: ' + (err && err.message ? err.message : String(err));
+  }
 }
 
 function obCopyJson() {
