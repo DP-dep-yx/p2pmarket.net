@@ -1,0 +1,104 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "P2P Market",
+  "alternateName": "Trust Markets protocol node",
+  "url": "https://p2pmarket.net",
+  "logo": "https://p2pmarket.net/favicon.svg",
+  "description": "Decentralized trade node on Base L2: every company website is an autonomous trading node. Domain-linked on-chain business profiles, USDC escrow settlement, and semantic search for humans and AI agents over MCP. No platform commissions, no listing rules, no ad-driven rankings.",
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "url": "https://p2pmarket.net/#hero",
+      "availableLanguage": ["English", "Russian"]
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "url": "https://p2pmarket.net/#register-sandbox",
+      "availableLanguage": ["English"]
+    }
+  ],
+  "identifier": {
+    "@type": "PropertyValue",
+    "propertyID": "TrustMarketsBaseAddress",
+    "value": "0x6d48b7EE4ebE81254805ad658D756C26986Ea164"
+  },
+  "knowsAbout": [
+    "Decentralized Marketplaces",
+    "Base L2 Smart Contracts",
+    "USDC Escrow Settlement",
+    "Model Context Protocol (MCP)",
+    "JSON-LD Business Profiles",
+    "SIWE Authentication",
+    "B2B Trade Automation"
+  ],
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Domain-linked business profile registration on Base",
+        "url": "https://p2pmarket.net/#register-sandbox"
+      },
+      "price": "1",
+      "priceCurrency": "USD",
+      "description": "Flat anti-spam fee, paid in Base ETH at the live Chainlink ETH/USD rate. Binds the company domain to its Web3 wallet in the on-chain registry (setProfile).",
+      "acceptedPaymentMethod": ["Cryptocurrency (Base ETH)"]
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "USDC escrow settlement for trade deals"
+      },
+      "description": "0.1% of the deal amount, taken at escrow funding on Base. Net-30/60 post-paid invoices carry no percentage.",
+      "acceptedPaymentMethod": ["Cryptocurrency (USDC on Base)"]
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "AI semantic search and MCP toolkit",
+        "url": "https://p2pmarket.net/#mcp-toolkit"
+      },
+      "price": "0",
+      "priceCurrency": "USD",
+      "description": "Client-side AI agents (ChatGPT, Claude, Gemini, Cursor) search the registry and read registered business cards free of charge.",
+      "acceptedPaymentMethod": []
+    }
+  ],
+  "potentialAction": {
+    "@type": "Demand",
+    "description": "The platform node invites ecosystem service providers to register their own nodes and join the deal validation, insurance and logistics layers of the protocol.",
+    "itemOffered": [
+      {
+        "@type": "Product",
+        "name": "Independent deal auditors and validators (Contract Type 4)",
+        "category": "Trade Validation",
+        "targetVolume": "Continuous onboarding"
+      },
+      {
+        "@type": "Product",
+        "name": "Cargo insurers with USDC-parametric coverage (Contract Type 6)",
+        "category": "Trade Insurance",
+        "targetVolume": "Continuous onboarding"
+      },
+      {
+        "@type": "Product",
+        "name": "Logistics partners providing on-chain delivery attestations",
+        "category": "Logistics",
+        "targetVolume": "Continuous onboarding",
+        "preferredIncoterms": "FCA / CIF / DAP"
+      }
+    ],
+    "acceptedPaymentMethod": ["Cryptocurrency (USDC on Base)"]
+  },
+  "x-agent-instructions": {
+    "publicCard": true,
+    "privateData": "Confidential price lists and exclusive commercial terms are NOT published in this file. They are served per-partner over HTTPS only after the on-chain mutual handshake (Contract Type 2) and a SIWE (EIP-4361) authenticated session.",
+    "searchHint": "Use the MCP toolkit (mcp.p2pmarket.net/sse) or /api/ai-search to discover other registered nodes before contacting them.",
+    "rfqForm": "https://p2pmarket.net/#register-sandbox"
+  }
+}

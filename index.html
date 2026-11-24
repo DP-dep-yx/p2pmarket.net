@@ -23,7 +23,7 @@
   "identifier": {
     "@type": "PropertyValue",
     "propertyID": "TrustMarketsBaseAddress",
-    "value": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+    "value": "0x6d48b7EE4ebE81254805ad658D756C26986Ea164"
   }
 }
 </script>
@@ -1971,7 +1971,7 @@ input[type="range"] {
         </div>
         <div class="field-group">
           <label for="ob-wallet" class="field-label">Owner Web3 wallet on Base</label>
-          <input type="text" id="ob-wallet" class="input-field" value="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" oninput="obInput()">
+          <input type="text" id="ob-wallet" class="input-field" value="0x6d48b7EE4ebE81254805ad658D756C26986Ea164" oninput="obInput()">
           <span class="data-label" style="text-transform: none; letter-spacing: 0;">Auto-filled when you connect a wallet in the header.</span>
         </div>
         <div class="field-group">
@@ -2046,7 +2046,7 @@ input[type="range"] {
             <span>Copy TXT</span>
           </button>
         </div>
-        <div id="ob-txt-val" class="kv-val" style="font-family: var(--font-label); word-break: break-all;">evm-contract=0x742d35Cc6634C0532925a3b844Bc454e4438f44e</div>
+        <div id="ob-txt-val" class="kv-val" style="font-family: var(--font-label); word-break: break-all;">evm-contract=0x6d48b7EE4ebE81254805ad658D756C26986Ea164</div>
       </div>
     </div>
 
@@ -2155,7 +2155,7 @@ input[type="range"] {
             <span>Copy</span>
           </button>
         </div>
-        <div id="ob-txt-val2" class="kv-val" style="font-family: var(--font-label); word-break: break-all;">evm-contract=0x742d35Cc6634C0532925a3b844Bc454e4438f44e</div>
+        <div id="ob-txt-val2" class="kv-val" style="font-family: var(--font-label); word-break: break-all;">evm-contract=0x6d48b7EE4ebE81254805ad658D756C26986Ea164</div>
         <div class="btn-row">
           <button type="button" class="btn btn-secondary" onclick="obVerifyDns()">
             <i data-lucide="globe" aria-hidden="true"></i>
@@ -2982,7 +2982,7 @@ Auth (Private) : SIWE EIP-4361 Signature
 
 function buildMegaPrompt() {
   const domain = appState.onb.domain || `p2pmarket.net`;
-  const wallet = appState.onb.wallet || `0x742d35Cc6634C0532925a3b844Bc454e4438f44e`;
+  const wallet = appState.onb.wallet || `0x6d48b7EE4ebE81254805ad658D756C26986Ea164`;
   return `You are my personal autonomous trade agent on the Trust Markets platform (p2pmarket.net).
 My domain: ${domain}
 My wallet / contract on Base (Chain ID 8453): ${wallet}
@@ -3149,8 +3149,8 @@ function obDefaults() {
   return {
     step: 1,
     domain: 'p2pmarket.net',
-    name: 'TrustMarkets.net',
-    wallet: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+    name: 'P2P Market',
+    wallet: '0x6d48b7EE4ebE81254805ad658D756C26986Ea164',
     desc: 'Decentralized trade node — AI discovery, USDC escrow and Net-30 settlement for global commerce.',
     knows: ['Supply Chain Optimization', 'Multimodal Freight Transportation'],
     city: '',
