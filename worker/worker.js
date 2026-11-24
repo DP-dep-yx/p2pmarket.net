@@ -1,4 +1,4 @@
-// TrustMarkets.net — Cloudflare Worker
+// p2pmarket.net — Cloudflare Worker
 // Static site (Workers Assets) + SIWE (EIP-4361) auth backend:
 //   GET  /api/auth/nonce   -> { nonce, expiresIn }
 //   POST /api/auth/verify  -> verifies signature, sets signed session cookie
@@ -180,6 +180,15 @@ export default {
     const secret = (env && env.WORKER_SECRET) || 'dev-secret';
     const cors = corsHeaders(request);
     const j = (obj, status, headers) => json(obj, status, Object.assign({}, cors, headers || {}));
+
+    // переименованные файлы стандарта и карточки — старые пути отдают 301
+    const LEGACY_PATHS = {
+      '/.well-known/trustmarkets-prompt.json': '/.well-known/p2pmarket-prompt.json',
+      '/schema/trustmarkets-schema.json': '/schema/p2pmarket-schema.json'
+    };
+    if (LEGACY_PATHS[path]) {
+      return Response.redirect(new URL(LEGACY_PATHS[path], url.origin).toString(), 301);
+    }
 
     // старые домены уводим на новый основной, путь и query сохраняем
     if (REDIRECT_HOSTS.has(url.hostname.toLowerCase())) {

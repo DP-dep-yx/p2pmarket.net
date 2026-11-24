@@ -4,7 +4,7 @@ pragma solidity ^0.8.24;
 /**
  * @title MockEthUsdFeed
  * @notice Deterministic stand-in for the Chainlink ETH/USD aggregator — TESTNET ONLY.
- * @dev Use for the Base Sepolia rehearsal so the whole $1 fee path of TrustMarketsRegistry
+ * @dev Use for the Base Sepolia rehearsal so the whole $1 fee path of P2PMarketRegistry
  *      can be exercised without depending on a live testnet feed. Implements the same
  *      minimal interface the registry expects (latestRoundData, 8-dp answer).
  *      Mainnet deploys MUST use the real feed instead:

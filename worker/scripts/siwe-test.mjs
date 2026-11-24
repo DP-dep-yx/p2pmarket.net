@@ -33,7 +33,7 @@ const expirationTime = new Date(Date.now() + 15 * 60 * 1000).toISOString();
 const message =
   DOMAIN + ' wants you to sign in with your Ethereum account:\n' +
   address + '\n\n' +
-  'Sign in to the TrustMarkets decentralized marketplace on Base.\n\n' +
+  'Sign in to the p2pmarket.net decentralized marketplace on Base.\n\n' +
   'URI: ' + BASE_URL + '\n' +
   'Version: 1\n' +
   'Chain ID: 8453\n' +

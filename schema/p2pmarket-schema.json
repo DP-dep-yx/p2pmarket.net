@@ -1,20 +1,20 @@
 {
   "@context": "https://schema.org",
   "@type": "Dataset",
-  "name": "TrustMarkets B2B Semantic Standard v10.0",
+  "name": "P2PMarket B2B Semantic Standard v17.0",
   "description": "Decentralized B2B Business Card & Smart Contract Schema on Base L2",
-  "url": "https://p2pmarket.net/schema/trustmarkets-schema.json",
-  "version": "10.0",
+  "url": "https://p2pmarket.net/schema/p2pmarket-schema.json",
+  "version": "17.0",
   "license": "https://opensource.org/licenses/MIT",
   "mainEntity": {
     "@type": "Organization",
     "@id": "https://p2pmarket.net/#organization",
-    "name": "TrustMarkets Protocol",
+    "name": "p2pmarket.net protocol",
     "url": "https://p2pmarket.net",
     "description": "Decentralized B2B Trade Ecosystem powered by Base L2 Smart Contracts, DNS TXT Verification, SIWE, and Zero-Cost Client AI Agents.",
     "identifier": {
       "@type": "PropertyValue",
-      "propertyID": "TrustMarketsBaseAddress",
+      "propertyID": "P2PMarketBaseAddress",
       "value": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
     },
     "additionalProperty": [
@@ -59,7 +59,7 @@
         "@type": "BuyAction",
         "name": "Procurement: Food-Grade PET Preforms & Packaging",
         "target": "https://p2pmarket.net/api/siwe-rfq",
-        "description": "Monthly volume 120 MT, delivery DAP Central Europe, settlement via TrustMarketsTrade.sol Escrow"
+        "description": "Monthly volume 120 MT, delivery DAP Central Europe, settlement via P2PMarketTrade.sol Escrow"
       }
     ],
     "logistics": [
@@ -68,7 +68,7 @@
         "name": "EuroTransit Multimodal Logistics AG",
         "identifier": {
           "@type": "PropertyValue",
-          "propertyID": "TrustMarketsBaseAddress",
+          "propertyID": "P2PMarketBaseAddress",
           "value": "0x9A8f7C6d5E4b3A2f1E0D9C8B7A6F5E4D3C2B1A09"
         },
         "serviceType": "40HC Container Rail & Maritime Freight, Customs Clearance"

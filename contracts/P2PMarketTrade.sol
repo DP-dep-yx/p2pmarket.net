@@ -18,7 +18,7 @@ interface AggregatorV3Interface {
 }
 
 /**
- * @title TrustMarketsTrade
+ * @title P2PMarketTrade
  * @notice Hybrid B2B Trade, Audit, Credit Pool & Cargo Insurance Contract on Base L2 (Trust Net v17.2)
  * @dev Covers Smart Contract Types 3, 4, 5, and 6:
  *      - Type 3: Hybrid Sale (With USDC Escrow OR Non-Escrow Net-30/60 Commercial Invoice Registry)
@@ -30,7 +30,7 @@ interface AggregatorV3Interface {
  *      Chainlink ETH/USD rate inside createDeal(), with any overpay refunded to the sender.
  *      The escrowed USDC itself is never deducted: the full deal amount reaches the seller.
  */
-contract TrustMarketsTrade {
+contract P2PMarketTrade {
     enum DealStatus {
         Created,
         FundedOrActive,

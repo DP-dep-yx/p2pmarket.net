@@ -1,5 +1,5 @@
 {
-  "name": "trustmarkets-indexer",
+  "name": "p2pmarket-indexer",
   "version": "17.1.0",
   "description": "Trust Net v17.1 Base L2 RPC Indexer & AI Semantic Search Backend",
   "main": "indexer.js",

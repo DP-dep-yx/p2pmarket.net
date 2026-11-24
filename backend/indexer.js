@@ -1,20 +1,20 @@
 /**
- * TrustMarkets Indexer — Trust Net v17.1
+ * P2PMarket Indexer — Trust Net v17.1
  *
  * Реальность, а не пересказ:
- *  - читает события ProfileUpdated / ProfileDeactivated прямо из TrustMarketsRegistry (viem getLogs, поллинг HTTP RPC);
+ *  - читает события ProfileUpdated / ProfileDeactivated прямо из P2PMarketRegistry (viem getLogs, поллинг HTTP RPC);
  *  - мультидоменная схема: ключ (wallet, domain) — один кошелёк владеет N доменами;
  *  - после ProfileUpdated вызывает getProfile(domain), скачивает карточку по aiPromptUri
  *    (https://… или ipfs://… через шлюз), парсит и кладёт в SQLite;
  *  - Trust Score: базовый 10.0, а при заданном TRADE_ADDRESS — из реальных
- *    completedDealsCount + onTimeInvoiceSettlements контракта TrustMarketsTrade;
+ *    completedDealsCount + onTimeInvoiceSettlements контракта P2PMarketTrade;
  *  - поиск: векторный (косинус), если настроен любой OpenAI-совместимый embeddings-эндпоинт,
  *    иначе — лексический, и ответ честно помечен mode:"lexical".
  *
  * Env:
  *  BASE_RPC_URL        (default https://mainnet.base.org)
- *  REGISTRY_ADDRESS    адрес TrustMarketsRegistry (без него индексатор работает только с локальной БД)
- *  TRADE_ADDRESS       адрес TrustMarketsTrade (включает ончейн Trust Score)
+ *  REGISTRY_ADDRESS    адрес P2PMarketRegistry (без него индексатор работает только с локальной БД)
+ *  TRADE_ADDRESS       адрес P2PMarketTrade (включает ончейн Trust Score)
  *  START_BLOCK         стартовый блок синка (default: текущий высотный на запуске)
  *  POLL_INTERVAL_MS    интервал опроса логов (default 12000)
  *  IPFS_GATEWAY        (default https://ipfs.io/ipfs/)
@@ -30,7 +30,7 @@ const { base } = require('viem/chains');
 const path = require('path');
 const fs = require('fs');
 
-const ABI = JSON.parse(fs.readFileSync(path.join(__dirname, 'abi', 'TrustMarketsRegistry.json'), 'utf8'));
+const ABI = JSON.parse(fs.readFileSync(path.join(__dirname, 'abi', 'P2PMarketRegistry.json'), 'utf8'));
 const EV = Object.fromEntries(ABI.filter(a => a.type === 'event').map(e => [e.name, e]));
 const FN = Object.fromEntries(ABI.filter(a => a.type === 'function').map(f => [f.name, f]));
 
@@ -188,7 +188,7 @@ async function fetchPromptCard(uri) {
   }
 }
 
-/** Ончейн Trust Score: база 10 + реальные сделки из TrustMarketsTrade (если задан TRADE_ADDRESS) */
+/** Ончейн Trust Score: база 10 + реальные сделки из P2PMarketTrade (если задан TRADE_ADDRESS) */
 async function computeTrustScore(wallet) {
   if (!CFG.trade) return 10.0;
   try {
@@ -428,9 +428,9 @@ async function selftest() {
   `);
   const A = '0x6d48b7ee4ebe81254805ad658d756c26986ea164';
   const B = '0xa33e1d790b1139d2e2b0bc7af8109df4b7831af2';
-  ins.run(A, 'p2pmarket.net', 'Decentralized marketplace node on Base L2', 'https://p2pmarket.net/schema/trustmarkets-schema.json',
+  ins.run(A, 'p2pmarket.net', 'Decentralized marketplace node on Base L2', 'https://p2pmarket.net/schema/p2pmarket-schema.json',
     'organic wheat hazelnuts almond flour supplier export', 25.0);
-  ins.run(B, 'alpina-foods.eu', 'Alpina Foods GmbH — organic food producer', 'https://alpina-foods.eu/.well-known/trustmarkets-prompt.json',
+  ins.run(B, 'alpina-foods.eu', 'Alpina Foods GmbH — organic food producer', 'https://alpina-foods.eu/.well-known/p2pmarket-prompt.json',
     'organic hazelnut spread chocolate confectionery EU certified', 10.0);
 
   const terms = tokenize('20t organic hazelnuts to Zurich');

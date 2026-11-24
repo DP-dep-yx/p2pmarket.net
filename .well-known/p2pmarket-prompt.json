@@ -22,7 +22,7 @@
   ],
   "identifier": {
     "@type": "PropertyValue",
-    "propertyID": "TrustMarketsBaseAddress",
+    "propertyID": "P2PMarketBaseAddress",
     "value": "0x6d48b7EE4ebE81254805ad658D756C26986Ea164"
   },
   "knowsAbout": [

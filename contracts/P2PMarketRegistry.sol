@@ -13,7 +13,7 @@ interface AggregatorV3Interface {
 }
 
 /**
- * @title TrustMarketsRegistry
+ * @title P2PMarketRegistry
  * @notice Decentralized B2B Identity Registry on Base L2 (Trust Net v17.1)
  * @dev Multi-domain identity: one wallet owns N domains, profile data is keyed by domain hash.
  *      $1 anti-spam fee (Skin in the Game) on every setProfile() AND on emergency deactivateProfile().
@@ -25,7 +25,7 @@ interface AggregatorV3Interface {
  *      Mutual attestation handshakes (Contract Type 2 / NDA) preserved from v10 and
  *      adapted to the multi-domain profile layout.
  */
-contract TrustMarketsRegistry {
+contract P2PMarketRegistry {
     struct BusinessProfile {
         string domain;          // lowercase "company.com"
         string businessInfo;    // Short business description
