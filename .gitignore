@@ -11,3 +11,4 @@ worker/node_modules/
 worker/public/
 worker/.wrangler/
 *:Zone.Identifier
+backend/trust_index.db

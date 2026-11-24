@@ -1,10 +1,11 @@
 {
   "name": "trustmarkets-indexer",
-  "version": "10.0.0",
-  "description": "Trust Net v10.0 Base L2 RPC Indexer & AI Semantic Search Backend",
+  "version": "17.1.0",
+  "description": "Trust Net v17.1 Base L2 RPC Indexer & AI Semantic Search Backend",
   "main": "indexer.js",
   "scripts": {
-    "start": "node indexer.js"
+    "start": "node indexer.js",
+    "selftest": "node indexer.js --selftest"
   },
   "dependencies": {
     "better-sqlite3": "^11.0.0",
