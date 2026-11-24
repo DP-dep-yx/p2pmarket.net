@@ -2253,15 +2253,23 @@ input[type="range"] {
     <div>
       <strong>p2pmarket.net</strong> — a decentralized trade protocol on Base L2. Sources: the Trust Net v17 specification, <code style="font-family: var(--font-label);">P2PMarketRegistry.sol</code> and <code style="font-family: var(--font-label);">P2PMarketTrade.sol</code> contracts, the Alpina Foods GmbH reference JSON-LD profile, and a Node.js + SQLite backend architecture.
       <div style="margin-top: var(--space-sm); display: flex; flex-wrap: wrap; gap: var(--space-md);">
+        <a href="https://github.com/DP-dep-yx/p2pmarket.net" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">GitHub Repository</a>
         <a href="contracts/P2PMarketRegistry.sol" style="color: var(--primary);">P2PMarketRegistry.sol</a>
         <a href="contracts/P2PMarketTrade.sol" style="color: var(--primary);">P2PMarketTrade.sol</a>
         <a href="schema/p2pmarket-schema.json" style="color: var(--primary);">p2pmarket-schema.json</a>
+        <a href=".well-known/p2pmarket-prompt.json" style="color: var(--primary);">p2pmarket-prompt.json</a>
         <a href="backend/indexer.js" style="color: var(--primary);">indexer.js</a>
       </div>
     </div>
-    <button type="button" class="btn btn-secondary btn-compact" onclick="resetAppState(this)">
-      Reset saved state
-    </button>
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center;">
+      <a href="https://github.com/DP-dep-yx/p2pmarket.net" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-compact" style="text-decoration: none;">
+        <i data-lucide="github" aria-hidden="true"></i>
+        <span>GitHub</span>
+      </a>
+      <button type="button" class="btn btn-secondary btn-compact" onclick="resetAppState(this)">
+        Reset saved state
+      </button>
+    </div>
   </footer>
 
 </main>
