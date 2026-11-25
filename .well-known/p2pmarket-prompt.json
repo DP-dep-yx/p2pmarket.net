@@ -10,12 +10,14 @@
     {
       "@type": "ContactPoint",
       "contactType": "customer support",
+      "email": "support@p2pmarket.net",
       "url": "https://p2pmarket.net/#hero",
       "availableLanguage": ["English"]
     },
     {
       "@type": "ContactPoint",
       "contactType": "sales",
+      "email": "sales@p2pmarket.net",
       "url": "https://p2pmarket.net/#register-sandbox",
       "availableLanguage": ["English"]
     }
